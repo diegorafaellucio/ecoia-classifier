@@ -39,7 +39,7 @@ import yaml
 
 
 from src.detector.utils import TryExcept, emojis
-from src.detector.utils.downloads import curl_download, gsutil_getsize
+from src.detector.yolo_detector.utils.downloads import curl_download, gsutil_getsize
 from src.detector.utils.metrics import box_iou, fitness
 
 FILE = Path(__file__).resolve()

@@ -1,6 +1,6 @@
 import logging
 from django.urls import path
-from src.detector.detector import Detector
+from src.detector import Detector
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
 from apps.classifier.views import ClassifierView
