@@ -3,13 +3,17 @@
 import numpy as np
 import dlib
 from src.enum.cuts_coords_enum import CutsCoords
+from django.conf import settings
+import os
 
 
 class ShapePredictor:
 
-    def __init__(self, shape_predictor_weights):
+    def __init__(self, model_path):
 
-        self.model_predictor = dlib.shape_predictor(shape_predictor_weights)
+        base_dir = settings.BASE_DIR
+        model_path = os.path.join(base_dir, model_path)
+        self.model_predictor = dlib.shape_predictor(model_path)
 
     def get_polygons(self, image, rect, padding_left=0, padding_top=0):
 

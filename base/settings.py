@@ -65,10 +65,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CRONJOBS = [
-    ('* * * * *', 'apps.classifier.cron.classification_processor_job'),
-    ('* * * * *', 'apps.integrator.cron.integrator_processor_job')
-            ]
+
 
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
@@ -85,9 +82,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_crontab',
     'apps.classifier',
-    'apps.integrator'
+    'apps.integrator',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -176,3 +173,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CRONJOBS = [
+    ('*/1 * * * *', 'base.cron.classification_processor_job')
+    # ('* * * * *', 'apps.classifier.cron.classification_processor_job', '>> /home/diego/test.txt'),
+    # ('* * * * *', 'cron.my_cron_job'),
+    # ('* * * * *', 'apps.integrator.cron.integrator_processor_job')
+            ]
