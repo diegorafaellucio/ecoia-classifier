@@ -329,7 +329,7 @@ class DetectMultiBackend(nn.Module):
         #   TensorFlow Lite:                *.tflite
         #   TensorFlow Edge TPU:            *_edgetpu.tflite
         #   PaddlePaddle:                   *_paddle_model
-        from src.detector.models.experimental import attempt_download, attempt_load  # scoped to avoid circular import
+        from src.classifier.models.experimental import attempt_download, attempt_load  # scoped to avoid circular import
 
         super().__init__()
         w = str(weights[0] if isinstance(weights, list) else weights)
@@ -488,7 +488,7 @@ class DetectMultiBackend(nn.Module):
         elif triton:  # NVIDIA Triton Inference Server
             LOGGER.info(f'Using {w} as Triton Inference Server...')
             check_requirements('tritonclient[all]')
-            from src.detector.utils.triton import TritonRemoteModel
+            from src.classifier.utils.triton import TritonRemoteModel
             model = TritonRemoteModel(url=w)
             nhwc = model.runtime.startswith('tensorflow')
         else:
@@ -599,8 +599,8 @@ class DetectMultiBackend(nn.Module):
     def _model_type(p='path/to/model.pt'):
         # Return model type from model path, i.e. path='path/to/model.onnx' -> type=onnx
         # types = [pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs, paddle]
-        from src.detector.export import export_formats
-        from src.detector.yolo_detector.utils.downloads import is_url
+        from src.classifier.export import export_formats
+        from src.classifier.yolo_classifier.utils.downloads import is_url
         sf = list(export_formats().Suffix)  # export suffixes
         if not is_url(p, check=False):
             check_suffix(p, sf)  # checks

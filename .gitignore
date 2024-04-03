@@ -1,7 +1,2 @@
 .env
-/data/models/cuts/
-/data/models/filter/
-/data/models/meat/
-/data/models/side/
-/data/models/skeleton/
-/data/models/stamp/
+__pycache__/

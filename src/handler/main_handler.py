@@ -13,11 +13,8 @@ from src.enum.image_state_enum import ImageStateEnum
 class MainHandler:
     logger = logging.getLogger(__name__)
 
-
     @staticmethod
     def process_images(classifier_suite):
-
-
 
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MAX_WORKERS.name)
