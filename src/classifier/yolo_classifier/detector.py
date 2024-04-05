@@ -94,7 +94,7 @@ class Detector():
                     detection_label = self.names[class_id]
                     # print(class_id, label, p1, p2)
 
-                    result['label'] = '{}-{}'.format(class_id, detection_label)
+                    result['label'] = detection_label
                     result['confidence'] = detection_condifence.item()
 
                     top_left_coords = {}

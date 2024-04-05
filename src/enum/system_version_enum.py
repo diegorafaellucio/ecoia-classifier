@@ -1,6 +1,6 @@
 
 from enum import Enum
 
-class OperationModelEnum(Enum):
+class SystemVersionEnum(Enum):
     STANDARD = 'STANDARD'
     PROFESSIONAL = 'PROFESSIONAL'

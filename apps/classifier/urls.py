@@ -44,7 +44,7 @@ stamp_classification_weights_path = ConfigurationStorageController.get_config_da
     ConfigurationEnum.STAMP_CLASSIFICATION_WEIGHTS_PATH.name)
 stamp_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.STAMP_CLASSIFICATION_APPROACH.name)
-stamp_detector = DetectorLoader.load_detector(bruise_classification_weights_path, stamp_classification_approach)
+stamp_detector = DetectorLoader.load_detector(stamp_classification_weights_path, stamp_classification_approach)
 
 side_a_shape_predictor_weights_file_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_A_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH.name)

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class CutsColors(Enum):
+class CutsEnum(Enum):
     ALCATRA = 1
     CAPA_CONTRA = 2
     CONTRA_COSTELA = 3

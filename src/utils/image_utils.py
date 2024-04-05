@@ -17,7 +17,7 @@ class ImageUtils:
     def has_image(image_absolute_path, flag_img, state):
         has_image = False
 
-        if os.path.exists(image_absolute_path) and int(flag_img) == 1 and int(state) in (ImageStateEnum.WAITING_PROCESSING.value):
+        if os.path.exists(image_absolute_path) and int(flag_img) == 1 and (int(state) == (ImageStateEnum.WAITING_PROCESSING.value)):
             has_image = True
         elif not os.path.exists(image_absolute_path):
             has_image = False

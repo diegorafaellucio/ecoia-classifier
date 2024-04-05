@@ -22,3 +22,7 @@
 	path = data/models/stamp
 	url = git@eco:ecotracesolutions/ecoia-weights-stamp.git
 	branch = main
+[submodule "data/models/bruise"]
+	path = data/models/bruise
+	url = git@eco:ecotracesolutions/ecoia-weights-bruise.git
+	branch = main

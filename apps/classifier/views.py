@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from src.enum.classifier_api_return_messages_enum import ClassifierApiReturnMessagesEnum
-from src.handler.main_handler import MainHandler
+from src.handler.classifier_handler import ClassifierHandler
 
 # Create your views here.
 class ClassifierView(GenericAPIView):
@@ -13,7 +13,7 @@ class ClassifierView(GenericAPIView):
 
         classifier_suite = kwargs['classifier_suite']
 
-        MainHandler.process_images(classifier_suite)
+        ClassifierHandler.process_images(classifier_suite)
 
         try:
 

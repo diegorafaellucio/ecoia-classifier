@@ -41,7 +41,7 @@ class Detector():
                 detection_label = class_names[class_id]
                 # print(class_id, label, p1, p2)
 
-                result['label'] = '{}-{}'.format(class_id, detection_label)
+                result['label'] = detection_label
                 result['confidence'] = confidence
 
                 top_left_coords = {}

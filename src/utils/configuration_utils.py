@@ -44,4 +44,8 @@ class ConfigurationUtils:
 
         ConfigurationEnum.DETECTION_PADDING.name: 350,
 
+        ConfigurationEnum.BRUISE_CONFIDENCE_THRESHOLD.name: 0.20,
+
+        ConfigurationEnum.BRUISE_PLOT_RADIUS.name: 0.80,
+
     }

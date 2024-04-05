@@ -67,3 +67,26 @@ class DetectorUtils:
         intersection_score = intersection.area / gt_polygon.area
 
         return intersection_score
+
+
+
+
+    @staticmethod
+    def coord_is_inside_detection_area(coord, detection):
+
+        x_point, y_point = coord
+
+        bottom_right = detection['bottomright']
+        top_left = detection['topleft']
+
+        x_min = top_left['x']
+        x_max = bottom_right['x']
+
+        y_min = top_left['y']
+        y_max = bottom_right['y']
+
+        if x_min <= x_point <= x_max and y_min <= y_point <= y_max:
+            return True
+        else:
+            return False
+
