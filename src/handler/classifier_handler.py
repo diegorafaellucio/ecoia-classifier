@@ -18,6 +18,7 @@ import cv2
 class ClassifierHandler:
     logger = logging.getLogger(__name__)
 
+
     @staticmethod
     def process_images(classifier_suite):
 
@@ -67,7 +68,7 @@ class ClassifierHandler:
 
         ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor = classifier_suite
+        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, watermarker = classifier_suite
 
         images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -84,6 +85,9 @@ class ClassifierHandler:
             #     'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
             image = cv2.imread(image_absolute_path)
+
+            image_with_watermarker = watermarker.get_image_with_watermarker(image)
+            cv2.imwrite(image_absolute_path, image_with_watermarker)
 
             classification_id = ClassifierUtils.get_classification_id(image_id, image, sequence_number, side_number,
                                                                         skeleton_detector, filter_detector,
@@ -107,6 +111,8 @@ class ClassifierHandler:
                 CutsUtils.save_cuts_data(image_id, cuts_coords)
 
                 cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, sanitized_bruises)
+
+                cut_lines_image = watermarker.get_image_with_watermarker(cut_lines_image)
 
                 cv2.imwrite(masked_image_absolute_path, cut_lines_image)
 
