@@ -19,6 +19,6 @@ def classification_processor_job():
 
         print(response.text)
 
-        time.sleep(1)
+        time.sleep(2)
 
 

@@ -27,8 +27,6 @@ class ConfigurationEnum(Enum):
 
     FILTER_BLACK_LIST = ['VIRADA_TOTAL', 'VIRADA_PARCIAL', 'ANGULADA_COSTELA_BANDA_A', 'ANGULADA_COSTELA_BANDA_B']
 
-    LOGO_PATH = 'src/watermarker/logo.png'
-
     SYSTEM_VERSION = 'PROFESSIONAL'
 
     IMAGES_MAIN_PATH = '/home/ecotrace/fotos'
@@ -46,4 +44,6 @@ class ConfigurationEnum(Enum):
     BRUISE_CONFIDENCE_THRESHOLD = 0.20
 
     BRUISE_PLOT_RADIUS = 0.80
+
+    WATERMARK_LOGO_PATH = 'data/images/watermark_logo.png'
 

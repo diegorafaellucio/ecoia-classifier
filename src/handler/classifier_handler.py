@@ -1,13 +1,16 @@
 import logging
 import concurrent.futures
 
+import imutils
+
 from src.controller.image_controller import ImageController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
-from src.utils.image_utils import ImageUtils
+from src.utils.file_utils import FileUtils
 from src.utils.classifier_utils import ClassifierUtils
 from src.utils.bruise_utils import BruiseUtils
 from src.utils.cuts_utils import CutsUtils
+from src.utils.watermark_utils import WatermarkUtils
 from src.enum.image_state_enum import ImageStateEnum
 from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
@@ -29,7 +32,7 @@ class ClassifierHandler:
 
         data = ImageController.get_images_to_classify(max_workers)
 
-        have_data_to_classify = ImageUtils.have_data_to_classify(data)
+        have_data_to_classify = FileUtils.have_data_to_classify(data)
 
         futures = []
 
@@ -68,7 +71,7 @@ class ClassifierHandler:
 
         ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, watermarker = classifier_suite
+        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor = classifier_suite
 
         images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -78,7 +81,7 @@ class ClassifierHandler:
         # ImageHandler.logger.info(
         #     'Checking if there are image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
-        has_image = ImageUtils.has_image(image_absolute_path, flag_img, state)
+        has_image = FileUtils.has_file(image_absolute_path, flag_img, state)
 
         if has_image:
             # ImageHandler.logger.info(
@@ -86,8 +89,7 @@ class ClassifierHandler:
 
             image = cv2.imread(image_absolute_path)
 
-            image_with_watermarker = watermarker.get_image_with_watermarker(image)
-            cv2.imwrite(image_absolute_path, image_with_watermarker)
+
 
             classification_id = ClassifierUtils.get_classification_id(image_id, image, sequence_number, side_number,
                                                                         skeleton_detector, filter_detector,
@@ -107,14 +109,23 @@ class ClassifierHandler:
 
                 cut_lines_image, cuts_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
-
                 CutsUtils.save_cuts_data(image_id, cuts_coords)
 
                 cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, sanitized_bruises)
 
-                cut_lines_image = watermarker.get_image_with_watermarker(cut_lines_image)
+                cut_lines_image_with_watermark = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
 
-                cv2.imwrite(masked_image_absolute_path, cut_lines_image)
+                resized_cut_lines_image_with_watermark = imutils.resize(cut_lines_image_with_watermark, height=500)
+
+                cv2.imwrite(masked_image_absolute_path, resized_cut_lines_image_with_watermark)
+
+                image_with_watermarker = WatermarkUtils.get_image_with_watermarker(image)
+
+                resized_image_with_watermarker = imutils.resize(image_with_watermarker, height=500)
+
+                FileUtils.copy_file(image_absolute_path)
+
+                cv2.imwrite(image_absolute_path, resized_image_with_watermarker)
 
                 BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
 

@@ -48,4 +48,7 @@ class ConfigurationUtils:
 
         ConfigurationEnum.BRUISE_PLOT_RADIUS.name: 0.80,
 
+        ConfigurationEnum.WATERMARK_LOGO_PATH.name: 'data/images/watermark_logo.png',
+
+
     }

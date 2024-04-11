@@ -5,7 +5,6 @@ from src.controller.configuration_storage_controller import ConfigurationStorage
 from src.enum.configuration_enum import ConfigurationEnum
 from apps.classifier.views import ClassifierView
 from src.shape_predictor.shape_predictor import ShapePredictor
-from src.watermarker.watermarker import Watermarker
 
 logger = logging.getLogger(__name__)
 
@@ -55,10 +54,8 @@ side_b_shape_predictor_weights_file_path = ConfigurationStorageController.get_co
     ConfigurationEnum.SIDE_B_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH.name)
 side_b_shape_predictor = ShapePredictor(side_b_shape_predictor_weights_file_path)
 
-watermarker = Watermarker(ConfigurationEnum.LOGO_PATH.value)
-
 classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
-                    side_a_shape_predictor, side_b_shape_predictor, watermarker]
+                    side_a_shape_predictor, side_b_shape_predictor]
 
 urlpatterns = [
     path("classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),
