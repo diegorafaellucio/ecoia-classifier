@@ -59,7 +59,8 @@ class ClassifierHandler:
                 image_id = x.result()
         else:
 
-            ClassifierHandler.logger('Was not images to process...')
+            # ClassifierHandler.logger('Was not images to process...')
+            print('Was not images to process...')
 
     @staticmethod
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
