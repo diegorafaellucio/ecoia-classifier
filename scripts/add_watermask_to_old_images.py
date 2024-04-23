@@ -1,19 +1,18 @@
 import os
 import cv2
 import tqdm
-
-from src.utils.watermark_utils import WatermarkUtils
 import imutils
-
 import concurrent.futures
 from concurrent.futures import ThreadPoolExecutor
+import numpy as np
+import cv2
 
 
 def insert_watermark_in_image(img, watermarker, alpha=1, beta=0.8):
     h_img, w_img, _ = img.shape
 
-    logo = cv.resize(watermarker, (w_img, h_img))
-    result = cv.addWeighted(img, alpha, logo, beta, 0)
+    logo = cv2.resize(watermarker, (w_img, h_img))
+    result = cv2.addWeighted(img, alpha, logo, beta, 0)
     return result
 
 
@@ -42,8 +41,8 @@ def create_watermark_based_on_image_size(image, watermark_path=None):
 
 
 def get_image_with_watermarker(image, watermark_path=None):
-    watermarker = WatermarkUtils.create_watermark_based_on_image_size(image, watermark_path)
-    image_with_watermark = WatermarkUtils.insert_watermark_in_image(image, watermarker)
+    watermarker = create_watermark_based_on_image_size(image, watermark_path)
+    image_with_watermark = insert_watermark_in_image(image, watermarker)
 
     return image_with_watermark
 
@@ -57,7 +56,7 @@ years = sorted(os.listdir(images_path), reverse=True)
 def generate_image(image_path):
     image = cv2.imread(image_path)
 
-    image_with_watermark = WatermarkUtils.get_image_with_watermarker(image,
+    image_with_watermark = get_image_with_watermarker(image,
                                                                      watermark_path='../data/images/watermark_logo.png')
 
     resized_image_with_watermark = imutils.resize(image_with_watermark, height=500)
