@@ -63,10 +63,13 @@ class ClassifierUtils:
 
                     meat_detection_result = ClassifierUtils.classify(meat_detector, image)
 
-                    meat_detection_label = meat_detection_result['label']
+                    if meat_detection_result is None:
+                        classification_id = ClassificationErrorEnum.ERRO_96.value
+                    else:
+                        meat_detection_label = meat_detection_result['label']
 
-                    meat_detataset_id = MeatEnum[meat_detection_label].value['database_id']
+                        meat_detataset_id = MeatEnum[meat_detection_label].value['database_id']
 
-                    classification_id = meat_detataset_id
+                        classification_id = meat_detataset_id
 
         return classification_id

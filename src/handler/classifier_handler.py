@@ -88,12 +88,15 @@ class ClassifierHandler:
             #     'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
             image = cv2.imread(image_absolute_path)
+            cut_lines_image = image.copy()
 
 
 
             classification_id = ClassifierUtils.get_classification_id(image_id, image, sequence_number, side_number,
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
+
+
 
             if system_version == SystemVersionEnum.PROFESSIONAL.value and classification_id not in (
                     ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_95.value,
@@ -109,25 +112,30 @@ class ClassifierHandler:
 
                 cut_lines_image, cuts_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
+                cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
+                                                                              sanitized_bruises)
+
                 CutsUtils.save_cuts_data(image_id, cuts_coords)
 
-                cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, sanitized_bruises)
-
-                cut_lines_image_with_watermark = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
-
-                resized_cut_lines_image_with_watermark = imutils.resize(cut_lines_image_with_watermark, height=500)
-
-                cv2.imwrite(masked_image_absolute_path, resized_cut_lines_image_with_watermark)
-
-                image_with_watermarker = WatermarkUtils.get_image_with_watermarker(image)
-
-                resized_image_with_watermarker = imutils.resize(image_with_watermarker, height=500)
-
-                FileUtils.copy_file(image_absolute_path)
-
-                cv2.imwrite(image_absolute_path, resized_image_with_watermarker)
-
                 BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
+
+
+
+
+
+            cut_lines_image_with_watermark = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
+
+            resized_cut_lines_image_with_watermark = imutils.resize(cut_lines_image_with_watermark, height=500)
+
+            cv2.imwrite(masked_image_absolute_path, resized_cut_lines_image_with_watermark)
+
+            image_with_watermarker = WatermarkUtils.get_image_with_watermarker(image)
+
+            resized_image_with_watermarker = imutils.resize(image_with_watermarker, height=500)
+
+            FileUtils.copy_file(image_absolute_path)
+
+            cv2.imwrite(image_absolute_path, resized_image_with_watermarker)
 
 
 

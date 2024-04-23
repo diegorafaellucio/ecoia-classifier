@@ -11,7 +11,7 @@ def classification_processor_job():
 
     counter = 0
 
-    while counter < 60:
+    while counter < 15:
 
         counter += 1
 
@@ -19,6 +19,6 @@ def classification_processor_job():
 
         print(response.text)
 
-        time.sleep(2)
+        time.sleep(4)
 
 

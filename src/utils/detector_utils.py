@@ -12,33 +12,34 @@ class DetectorUtils:
         max_condidence_score = 0
         max_intersection_score = 0
 
-        for detection in detections:
+        if detections is not None:
+            for detection in detections:
 
-            bottom_right = detection['bottomright']
-            top_left = detection['topleft']
+                bottom_right = detection['bottomright']
+                top_left = detection['topleft']
 
-            x_min = top_left['x']
-            x_max = bottom_right['x']
+                x_min = top_left['x']
+                x_max = bottom_right['x']
 
-            y_min = top_left['y']
-            y_max = bottom_right['y']
+                y_min = top_left['y']
+                y_max = bottom_right['y']
 
-            confidence = detection['confidence']
+                confidence = detection['confidence']
 
-            intersection_score = DetectorUtils.get_intersection_score(height, width, (x_min, y_min, x_max, y_max))
+                intersection_score = DetectorUtils.get_intersection_score(height, width, (x_min, y_min, x_max, y_max))
 
-            width = x_max - x_min
-            height = y_max - y_min
+                width = x_max - x_min
+                height = y_max - y_min
 
-            if not (width > 0) or not (height > 0):
-                pass
+                if not (width > 0) or not (height > 0):
+                    pass
 
 
-            if intersection_score > max_intersection_score and confidence > max_condidence_score:
-                max_condidence_score = confidence
+                if intersection_score > max_intersection_score and confidence > max_condidence_score:
+                    max_condidence_score = confidence
 
-                best_detection = detection
-                max_intersection_score = intersection_score
+                    best_detection = detection
+                    max_intersection_score = intersection_score
 
         return best_detection
 
