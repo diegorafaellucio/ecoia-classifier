@@ -1,28 +1,28 @@
 [submodule "data/models/skeleton"]
 	path = data/models/skeleton
-	url = git@eco:ecotracesolutions/ecoia-weights-skeleton.git
+	url = git@ecoia-weights-skeleton:ecotracesolutions/ecoia-weights-skeleton.git
 	branch = main
 [submodule "data/models/filter"]
 	path = data/models/filter
-	url = git@eco:ecotracesolutions/ecoia-weights-filter.git
+	url = git@ecoia-weights-filter:ecotracesolutions/ecoia-weights-filter.git
 	branch = main
 [submodule "data/models/meat"]
 	path = data/models/meat
-	url = git@eco:ecotracesolutions/ecoia-weights-meat.git
+	url = git@ecoia-weights-meat:ecotracesolutions/ecoia-weights-meat.git
 	branch = main
 [submodule "data/models/side"]
 	path = data/models/side
-	url = git@eco:ecotracesolutions/ecoia-weights-side.git
+	url = git@ecoia-weights-side:ecotracesolutions/ecoia-weights-side.git
 	branch = main
 [submodule "data/models/cuts"]
 	path = data/models/cuts
-	url = git@eco:ecotracesolutions/ecoia-weights-cuts.git
+	url = git@ecoia-weights-cuts:ecotracesolutions/ecoia-weights-cuts.git
 	branch = main
 [submodule "data/models/stamp"]
 	path = data/models/stamp
-	url = git@eco:ecotracesolutions/ecoia-weights-stamp.git
+	url = git@ecoia-weights-stamp:ecotracesolutions/ecoia-weights-stamp.git
 	branch = main
 [submodule "data/models/bruise"]
 	path = data/models/bruise
-	url = git@eco:ecotracesolutions/ecoia-weights-bruise.git
+	url = git@ecoia-weights-bruise:ecotracesolutions/ecoia-weights-bruise.git
 	branch = main
