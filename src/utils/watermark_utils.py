@@ -17,9 +17,14 @@ class WatermarkUtils:
         return result
 
     @staticmethod
-    def create_watermark_based_on_image_size(image):
-        logo_path = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.WATERMARK_LOGO_PATH.name)
+    def create_watermark_based_on_image_size(image, watermark_path=None):
+
+        if watermark_path is None:
+
+                logo_path = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.WATERMARK_LOGO_PATH.name)
+        else:
+            logo_path = watermark_path
 
         h_target, w_target, _ = image.shape
 
@@ -42,8 +47,8 @@ class WatermarkUtils:
         return mask_for_watermarker
 
     @staticmethod
-    def get_image_with_watermarker(image):
-        watermarker = WatermarkUtils.create_watermark_based_on_image_size(image)
+    def get_image_with_watermarker(image, watermark_path=None):
+        watermarker = WatermarkUtils.create_watermark_based_on_image_size(image, watermark_path)
         image_with_watermark = WatermarkUtils.insert_watermark_in_image(image, watermarker)
 
         return image_with_watermark
