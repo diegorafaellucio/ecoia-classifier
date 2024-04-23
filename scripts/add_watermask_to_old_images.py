@@ -1,13 +1,33 @@
 import os
 import cv2
+import tqdm
+
 from src.utils.watermark_utils import WatermarkUtils
 import imutils
+
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 
 images_path = '/home/ecotrace/fotos/2911'
 
 black_list_day_path = ['/home/ecotrace/fotos/2911/2024/04/22']
 
 years = sorted(os.listdir(images_path), reverse=True)
+
+
+def generate_image(image_path):
+    image = cv2.imread(image_path)
+
+    image_with_watermark = WatermarkUtils.get_image_with_watermarker(image,
+                                                                     watermark_path='../data/images/watermark_logo.png')
+
+    resized_image_with_watermark = imutils.resize(image_with_watermark, height=500)
+
+    cv2.imwrite(image_path, resized_image_with_watermark)
+
+    return True
+
+executor = ThreadPoolExecutor(max_workers=1)
 
 for year in years:
 
@@ -28,15 +48,18 @@ for year in years:
 
                 images = sorted(os.listdir(day_path), reverse=True)
 
-                for image in images:
+                futures = []
+
+                for image in tqdm.tqdm(images):
 
                     image_path = os.path.join(month_path + '/' + day, image)
 
-                    image = cv2.imread(image_path)
+                    futures.append(executor.submit(generate_image, image_path))
 
-                    image_with_watermark = WatermarkUtils.get_image_with_watermarker(image, watermark_path='../data/images/watermark_logo.png')
+                processed_counter = 0
 
-                    resized_image_with_watermark = imutils.resize(image_with_watermark, height=500)
+                for future in concurrent.futures.as_completed(futures):
+                    processed_counter += 1
+                    print(day_path + ': {}/{}'.format(processed_counter, len(images)))
 
-                    cv2.imshow('temp', resized_image_with_watermark)
-                    cv2.waitKey(0)
+
