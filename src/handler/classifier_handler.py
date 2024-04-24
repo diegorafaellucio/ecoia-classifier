@@ -122,7 +122,7 @@ class ClassifierHandler:
                 cut_lines_image, cuts_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
                 cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
-                                                                              sanitized_bruises)
+                                                                              sanitized_bruises, cuts_mask)
                 ClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
                 CutsUtils.save_cuts_data(image_id, cuts_coords)
 

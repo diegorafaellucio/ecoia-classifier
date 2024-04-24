@@ -123,7 +123,7 @@ class BruiseUtils:
         return bruise_detections
 
     @staticmethod
-    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises):
+    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CONFIDENCE_THRESHOLD.name)
@@ -152,25 +152,29 @@ class BruiseUtils:
                 midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
                                                                                             side_detection_result)
 
-                if midpoint_is_inside_detection:
+                cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
-                    if bruise_confidence > bruise_confidence_threshold:
+                if cut_id != 0:
 
-                        bruise_radius = 0
-                        bruise_width = bruise_x_max - bruise_x_min
-                        bruise_height = bruise_y_max - bruise_y_min
+                    if midpoint_is_inside_detection:
 
-                        if bruise_width > bruise_height:
-                            bruise_radius = int(bruise_width * bruise_plot_radius)
-                        else:
-                            bruise_radius = int(bruise_height * bruise_plot_radius)
+                        if bruise_confidence > bruise_confidence_threshold:
 
-                        hex_bruise_color = BruiseController.get_color_by_bruise_id(
-                            BruisesEnum[bruise_label.upper()].value)
-                        rgb_bruise_color = ImageColor.getrgb(hex_bruise_color)
+                            bruise_radius = 0
+                            bruise_width = bruise_x_max - bruise_x_min
+                            bruise_height = bruise_y_max - bruise_y_min
 
-                        cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
-                                                     , rgb_bruise_color, 5)
+                            if bruise_width > bruise_height:
+                                bruise_radius = int(bruise_width * bruise_plot_radius)
+                            else:
+                                bruise_radius = int(bruise_height * bruise_plot_radius)
+
+                            hex_bruise_color = BruiseController.get_color_by_bruise_id(
+                                BruisesEnum[bruise_label.upper()].value)
+                            rgb_bruise_color = ImageColor.getrgb(hex_bruise_color)
+
+                            cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
+                                                         , rgb_bruise_color, 5)
         return cut_lines_image
 
     @staticmethod
@@ -199,13 +203,19 @@ class BruiseUtils:
                 midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
                                                                                             side_detection_result)
 
-                if midpoint_is_inside_detection:
+                cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
-                    if bruise_confidence > bruise_confidence_threshold:
-                        cut_id = cuts_mask[mid_y_coord][mid_x_coord]
-                        bruise_id = BruisesEnum[bruise_label].value
+                if cut_id != 0:
 
-                        BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord])
+                    if midpoint_is_inside_detection:
+
+                        if bruise_confidence > bruise_confidence_threshold:
+
+
+
+                            bruise_id = BruisesEnum[bruise_label].value
+
+                            BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord])
 
     @staticmethod
     def get_bruise_integration_data(image_id):
