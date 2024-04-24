@@ -6,11 +6,13 @@ from src.enum.bruises_enum import BruisesEnum
 from PIL import ImageColor
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.controller.bruise_controller import BruiseController
+from src.controller.aux_bruise_controller import AuxBruiseController
+from src.controller.aux_cut_controller import AuxCutController
 from src.enum.configuration_enum import ConfigurationEnum
+
 
 class BruiseUtils:
     logger = logging.getLogger(__name__)
-
 
     @staticmethod
     def sanitize_bruises(bruises, stamps):
@@ -144,12 +146,11 @@ class BruiseUtils:
                 bruise_x_max = bruise['bottomright']['x']
                 bruise_y_max = bruise['bottomright']['y']
 
-                mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min)/2))
-                mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min)/2))
+                mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
+                mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
 
-                midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord], side_detection_result)
-
-
+                midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
+                                                                                            side_detection_result)
 
                 if midpoint_is_inside_detection:
 
@@ -164,11 +165,12 @@ class BruiseUtils:
                         else:
                             bruise_radius = int(bruise_height * bruise_plot_radius)
 
-                        hex_bruise_color = BruiseController.get_color_by_bruise_id(BruisesEnum[bruise_label.upper()].value)
+                        hex_bruise_color = BruiseController.get_color_by_bruise_id(
+                            BruisesEnum[bruise_label.upper()].value)
                         rgb_bruise_color = ImageColor.getrgb(hex_bruise_color)
 
                         cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
-                                                  , rgb_bruise_color, 5)
+                                                     , rgb_bruise_color, 5)
         return cut_lines_image
 
     @staticmethod
@@ -205,6 +207,27 @@ class BruiseUtils:
 
                         BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord])
 
+    @staticmethod
+    def get_bruise_integration_data(image_id):
 
+        output_data = []
 
+        bruises_in_image = BruiseController.get_bruises_by_image_id(image_id)
 
+        for bruise_in_image in bruises_in_image:
+            bruise_id = bruise_in_image[5]
+            region_id = bruise_in_image[1]
+
+            bruise_name = AuxBruiseController.get_name_by_id(bruise_id)
+            region_name = AuxCutController.get_name_by_id(region_id)
+
+            bruise_data = {
+                "id_lesao": bruise_id,
+                "id_regiao": region_id,
+                "label_lesao": bruise_name.upper(),
+                "label_regiao": region_name.upper()
+            }
+
+            output_data.append(bruise_data)
+
+            return output_data

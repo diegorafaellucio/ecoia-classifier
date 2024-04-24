@@ -1,11 +1,27 @@
 from django.db import connection
+from src.enum.image_state_enum import ImageStateEnum
 import re
+
+
 class ImageController:
 
     @staticmethod
     def get_images_to_classify(limit):
         with connection.cursor() as cursor:
-            sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  (0) and flag_img = 1 order by id desc limit {};'.format(limit)
+            sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id desc limit {};'.format(
+                ImageStateEnum.WAITING_PROCESSING.value, limit)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results
+
+    @staticmethod
+    def get_images_to_integrate(limit):
+        with connection.cursor() as cursor:
+            sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id desc limit {};'.format(
+                ImageStateEnum.WAITING_INTEGRATION.value,
+                limit)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
@@ -31,7 +47,8 @@ class ImageController:
     @staticmethod
     def update_filter_classification_data(filter_label, filter_confidence, image_id):
         with connection.cursor() as cursor:
-            query = "update image set filter_label = '{}', filter_confidence = '{}'  where id = '{}'".format(filter_label, filter_confidence, image_id)
+            query = "update image set filter_label = '{}', filter_confidence = '{}'  where id = '{}'".format(
+                filter_label, filter_confidence, image_id)
             cursor.execute(query)
             cursor.close()
             connection.close()
@@ -43,9 +60,6 @@ class ImageController:
             cursor.execute(query)
             cursor.close()
             connection.close()
-
-
-
 
     # @staticmethod
     # def get_new_image_data_py():

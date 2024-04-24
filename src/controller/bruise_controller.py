@@ -22,3 +22,13 @@ class BruiseController:
             cursor.close()
             connection.close()
             return results
+
+    @staticmethod
+    def get_bruises_by_image_id(image_id):
+        with connection.cursor() as cursor:
+            sql = "select * from bruise where image_id =  '{}';".format(image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results

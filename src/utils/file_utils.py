@@ -7,7 +7,7 @@ from src.enum.image_state_enum import ImageStateEnum
 class FileUtils:
     logger = logging.getLogger(__name__)
     @staticmethod
-    def have_data_to_classify(data):
+    def have_files_to_process(data):
         if data is None or len(data) == 0:
             return False
         else:

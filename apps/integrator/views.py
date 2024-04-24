@@ -3,17 +3,16 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from src.enum.classifier_api_return_messages_enum import ClassifierApiReturnMessagesEnum
-from src.handler.classifier_handler import ClassifierHandler
+from src.handler.integrator_handler import IntegratorHandler
 
 # Create your views here.
-class ClassifierView(GenericAPIView):
+class IntegratorView(GenericAPIView):
 
     # 2. Create
     def post(self, request, *args, **kwargs):
 
-        classifier_suite = kwargs['classifier_suite']
 
-        ClassifierHandler.process_images(classifier_suite)
+        IntegratorHandler.process_images()
 
         try:
 

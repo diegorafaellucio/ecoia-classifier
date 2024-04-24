@@ -32,7 +32,7 @@ class ClassifierHandler:
 
         data = ImageController.get_images_to_classify(max_workers)
 
-        have_data_to_classify = FileUtils.have_data_to_classify(data)
+        have_data_to_classify = FileUtils.have_files_to_process(data)
 
         futures = []
 
@@ -154,6 +154,6 @@ class ClassifierHandler:
             classification_id = ClassificationErrorEnum.ERRO_91.value
 
         ImageController.update_image_classification(classification_id, image_id)
-        ImageController.update_image_status(ImageStateEnum.PROCESSED.value, image_id)
+        ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
 
         return image_id
