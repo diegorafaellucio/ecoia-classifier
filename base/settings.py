@@ -13,45 +13,47 @@ import dotenv
 import os
 from pathlib import Path
 
-# LOGGING = {
-#         "version": 1,
-#         'disable_existing_loggers': False,
-#         "loggers": {
-#             "": {  # root logger
-#                 "level": "INFO",
-#                 "propagate": True,
-#                 "handlers": ["stream_handler", "file_handler"],
-#             },
-#         },
-#         "handlers": {
-#             "stream_handler": {
-#                 "class": "logging.StreamHandler",
-#                 "stream": "ext://sys.stdout",
-#                 "formatter": "default_formatter",
-#             },
-#             "file_handler": {
-#                 "class": "logging.FileHandler",
-#                 "filename": "./logs/main.log",
-#                 "mode": "a",
-#                 "formatter": "full_formatter",
-#             },
-#         },
-#         "formatters": {
-#             "default_formatter": {
-#                 "format": "%(asctime)s-%(levelname)s %(message)s",
-#                 "datefmt": "%Y-%m-%d %H:%M:%S"
-#             },
-#             "full_formatter": {
-#                 "format": "%(asctime)s Log Type: %(levelname)s  File: %(filename)s  Function:%(funcName)s \n Message:%(message)s",
-#                 "datefmt": "%Y-%m-%d %H:%M:%S"
-#             },
-#         },
-#     }
+
 
 dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+LOGGING = {
+        "version": 1,
+        'disable_existing_loggers': False,
+        "loggers": {
+            "": {  # root logger
+                "level": "INFO",
+                "propagate": True,
+                "handlers": ["stream_handler", "file_handler"],
+            },
+        },
+        "handlers": {
+            "stream_handler": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "default_formatter",
+            },
+            "file_handler": {
+                "class": "logging.FileHandler",
+                "filename": str(BASE_DIR) + "/logs/main.log",
+                "mode": "a",
+                "formatter": "full_formatter",
+            },
+        },
+        "formatters": {
+            "default_formatter": {
+                "format": "%(asctime)s-%(levelname)s %(name)s: %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S"
+            },
+            "full_formatter": {
+                "format": "%(asctime)s Log Type: %(levelname)s  File: %(filename)s  Function:%(funcName)s \n Message:%(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S"
+            },
+        },
+    }
 
 
 # Quick-start development settings - unsuitable for production
@@ -176,7 +178,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CRONJOBS = [
-    ('*/1 * * * *', 'base.cron.classification_processor_job')
+    ('*/1 * * * *', 'base.cron.classification_processor_job'),
+    ('*/1 * * * *', 'base.cron.integrator_processor_job')
     # ('* * * * *', 'apps.classifier.cron.classification_processor_job', '>> /home/diego/test.txt'),
     # ('* * * * *', 'cron.my_cron_job'),
     # ('* * * * *', 'apps.integrator.cron.integrator_processor_job')

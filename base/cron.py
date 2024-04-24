@@ -22,7 +22,7 @@ def classification_processor_job():
         time.sleep(4)
 
 
-def integator_processor_job():
+def integrator_processor_job():
     # your functionality goes here
     import requests
 

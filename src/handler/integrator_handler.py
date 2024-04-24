@@ -55,13 +55,13 @@ class IntegratorHandler:
                 image_id = x.result()
         else:
 
-            # ClassifierHandler.logger('Was not images to process...')
-            print('Was not images to process...')
+            IntegratorHandler.logger.info('Was not data to integrate!')
 
     @staticmethod
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
                       processed_at, flag_img, state, aux_grading_id):
 
+        IntegratorHandler.logger.info('Starting to integrate data. Image ID: {}.'.format(image_id))
         ImageController.update_image_status(ImageStateEnum.INTEGRATING.value, image_id)
 
         integration_endpoint = ConfigurationStorageController.get_config_data_value(
@@ -76,6 +76,7 @@ class IntegratorHandler:
             classification_name = AuxGradingController.get_name_by_id(aux_grading_id)
             classification_score = AuxGradingController.get_score_by_id(aux_grading_id)
 
+            IntegratorHandler.logger.info('Collecting bruise and cuts data to integrate. Image ID: {}.'.format(image_id))
             bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
 
             integration_dict = \
@@ -91,7 +92,7 @@ class IntegratorHandler:
                     "id_imagem": int(image_id),
                     "imagem": image_path,
                     "nr_banda": int(side_number),
-                    "nr_carretilha": int(roulette_number),
+                    "nr_carretilha": roulette_number if roulette_number is None else int(roulette_number),
                     "nr_sequencial": int(sequence_number)
                 }
 
@@ -99,10 +100,16 @@ class IntegratorHandler:
 
             integration_endpoint = integration_endpoint.format(sequence_number, side_number)
 
+            IntegratorHandler.logger.info(
+                'Sending data to client endpoint. Image ID: {}.'.format(image_id))
             return_code, elapsed_time  = IntegratorUtils.integrate_data(integration_endpoint, integration_string)
+
 
             IntegrationLogController.insert_into_integration_log(image_id, return_code, elapsed_time, integration_string)
 
+            IntegratorHandler.logger.info(
+                'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSED.name,
+                                                                       image_id))
             ImageController.update_image_status(ImageStateEnum.PROCESSED.value, image_id)
 
         return image_id

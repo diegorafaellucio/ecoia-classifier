@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework import permissions
 from src.enum.classifier_api_return_messages_enum import ClassifierApiReturnMessagesEnum
 from src.handler.classifier_handler import ClassifierHandler
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Create your views here.
 class ClassifierView(GenericAPIView):

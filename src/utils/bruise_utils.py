@@ -230,4 +230,4 @@ class BruiseUtils:
 
             output_data.append(bruise_data)
 
-            return output_data
+        return output_data

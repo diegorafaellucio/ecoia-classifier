@@ -21,7 +21,7 @@ class IntegratorUtils:
 
 
         except Exception as ex:
-            traceback.print_exc()
+            # traceback.print_exc()
             integration_stop = time.time()
             return_code = '503'
             elapsed_time = integration_stop - integration_start

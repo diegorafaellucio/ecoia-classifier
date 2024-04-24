@@ -20,7 +20,7 @@ class Detector():
 
         # print('detectando lesoes na imagem', image.shape)
 
-        pred = self.model.predict(image)
+        pred = self.model.predict(image, verbose=False)
 
         boxes = pred[0].boxes.xyxy.tolist()
         class_ids = pred[0].boxes.cls.tolist()
