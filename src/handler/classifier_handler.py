@@ -59,7 +59,7 @@ class ClassifierHandler:
                 image_id = x.result()
         else:
 
-            ClassifierHandler.logger.info('Was not data to integrate!')
+            ClassifierHandler.logger.info('Was not data to process!')
             # print('Was not images to process...')
 
     @staticmethod
