@@ -107,10 +107,10 @@ class IntegratorHandler:
 
             IntegrationLogController.insert_into_integration_log(image_id, return_code, elapsed_time, integration_string)
 
-            IntegratorHandler.logger.info(
-                'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSED.name,
-                                                                       image_id))
-            ImageController.update_image_status(ImageStateEnum.PROCESSED.value, image_id)
+        IntegratorHandler.logger.info(
+            'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSED.name,
+                                                                   image_id))
+        ImageController.update_image_status(ImageStateEnum.PROCESSED.value, image_id)
 
         return image_id
 
