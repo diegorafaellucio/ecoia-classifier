@@ -130,23 +130,24 @@ class ClassifierHandler:
                 BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
 
 
+            generate_watermark = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.MAX_WORKERS.name)
 
+            if generate_watermark == 1:
 
+                cut_lines_image = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
+                image = WatermarkUtils.get_image_with_watermarker(image)
 
-            cut_lines_image_with_watermark = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
+                cut_lines_image = imutils.resize(cut_lines_image, height=1920)
+                image = imutils.resize(image, height=1920)
 
-            resized_cut_lines_image_with_watermark = imutils.resize(cut_lines_image_with_watermark, height=1920)
+                cv2.imwrite(masked_image_absolute_path, cut_lines_image)
+                FileUtils.copy_file(image_absolute_path)
+                cv2.imwrite(image_absolute_path, image)
 
-            cv2.imwrite(masked_image_absolute_path, resized_cut_lines_image_with_watermark)
+            else:
 
-            image_with_watermarker = WatermarkUtils.get_image_with_watermarker(image)
-
-            resized_image_with_watermarker = imutils.resize(image_with_watermarker, height=1920)
-
-            FileUtils.copy_file(image_absolute_path)
-
-            cv2.imwrite(image_absolute_path, resized_image_with_watermarker)
-
+                cv2.imwrite(masked_image_absolute_path, cut_lines_image)
 
         else:
             classification_id = ClassificationErrorEnum.ERRO_91.value

@@ -80,21 +80,21 @@ class IntegratorHandler:
             bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
 
             integration_dict = \
-                {
+                [{
+                    "id_imagem": int(image_id),
+                    "imagem": image_path,
+                    "nr_sequencial": int(sequence_number),
+                    "nr_banda": int(side_number),
+                    "nr_carretilha": roulette_number if roulette_number is None else int(roulette_number),
+                    "dt_abate": str(slaughter_date),
+                    "data_hora_hora_processamento": str(processed_at),
+                    "data_hora_registro": str(created_at),
                     "dados": {
                         "id_classificacao": classification_score,
                         "label_classificacao": classification_name,
                         "lesoes": bruise_data
-                    },
-                    "data_hora_hora_processamento": str(processed_at),
-                    "data_hora_registro": str(created_at),
-                    "dt_abate": str(slaughter_date),
-                    "id_imagem": int(image_id),
-                    "imagem": image_path,
-                    "nr_banda": int(side_number),
-                    "nr_carretilha": roulette_number if roulette_number is None else int(roulette_number),
-                    "nr_sequencial": int(sequence_number)
-                }
+                    }
+                }]
 
             integration_string = json.dumps(integration_dict)
 

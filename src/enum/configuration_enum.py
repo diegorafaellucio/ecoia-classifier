@@ -47,3 +47,5 @@ class ConfigurationEnum(Enum):
 
     WATERMARK_LOGO_PATH = 'data/images/watermark_logo.png'
 
+    GENERATE_WATERMARK = 0
+

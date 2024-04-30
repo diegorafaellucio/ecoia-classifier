@@ -50,5 +50,7 @@ class ConfigurationUtils:
 
         ConfigurationEnum.WATERMARK_LOGO_PATH.name: 'data/images/watermark_logo.png',
 
+        ConfigurationEnum.GENERATE_WATERMARK.name: 'data/images/watermark_logo.png',
+
 
     }
