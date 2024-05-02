@@ -131,7 +131,7 @@ class ClassifierHandler:
 
 
             generate_watermark = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.MAX_WORKERS.name)
+            ConfigurationEnum.GENERATE_WATERMARK.name)
 
             if generate_watermark == 1:
 
