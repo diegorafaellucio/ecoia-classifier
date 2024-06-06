@@ -172,9 +172,10 @@ class BruiseUtils:
                             hex_bruise_color = BruiseController.get_color_by_bruise_id(
                                 BruisesEnum[bruise_label.upper()].value)
                             rgb_bruise_color = ImageColor.getrgb(hex_bruise_color)
+                            bgr_bruise_color = (rgb_bruise_color[2], rgb_bruise_color[1], rgb_bruise_color[0])
 
                             cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
-                                                         , rgb_bruise_color, 5)
+                                                         , bgr_bruise_color, 5)
         return cut_lines_image
 
     @staticmethod
