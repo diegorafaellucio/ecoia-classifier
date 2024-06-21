@@ -2,20 +2,18 @@ import json
 
 from django.db import connection
 from src.enum.configuration_enum import ConfigurationEnum
-from src.utils.configuration_utils import ConfigurationUtils
-import re
 class ConfigurationStorageController:
 
 
     @staticmethod
     def initialize_configs():
-
         with connection.cursor() as cursor:
-            for key, value in ConfigurationUtils.config_dict.items():
-                has_config_counter = ConfigurationStorageController.has_config(key)
+            for item_key, item in ConfigurationEnum.__members__.items():
+                item_value = item.value
+                has_config_counter = ConfigurationStorageController.has_config(item_key)
                 if has_config_counter == 0:
-                    value = json.dumps(value)
-                    default_query = "INSERT INTO configuration_storage (type, value) VALUES ('{}', '{}');".format(key, value)
+                    item_value = json.dumps(item_value)
+                    default_query = "INSERT INTO configuration_storage (type, value) VALUES ('{}', '{}');".format(item_key, item_value)
                     cursor.execute(default_query)
             cursor.close()
             connection.close()

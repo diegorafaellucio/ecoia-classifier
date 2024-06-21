@@ -130,6 +130,8 @@ class ClassifierHandler:
                 BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
 
 
+
+
             generate_watermark = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.GENERATE_WATERMARK.name)
 
