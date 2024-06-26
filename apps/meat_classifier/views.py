@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from src.enum.classifier_api_return_messages_enum import ClassifierApiReturnMessagesEnum
-from src.handler.classifier_handler import ClassifierHandler
+from src.handler.meat_classifier_handler import MeatClassifierHandler
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
@@ -15,7 +15,7 @@ class ClassifierView(GenericAPIView):
 
         classifier_suite = kwargs['classifier_suite']
 
-        ClassifierHandler.process_images(classifier_suite)
+        MeatClassifierHandler.process_images(classifier_suite)
 
         try:
 

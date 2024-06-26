@@ -4,7 +4,7 @@ def classification_processor_job():
     # your functionality goes here
     import requests
 
-    url = "http://127.0.0.1:8000/classifier"
+    url = "http://127.0.0.1:8000/meat-classifier"
 
     payload = {}
     headers = {}

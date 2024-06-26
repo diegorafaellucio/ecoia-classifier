@@ -1,9 +1,9 @@
 import logging
 from django.urls import path
-from src.classifier.detector_loader import DetectorLoader
+from src.ml.classifier.detector_loader import DetectorLoader
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
-from apps.classifier.views import ClassifierView
+from apps.meat_classifier.views import ClassifierView
 from src.ml.shape_predictor.shape_predictor import ShapePredictor
 
 logger = logging.getLogger(__name__)
@@ -12,34 +12,40 @@ ConfigurationStorageController.initialize_configs()
 
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)
+temp1 = ConfigurationEnum.SKELETON_CLASSIFICATION_APPROACH.name
 skeleton_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_APPROACH.name)
 skeleton_detector = DetectorLoader.load_detector(skeleton_classification_weights_path, skeleton_classification_approach)
 
+temp2 = ConfigurationEnum.FILTER_CLASSIFICATION_APPROACH.name
 filter_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.FILTER_CLASSIFICATION_WEIGHTS_PATH.name)
 filter_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.FILTER_CLASSIFICATION_APPROACH.name)
 filter_detector = DetectorLoader.load_detector(filter_classification_weights_path,filter_classification_approach)
 
+temp3 = ConfigurationEnum.SIDE_CLASSIFICATION_APPROACH.name
 side_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_CLASSIFICATION_WEIGHTS_PATH.name)
 side_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_CLASSIFICATION_APPROACH.name)
 side_detector = DetectorLoader.load_detector(side_classification_weights_path,side_classification_approach)
 
+temp4 = ConfigurationEnum.MEAT_CLASSIFICATION_APPROACH.name
 meat_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.MEAT_CLASSIFICATION_WEIGHTS_PATH.name)
 meat_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.MEAT_CLASSIFICATION_APPROACH.name)
 meat_detector = DetectorLoader.load_detector(meat_classification_weights_path, meat_classification_approach)
 
+temp5 = ConfigurationEnum.BRUISE_CLASSIFICATION_APPROACH.name
 bruise_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.BRUISE_CLASSIFICATION_WEIGHTS_PATH.name)
 bruise_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.BRUISE_CLASSIFICATION_APPROACH.name)
 bruise_detector = DetectorLoader.load_detector(bruise_classification_weights_path, bruise_classification_approach)
 
+temp6 = ConfigurationEnum.STAMP_CLASSIFICATION_APPROACH.name
 stamp_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.STAMP_CLASSIFICATION_WEIGHTS_PATH.name)
 stamp_classification_approach = ConfigurationStorageController.get_config_data_value(
@@ -58,5 +64,5 @@ classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_dete
                     side_a_shape_predictor, side_b_shape_predictor]
 
 urlpatterns = [
-    path("classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),
+    path("meat-classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),
 ]

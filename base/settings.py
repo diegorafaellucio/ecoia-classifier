@@ -84,7 +84,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.classifier',
+    'apps.meat_classifier',
     'apps.integrator',
     'django_crontab',
 ]
