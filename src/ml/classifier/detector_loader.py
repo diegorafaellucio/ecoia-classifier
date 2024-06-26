@@ -1,4 +1,4 @@
-from src.classifier.yolo_classifier.detector import Detector as YoloDetector
+from src.ml.classifier.yolo_classifier import Detector as YoloDetector
 from src.classifier.ultralytics_classifier.detector import Detector as UltralyticsDetector
 from src.enum.detection_approach_enum import DetectionApproachEnum
 from django.conf import settings

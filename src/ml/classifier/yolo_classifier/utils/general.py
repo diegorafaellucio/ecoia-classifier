@@ -38,9 +38,9 @@ import yaml
 
 
 
-from src.classifier.yolo_classifier.utils import TryExcept, emojis
-from src.classifier.yolo_classifier.utils.downloads import curl_download, gsutil_getsize
-from src.classifier.yolo_classifier.utils.metrics import box_iou, fitness
+from src.ml.classifier.yolo_classifier import TryExcept, emojis
+from src.ml.classifier.yolo_classifier import curl_download, gsutil_getsize
+from src.ml.classifier.yolo_classifier import box_iou, fitness
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLOv5 root directory
