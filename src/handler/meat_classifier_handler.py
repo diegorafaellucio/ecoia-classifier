@@ -95,7 +95,7 @@ class MeatClassifierHandler:
             cut_lines_image = image.copy()
 
             MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
-            classification_id = ClassifierUtils.get_classification_id(image_id, image, sequence_number, side_number,
+            classification_id = ClassifierUtils.get_classification_id(image_id, image,
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
 

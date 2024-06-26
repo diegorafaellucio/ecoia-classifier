@@ -29,7 +29,7 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def get_classification_id(image_id, image, sequence_number, side_number, skeleton_detector, filter_detector, meat_detector):
+    def get_classification_id(image_id, image, skeleton_detector, filter_detector, meat_detector):
 
         classification_id = None
 

@@ -12,40 +12,35 @@ ConfigurationStorageController.initialize_configs()
 
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)
-temp1 = ConfigurationEnum.SKELETON_CLASSIFICATION_APPROACH.name
+
 skeleton_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_APPROACH.name)
 skeleton_detector = DetectorLoader.load_detector(skeleton_classification_weights_path, skeleton_classification_approach)
 
-temp2 = ConfigurationEnum.FILTER_CLASSIFICATION_APPROACH.name
 filter_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.FILTER_CLASSIFICATION_WEIGHTS_PATH.name)
 filter_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.FILTER_CLASSIFICATION_APPROACH.name)
 filter_detector = DetectorLoader.load_detector(filter_classification_weights_path,filter_classification_approach)
 
-temp3 = ConfigurationEnum.SIDE_CLASSIFICATION_APPROACH.name
 side_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_CLASSIFICATION_WEIGHTS_PATH.name)
 side_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_CLASSIFICATION_APPROACH.name)
 side_detector = DetectorLoader.load_detector(side_classification_weights_path,side_classification_approach)
 
-temp4 = ConfigurationEnum.MEAT_CLASSIFICATION_APPROACH.name
 meat_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.MEAT_CLASSIFICATION_WEIGHTS_PATH.name)
 meat_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.MEAT_CLASSIFICATION_APPROACH.name)
 meat_detector = DetectorLoader.load_detector(meat_classification_weights_path, meat_classification_approach)
 
-temp5 = ConfigurationEnum.BRUISE_CLASSIFICATION_APPROACH.name
 bruise_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.BRUISE_CLASSIFICATION_WEIGHTS_PATH.name)
 bruise_classification_approach = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.BRUISE_CLASSIFICATION_APPROACH.name)
 bruise_detector = DetectorLoader.load_detector(bruise_classification_weights_path, bruise_classification_approach)
 
-temp6 = ConfigurationEnum.STAMP_CLASSIFICATION_APPROACH.name
 stamp_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.STAMP_CLASSIFICATION_WEIGHTS_PATH.name)
 stamp_classification_approach = ConfigurationStorageController.get_config_data_value(
