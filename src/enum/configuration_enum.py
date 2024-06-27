@@ -57,6 +57,8 @@ class ConfigurationEnum(Enum):
 
     GENERATE_WATERMARK = ('GENERATE_WATERMARK',0)
 
+    PIXEL_CENTIMETER_RATIO = ('PIXEL_CENTIMETER_RATIO', 0.14699525800946367 )
+
     def __init__(self, key, value):
         self._key = key
         self._value = value

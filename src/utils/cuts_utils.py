@@ -38,15 +38,17 @@ class CutsUtils:
     def get_cuts_mask_and_cut_lines_image(cuts_coords, image):
 
         cut_lines_image = image.copy()
-        mask_image = np.zeros(image.shape[:2], dtype=np.uint8)
+        cuts_mask = np.zeros(image.shape[:2], dtype=np.uint8)
 
         for cut_coord_key, cut_coord_data in cuts_coords.items():
             coords_polygon = cut_coord_data.reshape((-1, 1, 2))
             cv2.polylines(cut_lines_image, [coords_polygon], True, (255, 0, 255), 5)
             color = CutsEnum[cut_coord_key.upper()].value
-            cv2.fillPoly(mask_image, pts=[coords_polygon], color=(color, color, color))
+            cv2.fillPoly(cuts_mask, pts=[coords_polygon], color=(color, color, color))
 
-        return cut_lines_image, mask_image
+        _, binary_mask = cv2.threshold(cuts_mask, 0, 255, cv2.THRESH_BINARY)
+
+        return cut_lines_image, cuts_mask, binary_mask
 
     @staticmethod
     def save_cuts_data(image_id, cuts_coords):

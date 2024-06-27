@@ -10,6 +10,7 @@ from src.enum.conformation_enum import ConformationEnum
 from src.enum.configuration_enum import ConfigurationEnum
 from src.utils.file_utils import FileUtils
 from src.utils.classifier_utils import ClassifierUtils
+from src.utils.skeleton_size_utils import SkeletonSizeUtils
 from src.utils.bruise_utils import BruiseUtils
 from src.utils.cuts_utils import CutsUtils
 from src.utils.watermark_utils import WatermarkUtils
@@ -124,7 +125,7 @@ class MeatClassifierHandler:
                                                  side_b_shape_predictor)
 
                 MeatClassifierHandler.logger.info('Mapping bruises in cuts. Image ID: {}'.format(image_id))
-                cut_lines_image, cuts_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
+                cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
                 cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
                                                                               sanitized_bruises, cuts_mask)
@@ -150,7 +151,11 @@ class MeatClassifierHandler:
                     conformation_id = ConformationEnum[conformation_result['label']].value
                     CarcassInformationController.update_conformation(image_id, conformation_id)
 
+                width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
 
+                CarcassInformationController.update_width(image_id, width)
+                CarcassInformationController.update_height(image_id, height)
+                CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
 
 
             generate_watermark = ConfigurationStorageController.get_config_data_value(

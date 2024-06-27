@@ -44,3 +44,36 @@ class CarcassInformationController:
             cursor.close()
             connection.close()
             return results
+
+    @staticmethod
+    def update_width(image_id, width):
+        with connection.cursor() as cursor:
+            sql = "UPDATE carcass_information t SET t.width = '{}' WHERE t.image_id = '{}'".format(
+                width, image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results
+
+    @staticmethod
+    def update_height(image_id, height):
+        with connection.cursor() as cursor:
+            sql = "UPDATE carcass_information t SET t.height = '{}' WHERE t.image_id = '{}'".format(
+                height, image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results
+
+    @staticmethod
+    def update_size_descriptor(image_id, size_descriptor):
+        with connection.cursor() as cursor:
+            sql = "UPDATE carcass_information t SET t.size = '{}' WHERE t.image_id = '{}'".format(
+                size_descriptor, image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results
