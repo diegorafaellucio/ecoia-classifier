@@ -15,6 +15,7 @@ class ConfigurationStorageController:
                     item_value = json.dumps(item_value)
                     default_query = "INSERT INTO configuration_storage (type, value) VALUES ('{}', '{}');".format(item_key, item_value)
                     cursor.execute(default_query)
+                    results = cursor.fetchall()
             cursor.close()
             connection.close()
 
