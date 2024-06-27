@@ -8,7 +8,7 @@ from src.ml.shape_predictor.shape_predictor import ShapePredictor
 
 logger = logging.getLogger(__name__)
 
-ConfigurationStorageController.initialize_configs()
+ConfigurationStorageController. initialize_configs()
 
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)

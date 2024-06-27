@@ -16,7 +16,7 @@ class CarcassInformationController:
     @staticmethod
     def initialize_carcass_information(image_id):
         with connection.cursor() as cursor:
-            sql = "INSERT INTO carcass_information (image_id, height, width, aux_fat_color_id, aux_conformation_id, color_id, size, created_at, updated_at, aux_maturity_id, aux_ox_termite_id, aux_race_id) VALUES ({}, null, null, null, null, null, null, DEFAULT, DEFAULT, null, null, null)".format(
+            sql = "INSERT INTO carcass_information (image_id, height, width, aux_fat_color_id, aux_conformation_id, size, created_at, updated_at, aux_maturity_id, aux_ox_termite_id, aux_race_id) VALUES ({}, null, null, null, null, null, DEFAULT, DEFAULT, null, null, null)".format(
                 image_id)
             cursor.execute(sql)
             results = cursor.fetchall()
