@@ -28,8 +28,8 @@
 	branch = main
 [submodule "data/models/grease"]
 	path = data/models/grease
-	url = git@eco:ecoia-weights-grease-color/ecoia-weights-grease.git
+	url = git@ecoia-weights-grease-color:ecotracesolutions/ecoia-weights-grease.git
 	branch = main
 [submodule "data/models/conformation"]
 	path = data/models/conformation
-	url = git@eco:ecoia-weights-conformation/ecoia-weights-conformation.git
+	url = git@ecoia-weights-conformation:ecotracesolutions/ecoia-weights-conformation.git
