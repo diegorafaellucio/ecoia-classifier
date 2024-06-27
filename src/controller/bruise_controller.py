@@ -18,10 +18,8 @@ class BruiseController:
             sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at) values ({}, {}, {}, '{}', now(), now())".format(
                     bruise_id, image_id, cut_id, bruise_coordinates)
             cursor.execute(sql)
-            results = cursor.fetchall()
             cursor.close()
             connection.close()
-            return results
 
     @staticmethod
     def get_bruises_by_image_id(image_id):

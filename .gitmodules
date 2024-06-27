@@ -26,3 +26,10 @@
 	path = data/models/bruise
 	url = git@ecoia-weights-bruise:ecotracesolutions/ecoia-weights-bruise.git
 	branch = main
+[submodule "data/models/grease"]
+	path = data/models/grease
+	url = git@eco:ecotracesolutions/ecoia-weights-grease.git
+	branch = main
+[submodule "data/models/conformation"]
+	path = data/models/conformation
+	url = git@eco:ecotracesolutions/ecoia-weights-conformation.git

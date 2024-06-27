@@ -47,6 +47,13 @@ stamp_classification_approach = ConfigurationStorageController.get_config_data_v
     ConfigurationEnum.STAMP_CLASSIFICATION_APPROACH.name)
 stamp_detector = DetectorLoader.load_detector(stamp_classification_weights_path, stamp_classification_approach)
 
+
+conformation_classification_weights_path = ConfigurationStorageController.get_config_data_value(
+    ConfigurationEnum.CONFORMATION_CLASSIFICATION_WEIGHTS_PATH.name)
+conformation_classification_approach = ConfigurationStorageController.get_config_data_value(
+    ConfigurationEnum.CONFORMATION_CLASSIFICATION_APPROACH.name)
+conformation_detector = DetectorLoader.load_detector(conformation_classification_weights_path, conformation_classification_approach)
+
 side_a_shape_predictor_weights_file_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SIDE_A_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH.name)
 side_a_shape_predictor = ShapePredictor(side_a_shape_predictor_weights_file_path)
@@ -55,8 +62,11 @@ side_b_shape_predictor_weights_file_path = ConfigurationStorageController.get_co
     ConfigurationEnum.SIDE_B_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH.name)
 side_b_shape_predictor = ShapePredictor(side_b_shape_predictor_weights_file_path)
 
+grease_color_detector = DetectorLoader.load_detector(ConfigurationStorageController.get_config_data_value(ConfigurationEnum.GREASE_CLASSIFICATION_WEIGHTS_PATH.name), ConfigurationEnum.GREASE_CLASSIFICATION_APPROACH.value)
+
+
 classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
-                    side_a_shape_predictor, side_b_shape_predictor]
+                    side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector]
 
 urlpatterns = [
     path("meat-classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),

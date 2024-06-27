@@ -24,8 +24,14 @@ class ConfigurationEnum(Enum):
     STAMP_CLASSIFICATION_WEIGHTS_PATH = ('STAMP_CLASSIFICATION_WEIGHTS_PATH','data/models/stamp/weight.pt')
     STAMP_CLASSIFICATION_APPROACH = ('STAMP_CLASSIFICATION_APPROACH',DetectionApproachEnum.ULTRALYTICS.value)
 
+    CONFORMATION_CLASSIFICATION_WEIGHTS_PATH = ('STAMP_CLASSIFICATION_WEIGHTS_PATH', 'data/models/conformation/weight.pt')
+    CONFORMATION_CLASSIFICATION_APPROACH = ('STAMP_CLASSIFICATION_APPROACH', DetectionApproachEnum.ULTRALYTICS.value)
+
     SIDE_A_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH = ('SIDE_A_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH','data/models/cuts/model_A.dat')
     SIDE_B_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH = ('SIDE_B_SHAPE_PREDICTOR_WEIGHTS_FILE_PATH','data/models/cuts/model_B.dat')
+
+    GREASE_CLASSIFICATION_WEIGHTS_PATH = ('GREASE_CLASSIFICATION_WEIGHTS_PATH','data/models/grease/weight.sav')
+    GREASE_CLASSIFICATION_APPROACH = ('GREASE_CLASSIFICATION_APPROACH',DetectionApproachEnum.PICKLE.value)
 
     FILTER_BLACK_LIST = ('FILTER_BLACK_LIST',['','VIRADA_TOTAL', 'VIRADA_PARCIAL', 'ANGULADA_COSTELA_BANDA_A', 'ANGULADA_COSTELA_BANDA_B'])
 
@@ -62,4 +68,11 @@ class ConfigurationEnum(Enum):
     @property
     def value(self):
         return self._value
+
+    @classmethod
+    def get_value(cls, key):
+        for item in cls:
+            if item.key == key:
+                return item.value
+        raise KeyError(f'Key {key} not found in ConfigurationEnum.')
 

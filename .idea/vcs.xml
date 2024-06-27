@@ -3,8 +3,10 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/bruise" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/models/conformation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/cuts" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/filter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/models/grease" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/meat" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/side" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/skeleton" vcs="Git" />

@@ -4,13 +4,16 @@ import concurrent.futures
 import imutils
 
 from src.controller.image_controller import ImageController
+from src.controller.carcass_information_controller import CarcassInformationController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
+from src.enum.conformation_enum import ConformationEnum
 from src.enum.configuration_enum import ConfigurationEnum
 from src.utils.file_utils import FileUtils
 from src.utils.classifier_utils import ClassifierUtils
 from src.utils.bruise_utils import BruiseUtils
 from src.utils.cuts_utils import CutsUtils
 from src.utils.watermark_utils import WatermarkUtils
+from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
 from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
@@ -66,6 +69,7 @@ class MeatClassifierHandler:
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
                       processing_timestamp, flag_img, state, aux_grading_id, classifier_suite):
 
+
         MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
         classification_id = None
         system_version = ConfigurationStorageController.get_config_data_value(
@@ -74,7 +78,7 @@ class MeatClassifierHandler:
         MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
         ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor = classifier_suite
+        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector = classifier_suite
 
         images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -98,6 +102,7 @@ class MeatClassifierHandler:
             classification_id = ClassifierUtils.get_classification_id(image_id, image,
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
+
 
 
 
@@ -128,6 +133,22 @@ class MeatClassifierHandler:
 
                 MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
                 BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
+
+                carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
+                    image_id)
+
+                if not carcass_information_already_exists:
+                    CarcassInformationController.initialize_carcass_information(image_id)
+
+                grease_color_id = GreaseColorUtils.classify(grease_color_detector, image)
+
+                CarcassInformationController.update_grease_color(image_id, grease_color_id)
+
+                conformation_result = ClassifierUtils.classify(conformation_detector, image)
+
+                if conformation_result is not None:
+                    conformation_id = ConformationEnum[conformation_result['label']].value
+                    CarcassInformationController.update_conformation(image_id, conformation_id)
 
 
 
