@@ -3,11 +3,19 @@ from src.enum.grease_color_enum import GreaseColorEnum
 import numpy as np
 class GreaseColorUtils:
 
+    @staticmethod
+    def remove_background(image, binary_mask):
+        image_without_background = cv2.bitwise_and(image, image, mask=binary_mask)
+        return image_without_background
+
 
 
     @staticmethod
-    def classify(detector, image):
-        image_features = GreaseColorUtils.get_histogram(image)
+    def classify(detector, image, binary_mask):
+
+        image_without_background = GreaseColorUtils.remove_background(image, binary_mask)
+
+        image_features = GreaseColorUtils.get_histogram(image_without_background)
 
         detection_results = detector.detect(image_features)
         grease_color_model_id = str(detection_results[0])

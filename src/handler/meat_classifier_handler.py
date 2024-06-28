@@ -141,7 +141,7 @@ class MeatClassifierHandler:
                 if not carcass_information_already_exists:
                     CarcassInformationController.initialize_carcass_information(image_id)
 
-                grease_color_id = GreaseColorUtils.classify(grease_color_detector, image)
+                grease_color_id = GreaseColorUtils.classify(grease_color_detector, image, binary_mask)
 
                 CarcassInformationController.update_grease_color(image_id, grease_color_id)
 
