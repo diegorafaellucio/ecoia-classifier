@@ -39,10 +39,12 @@ class ImageController:
     @staticmethod
     def update_side_classification_data(classification, image_id):
         with connection.cursor() as cursor:
-            query = "update image set aux_grading_id = '{}'  where id = '{}'".format(classification, image_id)
+            query = "update image set aux_side_id = '{}'  where id = '{}'".format(classification, image_id)
             cursor.execute(query)
             cursor.close()
             connection.close()
+
+    #         TODO
 
     @staticmethod
     def update_filter_classification_data(filter_label, filter_confidence, image_id):
