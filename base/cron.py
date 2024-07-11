@@ -33,7 +33,7 @@ def integrator_processor_job():
 
     counter = 0
 
-    while counter < 15:
+    while counter < 1:
 
         counter += 1
 
@@ -41,6 +41,6 @@ def integrator_processor_job():
 
         print(response.text)
 
-        time.sleep(4)
+        # time.sleep(4)
 
 
