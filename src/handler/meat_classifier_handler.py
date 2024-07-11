@@ -30,7 +30,7 @@ class MeatClassifierHandler:
     def process_images(classifier_suite):
 
         max_workers = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.MAX_WORKERS.name)
+            ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
         execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
 
@@ -141,21 +141,36 @@ class MeatClassifierHandler:
                 if not carcass_information_already_exists:
                     CarcassInformationController.initialize_carcass_information(image_id)
 
-                grease_color_id = GreaseColorUtils.classify(grease_color_detector, image, binary_mask)
+                grease_color_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_GREASE_PREDICTION.name)
 
-                CarcassInformationController.update_grease_color(image_id, grease_color_id)
+                if grease_color_classification_is_enabled:
 
-                conformation_result = ClassifierUtils.classify(conformation_detector, image)
+                    grease_color_id = GreaseColorUtils.classify(grease_color_detector, image, binary_mask)
 
-                if conformation_result is not None:
-                    conformation_id = ConformationEnum[conformation_result['label']].value
-                    CarcassInformationController.update_conformation(image_id, conformation_id)
+                    CarcassInformationController.update_grease_color(image_id, grease_color_id)
+
+                conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
+
+
+                if conformation_classification_is_enabled:
+                    conformation_result = ClassifierUtils.classify(conformation_detector, image)
+
+                    if conformation_result is not None:
+                        conformation_id = ConformationEnum[conformation_result['label']].value
+                        CarcassInformationController.update_conformation(image_id, conformation_id)
+
+                size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
 
                 width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
 
-                CarcassInformationController.update_width(image_id, width)
-                CarcassInformationController.update_height(image_id, height)
-                CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
+                if size_prediction_is_enabled:
+
+                    CarcassInformationController.update_width(image_id, width)
+                    CarcassInformationController.update_height(image_id, height)
+                    CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
 
 
             generate_watermark = ConfigurationStorageController.get_config_data_value(

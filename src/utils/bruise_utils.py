@@ -72,7 +72,7 @@ class BruiseUtils:
 
                     intersection_score = BruiseUtils.get_intersection_score(gt_coords, detection_coords)
 
-                    if intersection_score > 0.80:
+                    if intersection_score > 0.60:
                         if first_detection_condidence > second_detection_condidence:
                             if second_counter not in black_list:
                                 black_list.append(second_counter)

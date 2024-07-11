@@ -22,7 +22,7 @@ class IntegratorHandler:
     def process_images():
 
         max_workers = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.MAX_WORKERS.name)
+            ConfigurationEnum.INTEGRATOR_MAX_WORKERS.name)
 
         execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
 
