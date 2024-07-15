@@ -12,7 +12,7 @@ class IntegratorUtils:
         integration_start = time.time()
         try:
 
-            return_data = requests.post(integration_endpoint, data=integration_string, timeout=5)
+            return_data = requests.post(integration_endpoint, data=integration_string, timeout=7)
             integration_stop = time.time()
             return_code = return_data.status_code
 
