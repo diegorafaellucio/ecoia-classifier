@@ -28,10 +28,10 @@ class DetectorUtils:
 
                 intersection_score = DetectorUtils.get_intersection_score(height, width, (x_min, y_min, x_max, y_max))
 
-                width = x_max - x_min
-                height = y_max - y_min
+                detection_width = x_max - x_min
+                detection_height = y_max - y_min
 
-                if not (width > 0) or not (height > 0):
+                if not (detection_width > 0) or not (detection_height > 0):
                     pass
 
 
