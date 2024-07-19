@@ -104,13 +104,16 @@ class MeatClassifierHandler:
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
 
+            side_detection_result = ClassifierUtils.classify(side_detector, image)
 
+            if side_detection_result is None:
+                classification_id = ClassificationErrorEnum.ERRO_96.value
 
-
-            if system_version == SystemVersionEnum.PROFESSIONAL.value and classification_id not in (
+            if classification_id not in (
                     ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_95.value,
                     ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value):
-                side_detection_result = ClassifierUtils.classify(side_detector, image)
+
+
 
                 MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
                 bruise_detection_results = bruise_detector.detect(image)
