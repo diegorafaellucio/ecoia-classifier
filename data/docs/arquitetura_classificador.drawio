@@ -1,0 +1,710 @@
+<mxfile host="app.diagrams.net" modified="2024-07-16T13:28:59.537Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="KarxfnRfql4M9wdSgzUM" version="24.6.5" type="google" pages="9">
+  <diagram name="ecoia_classifier" id="3hz6ZmU6dFuBlbUAx8r8">
+    <mxGraphModel grid="0" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-4" value="" style="rounded=0;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="190" y="110" width="430" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-8" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="425" y="140" width="180" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-18" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="140" width="180" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-19" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="410" width="390" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-20" value="Classificador" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="1">
+          <mxGeometry x="375" y="110" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-29" value="base" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="270" y="142" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-30" value="apps" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="485" y="142" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-31" value="src" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="1">
+          <mxGeometry x="375" y="410" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-32" value="ml" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="447" width="113" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-35" value="enum" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="348.5" y="447" width="113" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-36" value="handler" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="478" y="447" width="113" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-38" value="controller" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="507.5" width="113" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-50" value="Para cada&amp;nbsp; módulo eu tenho que ter um&amp;nbsp; cron" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="176" y="15" width="259" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-51" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="651" y="130" width="180" height="263" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-47" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-51">
+          <mxGeometry y="3" width="180" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-43" value="Deteção de Carcaças" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-51">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-44" value="Pré Filtro" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-51">
+          <mxGeometry x="27" y="107" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-45" value="Classificação de Gordura" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-51">
+          <mxGeometry x="27" y="183" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-49" value="meat_classifier" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-51">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-52" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="867" y="129" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-53" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-54" value="Detecção de Banda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-55" value="Deteção de Lesão" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry x="27" y="107" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-56" value="Detecção de Carimbos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry x="27" y="183" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-57" value="bruise_detection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-59" value="Detecção de Landmarks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-52">
+          <mxGeometry x="27" y="259" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-58" value="Modelos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="2" y="99" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zgrA_5psnCCQZXNT0TAl-1" value="Legenda" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="32" y="59" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-60" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1086" y="130" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-61" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-60">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-62" value="Detecção de Cupim" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-60">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-65" value="hump_detection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-60">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-67" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1297" y="129" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-68" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-67">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-69" value="Conformation Detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-67">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-70" value="&lt;div&gt;conformation_evaluation&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-67">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-82" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1504" y="125" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-83" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-82">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-84" value="Breed Stamp Detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-82">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-85" value="breed_detection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-82">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-86" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="1721" y="127" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-87" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-86">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-88" value="Teeth Stamp Detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-86">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-89" value="teeth_detection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-86">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-90" value="&lt;div&gt;meat_classifier&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="461.5" y="178" width="98" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-92" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="867" y="510" width="180" height="391" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-93" value="" style="rounded=1;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-92">
+          <mxGeometry y="3" width="180" height="342" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-94" value="Conformation Detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-92">
+          <mxGeometry x="27" y="32" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-95" value="grease_color_detection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;container=0;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-92">
+          <mxGeometry x="54" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-101" value="" style="group;fontSize=10;" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="208" y="899" width="296.91" height="159.73" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-99" value="&lt;div&gt;&lt;pre style=&quot;font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace;&quot;&gt;&lt;font size=&quot;1&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 11px;&quot;&gt;meat_classifier_job&lt;/span&gt;&lt;/font&gt;&lt;/pre&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-101">
+          <mxGeometry y="24.429294117647057" width="270.60151898734176" height="135.30070588235293" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-100" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.clock;" vertex="1" parent="MmXZuu2XQTDe7oJaU5T4-101">
+          <mxGeometry x="240.53468354430382" width="56.3753164556962" height="56.37529411764705" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MmXZuu2XQTDe7oJaU5T4-105" target="MmXZuu2XQTDe7oJaU5T4-108">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-105" value="&lt;div&gt;&lt;b&gt;MeatClassifierView&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;url_request&amp;lt;post&amp;gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="214" y="1197" width="258" height="129" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="MmXZuu2XQTDe7oJaU5T4-99" target="MmXZuu2XQTDe7oJaU5T4-105">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bSyHYzorNVcHnRpJ8cbi-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MmXZuu2XQTDe7oJaU5T4-108" target="ca1MHTSzd5RzMZ5nzYW5-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="1261.375" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;MeatClassifierHandler&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;process_images&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="MmXZuu2XQTDe7oJaU5T4-108">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="756" y="1199.13" width="249.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-114" value="bruise_detector" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="465" y="207" width="101" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-115" value="hump_detector" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="466.5" y="233" width="98" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-116" value="conformation_classifier" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="442" y="265" width="141" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-117" value="breed_classifier" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="467.5" y="294" width="102" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-118" value="teeth_classifier" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="468.5" y="324" width="98" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="MmXZuu2XQTDe7oJaU5T4-119" value="grease_color_classifier" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="448" y="347" width="141" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="bSyHYzorNVcHnRpJ8cbi-2" value="&lt;div align=&quot;justify&quot;&gt;Esse método é o responsável &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;por consultar o banco de dados&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;e verificar se há imagens que &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;necessitam de processamento.&lt;br&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp;Para um registro ser processado&lt;/div&gt;&lt;div&gt;o state tem que ser 0.&lt;br&gt;&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="719" y="1432" width="286.5" height="191" as="geometry" />
+        </mxCell>
+        <mxCell id="bSyHYzorNVcHnRpJ8cbi-3" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.565;exitY=0.12;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="bSyHYzorNVcHnRpJ8cbi-2" target="MmXZuu2XQTDe7oJaU5T4-108">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1028" y="1147" as="sourcePoint" />
+            <mxPoint x="1078" y="1097" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div align=&quot;center&quot;&gt;&lt;b&gt;MeatClassifierHandler&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;center&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;center&quot;&gt;process_image&lt;/div&gt;" teste="teste" link="data:page/id,3ODfkzNZiVg8xECvY7Lb" id="ca1MHTSzd5RzMZ5nzYW5-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+            <mxGeometry x="1155" y="1199.13" width="249.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="KyfA7RS_YZqrHBffgvev" name="MeatClassifierHandler:process_images">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yAl9YyUPsZTqifAB3imJ-1" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
+          <mxGeometry y="40" width="1170" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="1KIXzqsKriB5JoOum1dy-1" value="&lt;div align=&quot;left&quot;&gt;&lt;b&gt;MeatClassifierHandler&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;process_images(classifier_suite)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="30" y="8" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="yAl9YyUPsZTqifAB3imJ-1" source="HzZ_MdN9k_sYnIg-4BV6-6" target="HzZ_MdN9k_sYnIg-4BV6-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-2" value="não" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="HzZ_MdN9k_sYnIg-4BV6-1">
+          <mxGeometry x="0.0088" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="yAl9YyUPsZTqifAB3imJ-1" source="HzZ_MdN9k_sYnIg-4BV6-6" target="HzZ_MdN9k_sYnIg-4BV6-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-4" value="sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="HzZ_MdN9k_sYnIg-4BV6-3">
+          <mxGeometry x="-0.0476" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-6" value="&lt;div&gt;data&amp;nbsp; existe informação para classificar ?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="387.25" y="120" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="yAl9YyUPsZTqifAB3imJ-1" source="HzZ_MdN9k_sYnIg-4BV6-8" target="HzZ_MdN9k_sYnIg-4BV6-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-8" value="data" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="220" y="130" width="135.75" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-9" value="&lt;div&gt;Loga&amp;nbsp; mensagem de que não há dados para processar&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="451.25" y="313" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pKRMk2Jle4-NR58qwGT3-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="yAl9YyUPsZTqifAB3imJ-1" source="HzZ_MdN9k_sYnIg-4BV6-10" target="pKRMk2Jle4-NR58qwGT3-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HzZ_MdN9k_sYnIg-4BV6-10" value="&lt;div&gt;Extrai informações importantes de data e inicializa thread com o método process_image&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="790" y="120" width="154.25" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pKRMk2Jle4-NR58qwGT3-5" value="&lt;div&gt;Para cada processo finalizado, salva resultado do acabamento de gordura como image_id&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="790" y="270" width="154.25" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_uDc8u5oS-wyEt_INqyb-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="yAl9YyUPsZTqifAB3imJ-1" source="_uDc8u5oS-wyEt_INqyb-1" target="HzZ_MdN9k_sYnIg-4BV6-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_uDc8u5oS-wyEt_INqyb-1" value="&lt;div style=&quot;text-align: justify;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Busca max_workers das configurações, incializa ThreadPool&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="20" y="130" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bziV5wqk4vL8baLyRlcd-1" value="&lt;div align=&quot;justify&quot;&gt;É o método responsável por realizar &lt;br&gt;a classificação da imagem. &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;Essa etapa corresponde a &lt;br&gt;classificacao da carcaça, pré filtro e &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;classificação de gordura.&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+          <mxGeometry x="20" y="290" width="280" height="135" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;b&gt;ImageController&lt;/b&gt;" link="data:page/id,fYRVy3EhGaxCeEODg9SI" id="jGOAjXuJo7Y99eGNAZKq-1">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="yAl9YyUPsZTqifAB3imJ-1">
+            <mxGeometry x="944.25" y="60" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3ODfkzNZiVg8xECvY7Lb" name="MeatClassifierHandler:process_image">
+    <mxGraphModel dx="1250" dy="142" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-1" value="" style="swimlane;startSize=0;" parent="1" vertex="1">
+          <mxGeometry x="920" y="1130" width="2752" height="896.5" as="geometry">
+            <mxRectangle x="1213" y="1239.5" width="50" height="44" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-2" value="&lt;div align=&quot;left&quot;&gt;&lt;b&gt;MeatClassifierHandler&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="32" y="33" width="651" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-3" value="&lt;div align=&quot;justify&quot;&gt;É o método responsável por realizar &lt;br&gt;a classificação da imagem. &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;Essa etapa corresponde a &lt;br&gt;classificacao da carcaça, pré filtro e &lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;classificação de gordura.&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;justify&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="1014" y="33" width="280" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="jwZgUoI2XKWKUdoW0SVB-1" source="jwZgUoI2XKWKUdoW0SVB-9" target="jwZgUoI2XKWKUdoW0SVB-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-5" value="não" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="jwZgUoI2XKWKUdoW0SVB-4" connectable="0" vertex="1">
+          <mxGeometry x="0.0088" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="jwZgUoI2XKWKUdoW0SVB-1" source="jwZgUoI2XKWKUdoW0SVB-9" target="jwZgUoI2XKWKUdoW0SVB-13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-7" value="sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="jwZgUoI2XKWKUdoW0SVB-6" connectable="0" vertex="1">
+          <mxGeometry x="-0.0476" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="jwZgUoI2XKWKUdoW0SVB-1" source="jwZgUoI2XKWKUdoW0SVB-9" target="jwZgUoI2XKWKUdoW0SVB-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-9" value="&lt;div&gt;image_path existe no sistema&lt;/div&gt;&lt;div&gt;de arquivos?&lt;br&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="318" y="288.5" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="jwZgUoI2XKWKUdoW0SVB-1" source="jwZgUoI2XKWKUdoW0SVB-11" target="jwZgUoI2XKWKUdoW0SVB-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-11" value="image_path" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="75" y="298.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-12" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 91&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="382" y="481.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-13" value="&lt;div&gt;Inicializa o objeto&lt;/div&gt;&lt;div&gt;imagem&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="706.5" y="298.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-14" value="Verifica no banco de dados a versão do sistema. Podendo ser Standard ou Professional" style="rounded=1;whiteSpace=wrap;html=1;arcSize=0;" parent="jwZgUoI2XKWKUdoW0SVB-1" vertex="1">
+          <mxGeometry x="680" y="438.5" width="173" height="86.5" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-14" target="JjHY08yIrcrNO6UWXi4U-11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2423" y="1658.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-11" target="JjHY08yIrcrNO6UWXi4U-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-10" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JjHY08yIrcrNO6UWXi4U-9" connectable="0" vertex="1">
+          <mxGeometry x="-0.3191" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-11" value="Verifica se o resulatdo é None" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2470" y="1618.37" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-12" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 92&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="2534" y="1800" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-11" target="JjHY08yIrcrNO6UWXi4U-16" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3039.929" y="1659.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(skeleton_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="JjHY08yIrcrNO6UWXi4U-14">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="2000" y="1596" width="249.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-16" target="JjHY08yIrcrNO6UWXi4U-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(filter_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="JjHY08yIrcrNO6UWXi4U-16">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="2860" y="1596" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-17" target="JjHY08yIrcrNO6UWXi4U-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-17" target="JjHY08yIrcrNO6UWXi4U-23" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-17" value="Verifica se o resulatdo é None" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="3200" y="1618.37" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-18" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 95&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="3264" y="1780" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-17" target="JjHY08yIrcrNO6UWXi4U-18" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2604" y="1708.5" as="sourcePoint" />
+            <mxPoint x="2604" y="1810.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-20" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JjHY08yIrcrNO6UWXi4U-19" connectable="0" vertex="1">
+          <mxGeometry x="-0.3191" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ImageController&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;update_filter_classification_data&lt;/div&gt;&lt;div&gt;(label, confidence)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="JjHY08yIrcrNO6UWXi4U-21">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="3640" y="1420" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-23" target="JjHY08yIrcrNO6UWXi4U-25" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;is_in_black_list&lt;/div&gt;&lt;div&gt;(filter_detection_result, filter_black_list)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="JjHY08yIrcrNO6UWXi4U-23">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="3640" y="1767.63" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-25" target="JjHY08yIrcrNO6UWXi4U-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-29" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JjHY08yIrcrNO6UWXi4U-28" connectable="0" vertex="1">
+          <mxGeometry x="-0.0496" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-25" target="JjHY08yIrcrNO6UWXi4U-30" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-25" value="Está na black list" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="4140" y="1790" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-27" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 97&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="4204" y="1966.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-30" target="JjHY08yIrcrNO6UWXi4U-32" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(meat_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="JjHY08yIrcrNO6UWXi4U-30">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="4600" y="1768" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-15" value="" style="swimlane;startSize=0;" parent="1" vertex="1">
+          <mxGeometry x="1950" y="1418.5" width="1607" height="608" as="geometry">
+            <mxRectangle x="1018" y="288.5" width="50" height="44" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jwZgUoI2XKWKUdoW0SVB-16" value="&lt;div align=&quot;left&quot;&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;get_classification_id(iimage_id, image, skeleton_detector, filter_detector,meat_detector)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="jwZgUoI2XKWKUdoW0SVB-15" vertex="1">
+          <mxGeometry x="18" y="25" width="485" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="JjHY08yIrcrNO6UWXi4U-32" target="JjHY08yIrcrNO6UWXi4U-34" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-36" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JjHY08yIrcrNO6UWXi4U-35" connectable="0" vertex="1">
+          <mxGeometry x="-0.1556" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="JjHY08yIrcrNO6UWXi4U-32" target="JjHY08yIrcrNO6UWXi4U-38" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-32" value="Verifica se o resulatdo é None" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="5020" y="1790" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-34" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 96&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="5084" y="1960" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JjHY08yIrcrNO6UWXi4U-38" value="Atribui o Id da classificação" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="5470" y="1800.38" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="EyWzopnqrZNX2xV_Lo9M" name="ClassifierUtils:classify">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="W0uxq6z9oxh3wdNfcvnj-1" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="370" width="2752" height="896.5" as="geometry">
+            <mxRectangle x="1213" y="1239.5" width="50" height="44" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="W0uxq6z9oxh3wdNfcvnj-2" value="&lt;div align=&quot;left&quot;&gt;ClassifyUtils&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;classify(detector, image)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="W0uxq6z9oxh3wdNfcvnj-1">
+          <mxGeometry x="32" y="31" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="W0uxq6z9oxh3wdNfcvnj-3" value="&lt;div align=&quot;justify&quot;&gt;Função que classifica as imagens de acordo com modelo especificado.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="W0uxq6z9oxh3wdNfcvnj-1">
+          <mxGeometry x="1014" y="33" width="280" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="z0oBCv09WBahPP6gnZLW-1" value="&lt;font face=&quot;Helvetica&quot;&gt;image_height&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;image_width&lt;/font&gt;&lt;/div&gt;" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="W0uxq6z9oxh3wdNfcvnj-1">
+          <mxGeometry x="155" y="300" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z0oBCv09WBahPP6gnZLW-6" value="" style="swimlane;startSize=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="W0uxq6z9oxh3wdNfcvnj-1">
+          <mxGeometry x="470" y="240" width="780" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="BHqvXu_lDTeNpTN6zJe7-3" value="&lt;br&gt;&lt;div&gt;&lt;font face=&quot;Helvetica&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry x="80" y="20" width="20" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="for-SbJBtSRIGNDI44jR-1" value="&lt;font face=&quot;Helvetica&quot;&gt;detector.detect(image)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry x="20" y="20" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Oszn9mvFcM19tA5tD1cA-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" edge="1" parent="z0oBCv09WBahPP6gnZLW-6" source="for-SbJBtSRIGNDI44jR-2" target="Oszn9mvFcM19tA5tD1cA-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="for-SbJBtSRIGNDI44jR-2" value="" style="swimlane;startSize=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry x="25" y="120" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="for-SbJBtSRIGNDI44jR-3" value="&lt;font face=&quot;Helvetica&quot;&gt;predict(image)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="for-SbJBtSRIGNDI44jR-2">
+          <mxGeometry x="20" y="5" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="for-SbJBtSRIGNDI44jR-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" edge="1" parent="z0oBCv09WBahPP6gnZLW-6" source="for-SbJBtSRIGNDI44jR-2" target="for-SbJBtSRIGNDI44jR-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="for-SbJBtSRIGNDI44jR-6" value="&lt;div align=&quot;justify&quot;&gt;Classifica e detectar os resultados do modelo e defini uma saída padrão&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry x="170" y="10" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Oszn9mvFcM19tA5tD1cA-1" value="" style="swimlane;startSize=0;sketch=1;hachureGap=4;jiggle=2;curveFitting=1;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry x="200" y="120" width="500" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Oszn9mvFcM19tA5tD1cA-2" value="&lt;font face=&quot;Helvetica&quot;&gt;DetectorUtils.get_best_detection(detection_results,image_height,image_width)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="Oszn9mvFcM19tA5tD1cA-1">
+          <mxGeometry x="40" y="10" width="360" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BHqvXu_lDTeNpTN6zJe7-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="W0uxq6z9oxh3wdNfcvnj-1" source="z0oBCv09WBahPP6gnZLW-1" target="z0oBCv09WBahPP6gnZLW-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="340" as="sourcePoint" />
+            <mxPoint x="420" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="z0YXxZPTez1rHx6HombU" name="ClassifierUtils:get_classification_id">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-7" target="RKTG-zFVwwL_jc_H90-I-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2423" y="1658.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-4" target="RKTG-zFVwwL_jc_H90-I-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-3" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="RKTG-zFVwwL_jc_H90-I-2">
+          <mxGeometry x="-0.3191" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-4" value="Verifica se o resulatdo é None" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2470" y="1618.37" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-5" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 92&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2534" y="1800" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-4" target="RKTG-zFVwwL_jc_H90-I-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3039.929" y="1659.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(skeleton_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="RKTG-zFVwwL_jc_H90-I-7">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="2000" y="1596" width="249.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-9" target="RKTG-zFVwwL_jc_H90-I-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(filter_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="RKTG-zFVwwL_jc_H90-I-9">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="2860" y="1596" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-12" target="RKTG-zFVwwL_jc_H90-I-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-12" target="RKTG-zFVwwL_jc_H90-I-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-12" value="Verifica se o resultado é None" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3200" y="1618.37" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-13" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 95&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="3264" y="1780" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-12" target="RKTG-zFVwwL_jc_H90-I-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2604" y="1708.5" as="sourcePoint" />
+            <mxPoint x="2604" y="1810.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-15" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="RKTG-zFVwwL_jc_H90-I-14">
+          <mxGeometry x="-0.3191" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ImageController&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;update_filter_classification_data&lt;/div&gt;&lt;div&gt;(label, confidence)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="RKTG-zFVwwL_jc_H90-I-16">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="3640" y="1420" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-18" target="RKTG-zFVwwL_jc_H90-I-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;is_in_black_list&lt;/div&gt;&lt;div&gt;(filter_detection_result, filter_black_list)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="RKTG-zFVwwL_jc_H90-I-18">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="3640" y="1767.63" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-22" target="RKTG-zFVwwL_jc_H90-I-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-20" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="RKTG-zFVwwL_jc_H90-I-19">
+          <mxGeometry x="-0.0496" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-22" target="RKTG-zFVwwL_jc_H90-I-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-22" value="Está na black list" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="4140" y="1790" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-23" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 97&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="4204" y="1966.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-25" target="RKTG-zFVwwL_jc_H90-I-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <object label="&lt;div&gt;&lt;b&gt;ClassifierUtils&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;classify(meat_detector, image)&lt;/div&gt;" teste="teste" link="data:page/id,KyfA7RS_YZqrHBffgvev" id="RKTG-zFVwwL_jc_H90-I-25">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+            <mxGeometry x="4600" y="1768" width="243.5" height="124.75" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-29" target="RKTG-zFVwwL_jc_H90-I-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-27" value="Sim" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="RKTG-zFVwwL_jc_H90-I-26">
+          <mxGeometry x="-0.1556" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="RKTG-zFVwwL_jc_H90-I-29" target="RKTG-zFVwwL_jc_H90-I-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-29" value="Verifica se o resulatdo é None" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="5020" y="1790" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-30" value="&lt;div&gt;Classifica imagem&lt;/div&gt;&lt;div&gt;como erro 96&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="5084" y="1960" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-31" value="Atribui o Id da classificação" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="5470" y="1800.38" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RKTG-zFVwwL_jc_H90-I-32" value="&lt;font style=&quot;font-size: 36px;&quot;&gt;get_classification_id&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1715" y="1170" width="350" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3N7gj57DuN3JeOwxWrvG" name="DetectorUtils:get_best_detection">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fYRVy3EhGaxCeEODg9SI" name="ImageController">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zZaua8dkE-AzLdBVmdad-1" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
+          <mxGeometry y="10" width="1240" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="EiKctb7str9a6EKLZoM8-1" value="&lt;div align=&quot;left&quot;&gt;&lt;b&gt;ImageController&lt;/b&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="10" y="10" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="EiKctb7str9a6EKLZoM8-2" value="&lt;div&gt;&lt;p&gt;&lt;strong&gt;get_images_to_classify(limit)&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;limit&lt;/code&gt; (inteiro) - número limite de imagens&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Lista de tuplas com informações de imagens para serem classificadas&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Descrição:&lt;/strong&gt; Busca imagens que estão no estado &lt;code&gt;WAITING_PROCESSING&lt;/code&gt; e têm &lt;code&gt;flag_img&lt;/code&gt; igual a 1. Dados retornados:id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="10" y="50" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-1" value="&lt;div&gt;&lt;p&gt;&lt;strong&gt;get_images_to_integrate(limit)&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;limit&lt;/code&gt; (inteiro) - número limite de imagens&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Lista de tuplas com informações de imagens para serem integradas&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Descrição:&lt;/strong&gt; Busca imagens que estão no estado &lt;code&gt;WAITING_PROCESSING&lt;/code&gt; e têm &lt;code&gt;flag_img&lt;/code&gt; igual a 1. Dados retornados:id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="370" y="50" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-2" value="&lt;p&gt;&lt;strong&gt;update_image_status(status, image_id)&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;status&lt;/code&gt; (string), &lt;code&gt;image_id&lt;/code&gt; (inteiro)&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Nenhuma&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Descrição:&lt;/strong&gt; Atualiza o estado de uma imagem específica (&lt;code&gt;image_id&lt;/code&gt;) para o novo estado (&lt;code&gt;status&lt;/code&gt;).&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="10" y="220" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-3" value="&lt;p&gt;&lt;strong&gt;update_side_classification_data(classification, image_id)&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;classification&lt;/code&gt; (inteiro), &lt;code&gt;image_id&lt;/code&gt; (inteiro)&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Nenhuma&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Descrição:&lt;/strong&gt; Atualiza a coluna &lt;code&gt;aux_grading_id&lt;/code&gt; de uma imagem específica (&lt;code&gt;image_id&lt;/code&gt;) com a nova classificação (&lt;code&gt;classification&lt;/code&gt;).&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="370" y="220" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-4" value="&lt;p&gt;&lt;strong&gt;update_filter_classification_data(filter_label, filter_confidence, image_id)&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;filter_label&lt;/code&gt; (string), &lt;code&gt;filter_confidence&lt;/code&gt; (float), &lt;code&gt;image_id&lt;/code&gt; (inteiro)&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Nenhuma&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Descrição:&lt;/strong&gt; Atualiza as colunas &lt;code&gt;filter_label&lt;/code&gt;, &lt;code&gt;filter_confidence&lt;/code&gt; e &lt;code&gt;processed_at&lt;/code&gt; (para o timestamp atual) de uma imagem específica (&lt;code&gt;image_id&lt;/code&gt;).&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="740" y="50" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-5" value="&lt;p&gt;&lt;strong&gt;&lt;font color=&quot;#330000&quot;&gt;update_image_classification(classification, image_id)&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;font color=&quot;#330000&quot;&gt;&lt;strong&gt;Entrada:&lt;/strong&gt; &lt;code&gt;classification&lt;/code&gt; (inteiro), &lt;code&gt;image_id&lt;/code&gt; (inteiro)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#330000&quot;&gt;&lt;strong&gt;Saída:&lt;/strong&gt; Nenhuma&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font color=&quot;#330000&quot;&gt;&lt;strong style=&quot;&quot;&gt;Descrição:&lt;/strong&gt; Atualiza a coluna &lt;code style=&quot;&quot;&gt;aux_grading_id&lt;/code&gt; de uma imagem específica (&lt;code style=&quot;&quot;&gt;image_id&lt;/code&gt;) com a nova classificação (&lt;code style=&quot;&quot;&gt;classification&lt;/code&gt;).&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry x="740" y="220" width="350" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="CRBL9om0M-Q5pomhECtM-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="zZaua8dkE-AzLdBVmdad-1" target="zZaua8dkE-AzLdBVmdad-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="kgb3OIQgJZVSwv2Q72q0" name="IntegratorHandler:process_images">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="zk0ol0WII-0tTzYyrlv5" name="Integrator_Handler:process_image">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
