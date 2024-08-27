@@ -33,3 +33,11 @@
 [submodule "data/models/conformation"]
 	path = data/models/conformation
 	url = git@ecoia-weights-conformation:ecotracesolutions/ecoia-weights-conformation.git
+[submodule "data/models/hump"]
+	path = data/models/hump
+	url = git@ecoia-weights-hump:ecotracesolutions/ecoia-weights-hump
+	branch = main
+[submodule "data/models/breed"]
+	path = data/models/breed
+	url = git@ecoia-weights-breed:ecotracesolutions/ecoia-weights-hump
+	branch = main
