@@ -68,3 +68,16 @@ Host ecoia-weights-skeleton
   User git
   IdentityFile /home/ecotrace/.ssh/ecoia-weights-skeleton
   IdentitiesOnly yes
+
+Host ecoia-weights-breed
+  HostName github.com
+  User git
+  IdentityFile /home/ecotrace/.ssh/ecoia-weights-breed
+  IdentitiesOnly yes
+
+Host ecoia-weights-hump
+  HostName github.com
+  User git
+  IdentityFile /home/ecotrace/.ssh/ecoia-weights-hump
+  IdentitiesOnly yes
+

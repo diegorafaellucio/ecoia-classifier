@@ -64,9 +64,16 @@ side_b_shape_predictor = ShapePredictor(side_b_shape_predictor_weights_file_path
 
 grease_color_detector = DetectorLoader.load_detector(ConfigurationStorageController.get_config_data_value(ConfigurationEnum.GREASE_CLASSIFICATION_WEIGHTS_PATH.name), ConfigurationEnum.GREASE_CLASSIFICATION_APPROACH.value)
 
+hump_classification_weights_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.HUMP_CLASSIFICATION_WEIGHTS_PATH.name)
+hump_classification_approach = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.HUMP_CLASSIFICATION_APPROACH.name)
+hump_detector = DetectorLoader.load_detector(hump_classification_weights_path, hump_classification_approach)
+
+breed_classification_weights_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.BREED_CLASSIFICATION_WEIGHTS_PATH.name)
+breed_classification_approach = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.BREED_CLASSIFICATION_APPROACH.name)
+breed_detector = DetectorLoader.load_detector(breed_classification_weights_path, breed_classification_approach)
 
 classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
-                    side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector]
+                    side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector]
 
 urlpatterns = [
     path("meat-classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),

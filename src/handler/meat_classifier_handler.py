@@ -18,6 +18,9 @@ from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
 from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
+from src.enum.hump_enum import HumpEnum
+from src.utils.hump_utils import HumpUtils
+from src.utils.breed_utils import BreedUtils
 import cv2
 
 
@@ -79,7 +82,7 @@ class MeatClassifierHandler:
         MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
         ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector = classifier_suite
+        skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector = classifier_suite
 
         images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -103,6 +106,7 @@ class MeatClassifierHandler:
             classification_id = ClassifierUtils.get_classification_id(image_id, image,
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
+
 
             side_detection_result = ClassifierUtils.classify(side_detector, image)
 
@@ -164,6 +168,8 @@ class MeatClassifierHandler:
                         conformation_id = ConformationEnum[conformation_result['label']].value
                         CarcassInformationController.update_conformation(image_id, conformation_id)
 
+
+
                 size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
                     ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
 
@@ -175,6 +181,27 @@ class MeatClassifierHandler:
                     CarcassInformationController.update_height(image_id, height)
                     CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
 
+                hump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_HUMP_PREDICTION.name)
+
+                if hump_classification_is_enabled:
+                  if side_detection_result['label'] == 'LADO_B':
+                    MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
+                    hump_result = ClassifierUtils.classify(hump_detector, image)
+                    hump_id = HumpUtils.get_hump_id(hump_result)
+                  else:
+                    hump_id = HumpEnum.AUSENTE.value
+
+                  CarcassInformationController.update_hump(image_id, hump_id)
+
+
+                breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_BREED_PREDICTION.name)
+
+                if breed_classification_is_enabled:
+                    breed_result = ClassifierUtils.classify(breed_detector, image)
+                    if breed_result:
+                        breed_id = BreedUtils.get_breed_id(breed_result)
+                        CarcassInformationController.update_breed(image_id, breed_id)
 
             generate_watermark = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.GENERATE_WATERMARK.name)
