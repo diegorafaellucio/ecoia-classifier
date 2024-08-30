@@ -11,3 +11,20 @@ class IntegrationLogController:
             cursor.execute(sql)
             cursor.close()
             connection.close()
+
+    @staticmethod
+    def has_integration_to_image(image_id):
+        with connection.cursor() as cursor:
+            sql = "select count(*) from integration_log where image_id = {}".format(
+                image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+
+            if results[0][0] == 0:
+                return False
+            else:
+                return True
+
+
