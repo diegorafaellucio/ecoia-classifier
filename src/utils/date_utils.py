@@ -10,7 +10,7 @@ class DateUtils:
     def get_start_interval_from_created_at():
         date = datetime.now()
 
-        date = DateUtils.subtract_days(date, 1)
+        # date = DateUtils.subtract_days(date, 1)
 
         date = DateUtils.reset_hour(date, [0, 0, 0])
 
@@ -25,7 +25,7 @@ class DateUtils:
     def get_finish_interval_from_created_at():
         date = datetime.now()
 
-        date = DateUtils.subtract_days(date, 1)
+        date = DateUtils.add_days(date, 1)
 
         date = DateUtils.reset_hour(date, [23, 59, 59])
 
