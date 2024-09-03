@@ -39,5 +39,5 @@
 	branch = main
 [submodule "data/models/breed"]
 	path = data/models/breed
-	url = git@ecoia-weights-breed:ecotracesolutions/ecoia-weights-hump
+	url = git@ecoia-weights-breed:ecotracesolutions/ecoia-weights-breed
 	branch = main
