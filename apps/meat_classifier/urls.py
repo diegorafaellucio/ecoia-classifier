@@ -5,10 +5,13 @@ from src.controller.configuration_storage_controller import ConfigurationStorage
 from src.enum.configuration_enum import ConfigurationEnum
 from apps.meat_classifier.views import ClassifierView
 from src.ml.shape_predictor.shape_predictor import ShapePredictor
+from src.utils.configuration_storage_utils import ConfigurationStorageUtils
+from src.utils.aux_model_utils import AuxModelUtils
 
 logger = logging.getLogger(__name__)
 
-ConfigurationStorageController. initialize_configs()
+ConfigurationStorageUtils.initialize_configs()
+AuxModelUtils.initialize_models()
 
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)
