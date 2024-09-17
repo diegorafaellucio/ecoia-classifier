@@ -81,7 +81,7 @@ class IntegratorHandler:
 
                 has_integration_to_image = IntegrationLogController.has_integration_to_image(image_id)
 
-                if has_integration_to_image:
+                if not has_integration_to_image:
 
                     images_endpoint = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.IMAGES_ENDPOINT.name)
