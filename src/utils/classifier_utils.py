@@ -40,16 +40,22 @@ class ClassifierUtils:
 
         if skeleton_detection_result is None:
             classification_id = ClassificationErrorEnum.ERRO_92.value
+            filter_label = 'NAO_CLASSIFICADO'
+            filter_confidence = 0.0
 
         else:
             filter_detection_result = ClassifierUtils.classify(filter_detector, image)
 
             if filter_detection_result is None:
                 classification_id = ClassificationErrorEnum.ERRO_95.value
+
+
+                filter_label = 'NAO_CLASSIFICADO'
+                filter_confidence = 0.0
             else:
 
-                ImageController.update_filter_classification_data(filter_detection_result['label'],
-                                                                  filter_detection_result['confidence'], image_id)
+                filter_label = filter_detection_result['label']
+                filter_confidence = filter_detection_result['confidence']
 
                 filter_black_list = ConfigurationStorageController.get_config_data_value(
                     ConfigurationEnum.FILTER_BLACK_LIST.name)
@@ -72,4 +78,4 @@ class ClassifierUtils:
 
                         classification_id = meat_detataset_id
 
-        return classification_id
+        return classification_id, filter_label, filter_confidence

@@ -103,10 +103,11 @@ class MeatClassifierHandler:
             cut_lines_image = image.copy()
 
             MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
-            classification_id = ClassifierUtils.get_classification_id(image_id, image,
+            classification_id, filter_label, filter_confidence = ClassifierUtils.get_classification_id(image_id, image,
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
 
+            ImageController.update_filter_classification_data(filter_label, filter_confidence)
 
             side_detection_result = ClassifierUtils.classify(side_detector, image)
 
@@ -224,6 +225,8 @@ class MeatClassifierHandler:
 
         else:
             classification_id = ClassificationErrorEnum.ERRO_91.value
+            ImageController.update_filter_classification_data('NAO_CLASSIFICADO',
+                                                              0.0, image_id)
 
         MeatClassifierHandler.logger.info(
             'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
