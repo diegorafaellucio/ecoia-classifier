@@ -31,7 +31,7 @@ class ImageController:
     @staticmethod
     def update_image_status(status, image_id):
         with connection.cursor() as cursor:
-            query = "update image set state = '{}', state = '{}', processed_at = now()  where id = '{}'".format(status, image_id)
+            query = "update image set state = '{}', processed_at = now()  where id = '{}'".format(status, image_id)
             cursor.execute(query)
             cursor.close()
             connection.close()
