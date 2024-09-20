@@ -107,7 +107,7 @@ class MeatClassifierHandler:
                                                                         skeleton_detector, filter_detector,
                                                                         meat_detector)
 
-            ImageController.update_filter_classification_data(filter_label, filter_confidence)
+            ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
             side_detection_result = ClassifierUtils.classify(side_detector, image)
 
