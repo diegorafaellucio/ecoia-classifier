@@ -18,6 +18,7 @@ RUN mv install/install.sh install.sh
 RUN mv install/requeriments_base.txt requeriments_base.txt
 RUN mv install/requeriments_torch.txt requeriments_torch.txt
 RUN mv install/requeriments_ultralytics.txt requeriments_ultralytics.txt
+RUN mv install/get-pip.py get-pip.py
 
 RUN ./install.sh
 
