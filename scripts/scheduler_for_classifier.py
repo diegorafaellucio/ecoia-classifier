@@ -1,11 +1,8 @@
+import requests
 import time
 
-def classification_processor_job():
-    # your functionality goes here
-    import requests
-
-    url = "http://127.0.0.1:8000/meat-classifier"
-    
+def routine_classifier():
+    url= "http://classifier:8000/meat-classifier"
     payload = {}
     headers = {}
 
@@ -21,12 +18,8 @@ def classification_processor_job():
 
         time.sleep(4)
 
-
-def integrator_processor_job():
-    # your functionality goes here
-    import requests
-
-    url = "http://127.0.0.1:8000/integrator"
+def routine_imtegrator():
+    url = "http://classifier:8000/integrator"
 
     payload = {}
     headers = {}
@@ -43,4 +36,6 @@ def integrator_processor_job():
 
         # time.sleep(4)
 
-
+while(True):
+    routine_classifier()
+    routine_imtegrator()
