@@ -1,46 +1,34 @@
+import requests
 import time
+import os, django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.settings")
+from src.controller.configuration_storage_controller import ConfigurationStorageController
+from src.controller.image_controller import ImageController
+from src.enum.configuration_enum import ConfigurationEnum
+
 
 def classification_processor_job():
-    # your functionality goes here
-    import requests
 
-    url = "http://127.0.0.1:8000/meat-classifier"
+    image_classifier_endpoint = "http://127.0.0.1:8000/classifier/job-status"
 
     payload = {}
     headers = {}
 
-    counter = 0
+    response = requests.request("POST", image_classifier_endpoint, headers=headers, data=payload)
 
-    while counter < 15:
-
-        counter += 1
-
-        response = requests.request("POST", url, headers=headers, data=payload)
-
-        print(response.text)
-
-        time.sleep(4)
+    print(response.text)
 
 
 def integrator_processor_job():
-    # your functionality goes here
-    import requests
 
-    url = "http://127.0.0.1:8000/integrator"
+    url = "http://127.0.0.1:8000/integrator/job-status"
 
     payload = {}
     headers = {}
 
-    counter = 0
+    response = requests.request("POST", url, headers=headers, data=payload)
 
-    while counter < 1:
+    print(response.text)
 
-        counter += 1
-
-        response = requests.request("POST", url, headers=headers, data=payload)
-
-        print(response.text)
-
-        # time.sleep(4)
 
 

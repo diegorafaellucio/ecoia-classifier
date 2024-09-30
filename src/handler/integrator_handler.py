@@ -22,12 +22,17 @@ class IntegratorHandler:
     @staticmethod
     def process_images():
 
+        amount_of_images_in_integrating_state = ImageController.get_amount_of_images_by_state(
+            ImageStateEnum.INTEGRATING.value)
+
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.INTEGRATOR_MAX_WORKERS.name)
 
-        execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
+        available_workers = max_workers - amount_of_images_in_integrating_state;
 
-        data = ImageController.get_images_to_integrate(max_workers)
+        execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
+
+        data = ImageController.get_images_to_integrate(available_workers)
 
         have_data_to_integrate = FileUtils.have_files_to_process(data)
 

@@ -13,48 +13,45 @@ import dotenv
 import os
 from pathlib import Path
 
-
-
 dotenv.load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 LOGGING = {
-        "version": 1,
-        'disable_existing_loggers': False,
-        "loggers": {
-            "": {  # root logger
-                "level": "INFO",
-                "propagate": True,
-                "handlers": ["stream_handler", "file_handler"],
-            },
+    "version": 1,
+    'disable_existing_loggers': False,
+    "loggers": {
+        "": {  # root logger
+            "level": "INFO",
+            "propagate": True,
+            "handlers": ["stream_handler", "file_handler"],
         },
-        "handlers": {
-            "stream_handler": {
-                "class": "logging.StreamHandler",
-                "stream": "ext://sys.stdout",
-                "formatter": "default_formatter",
-            },
-            "file_handler": {
-                "class": "logging.FileHandler",
-                "filename": str(BASE_DIR) + "/logs/main.log",
-                "mode": "a",
-                "formatter": "full_formatter",
-            },
+    },
+    "handlers": {
+        "stream_handler": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+            "formatter": "default_formatter",
         },
-        "formatters": {
-            "default_formatter": {
-                "format": "%(asctime)s-%(levelname)s %(name)s: %(message)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S"
-            },
-            "full_formatter": {
-                "format": "%(asctime)s Log Type: %(levelname)s  File: %(filename)s  Function:%(funcName)s \n Message:%(message)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S"
-            },
+        "file_handler": {
+            "class": "logging.FileHandler",
+            "filename": str(BASE_DIR) + "/logs/main.log",
+            "mode": "a",
+            "formatter": "full_formatter",
         },
-    }
-
+    },
+    "formatters": {
+        "default_formatter": {
+            "format": "%(asctime)s-%(levelname)s %(name)s: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+        "full_formatter": {
+            "format": "%(asctime)s Log Type: %(levelname)s  File: %(filename)s  Function:%(funcName)s \n Message:%(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+    },
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -66,8 +63,6 @@ SECRET_KEY = 'django-insecure-kw3gj3na@c%)_6&sw7mw0u(2&csptr!jndg*e5v=1=dn_3t@)v
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
 
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
@@ -119,7 +114,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -131,9 +125,11 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
+        'OPTIONS': {
+            'init_command': "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",  # Ensure proper isolation level
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -153,7 +149,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -165,7 +160,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -176,11 +170,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CRONJOBS = [
     ('*/1 * * * *', 'base.cron.classification_processor_job'),
     ('*/1 * * * *', 'base.cron.integrator_processor_job')
     # ('* * * * *', 'apps.classifier.cron.classification_processor_job', '>> /home/diego/test.txt'),
     # ('* * * * *', 'cron.my_cron_job'),
     # ('* * * * *', 'apps.integrator.cron.integrator_processor_job')
-            ]
+]

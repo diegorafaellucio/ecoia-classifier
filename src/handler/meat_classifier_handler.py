@@ -16,7 +16,6 @@ from src.utils.cuts_utils import CutsUtils
 from src.utils.watermark_utils import WatermarkUtils
 from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
-from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
 from src.enum.hump_enum import HumpEnum
 from src.utils.hump_utils import HumpUtils
@@ -32,12 +31,16 @@ class MeatClassifierHandler:
     @staticmethod
     def process_images(classifier_suite):
 
+        amount_of_images_in_processing_state = ImageController.get_amount_of_images_by_state(ImageStateEnum.PROCESSING.value)
+
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
-        execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
+        available_workers = max_workers - amount_of_images_in_processing_state;
 
-        data = ImageController.get_images_to_classify(max_workers)
+        execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
+
+        data = ImageController.get_images_to_classify(available_workers)
 
         have_data_to_classify = FileUtils.have_files_to_process(data)
 

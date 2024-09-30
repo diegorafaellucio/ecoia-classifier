@@ -3,8 +3,12 @@ from django.urls import path
 from src.ml.classifier.detector_loader import DetectorLoader
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
-from apps.meat_classifier.views import ClassifierView
+from src.enum.job_name_enum import JobNameEnum
+from apps.meat_classifier.views.classify_view import ClassifyView
+from apps.meat_classifier.views.job_status_view import JobStatusView
 from src.ml.shape_predictor.shape_predictor import ShapePredictor
+from src.job.meat_classifier_job import MeatClassifierJob
+import threading
 
 logger = logging.getLogger(__name__)
 
@@ -75,6 +79,11 @@ breed_detector = DetectorLoader.load_detector(breed_classification_weights_path,
 classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
                     side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector]
 
+
+meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, name=JobNameEnum.CLASSIFIER.value)
+meat_classifier_job_thread.start()
+
 urlpatterns = [
-    path("meat-classifier", ClassifierView.as_view(), {'classifier_suite': classifier_suite}),
+    path("classify", ClassifyView.as_view(), {'classifier_suite': classifier_suite}),
+    path("job_status", JobStatusView.as_view(), {'meat_classifier_job_thread': meat_classifier_job_thread}),
 ]

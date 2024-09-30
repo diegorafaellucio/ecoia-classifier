@@ -6,15 +6,14 @@ from src.enum.classifier_api_return_messages_enum import ClassifierApiReturnMess
 from src.handler.integrator_handler import IntegratorHandler
 
 # Create your views here.
-class IntegratorView(GenericAPIView):
+class IntegrateView(GenericAPIView):
 
     # 2. Create
     def post(self, request, *args, **kwargs):
 
-
-        IntegratorHandler.process_images()
-
         try:
+
+            IntegratorHandler.process_images()
 
             return Response({"status": "success", "message": ClassifierApiReturnMessagesEnum.SUCCESS.value}, status=status.HTTP_200_OK)
         except:

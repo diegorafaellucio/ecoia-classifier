@@ -160,8 +160,6 @@ class BruiseUtils:
 
                         if bruise_confidence > bruise_confidence_threshold:
 
-                            print(bruise_label, bruise_confidence)
-
                             bruise_radius = 0
                             bruise_width = bruise_x_max - bruise_x_min
                             bruise_height = bruise_y_max - bruise_y_min
