@@ -1,11 +1,11 @@
-django==5.0.3
+django==4.1.13
 python-dotenv==1.0.1
 django-crontab==0.7.1
 opencv-python==4.9.0.80
 tqdm==4.66.2
 pandas==2.2.2
 psutil==4.4.2
-django-rest-framework==0.1.0
+djangorestframework==3.13.1
 imutils==0.5.4
 shapely==2.0.4
 cmake==3.29.2
