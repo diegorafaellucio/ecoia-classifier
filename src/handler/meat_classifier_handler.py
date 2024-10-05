@@ -179,9 +179,10 @@ class MeatClassifierHandler:
                 size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
                     ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
 
-                width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
+
 
                 if size_prediction_is_enabled:
+                    width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
 
                     CarcassInformationController.update_width(image_id, width)
                     CarcassInformationController.update_height(image_id, height)
