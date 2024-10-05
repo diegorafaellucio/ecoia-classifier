@@ -38,7 +38,7 @@ class MeatClassifierHandler:
 
         available_workers = max_workers - amount_of_images_in_processing_state;
 
-        if max_workers > 0:
+        if available_workers > 0:
 
 
             execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
