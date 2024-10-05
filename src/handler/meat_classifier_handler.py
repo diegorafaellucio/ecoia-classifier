@@ -36,9 +36,10 @@ class MeatClassifierHandler:
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
+        available_workers = max_workers - amount_of_images_in_processing_state;
+
         if max_workers > 0:
 
-            available_workers = max_workers - amount_of_images_in_processing_state;
 
             execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
 
