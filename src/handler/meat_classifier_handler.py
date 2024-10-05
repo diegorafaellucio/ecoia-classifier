@@ -112,16 +112,16 @@ class MeatClassifierHandler:
 
             ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
+            side_detection_result = ClassifierUtils.classify(side_detector, image)
 
-
-            # if side_detection_result is None:
-            #     classification_id = ClassificationErrorEnum.ERRO_96.value
+            if side_detection_result is None:
+                classification_id = ClassificationErrorEnum.ERRO_96.value
 
             if classification_id not in (
                     ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_95.value,
                     ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value):
 
-                side_detection_result = ClassifierUtils.classify(side_detector, image)
+
 
 
 
