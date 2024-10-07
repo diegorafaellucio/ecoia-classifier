@@ -32,6 +32,8 @@ class IntegratorJob():
             integrator_module_interval_delay = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.INTEGRATOR_MODULE_INTERVAL_DELAY.name)
 
+            time.sleep(integrator_module_interval_delay)
+
             if integrator_module_is_active:
 
                 IntegratorJob.logger.info('Requesting a new batch processing.')
@@ -39,4 +41,3 @@ class IntegratorJob():
                 IntegratorJob.logger.info(response)
 
 
-            time.sleep(integrator_module_interval_delay)

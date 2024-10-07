@@ -30,9 +30,10 @@ class MeatClassifierJob():
             meat_classifier_interval_delay = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.MEAT_CLASSIFIER_MODULE_INTERVAL_DELAY.name)
 
+            time.sleep(meat_classifier_interval_delay)
+
             if meat_classifier_module_is_active:
                 MeatClassifierJob.logger.info('Requesting a new batch processing.')
                 response = requests.request("POST", meat_classifier_endpoint, headers=headers, data=payload)
                 MeatClassifierJob.logger.info(response)
 
-            time.sleep(meat_classifier_interval_delay)
