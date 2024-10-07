@@ -171,8 +171,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('*/1 * * * *', 'base.cron.classification_processor_job'),
-    ('*/1 * * * *', 'base.cron.integrator_processor_job')
+    # ('*/1 * * * *', 'base.cron.classification_processor_job'),
+    # ('*/1 * * * *', 'base.cron.integrator_processor_job')
     # ('* * * * *', 'apps.classifier.cron.classification_processor_job', '>> /home/diego/test.txt'),
     # ('* * * * *', 'cron.my_cron_job'),
     # ('* * * * *', 'apps.integrator.cron.integrator_processor_job')

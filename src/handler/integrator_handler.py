@@ -22,21 +22,22 @@ class IntegratorHandler:
     @staticmethod
     def process_images():
 
-        amount_of_images_in_integrating_state = ImageController.get_amount_of_images_by_state(
-            ImageStateEnum.INTEGRATING.value)
-
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.INTEGRATOR_MAX_WORKERS.name)
 
-        available_workers = max_workers - amount_of_images_in_integrating_state;
+        # amount_of_images_in_integrating_state = ImageController.get_amount_of_images_by_state(
+        #     ImageStateEnum.INTEGRATING.value)
+        #
+        #
+        # available_workers = max_workers - amount_of_images_in_integrating_state;
 
-        execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
+        # execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
 
-        data = ImageController.get_images_to_integrate(available_workers)
+        data = ImageController.get_images_to_integrate(max_workers)
 
         have_data_to_integrate = FileUtils.have_files_to_process(data)
 
-        futures = []
+        # futures = []
 
         if have_data_to_integrate:
             for item in data:
@@ -52,13 +53,17 @@ class IntegratorHandler:
                 state = item[9]
                 aux_grading_id = item[10]
 
-                futures.append(
-                    execution_pool.submit(IntegratorHandler.process_image, image_id, image_path, sequence_number,
-                                          side_number, roulette_number, slaughter_date, created_at,
-                                          processed_at, flag_img, state, aux_grading_id))
+                # futures.append(
+                #     execution_pool.submit(IntegratorHandler.process_image, image_id, image_path, sequence_number,
+                #                           side_number, roulette_number, slaughter_date, created_at,
+                #                           processed_at, flag_img, state, aux_grading_id))
 
-            for x in concurrent.futures.as_completed(futures):
-                image_id = x.result()
+                IntegratorHandler.process_image(image_id, image_path, sequence_number,
+                side_number, roulette_number, slaughter_date, created_at,
+                processed_at, flag_img, state, aux_grading_id)
+
+            # for x in concurrent.futures.as_completed(futures):
+            #     image_id = x.result()
         else:
 
             IntegratorHandler.logger.info('Was not data to integrate!')

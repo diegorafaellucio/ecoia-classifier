@@ -1,10 +1,6 @@
 import requests
-import time
 import os, django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.settings")
-from src.controller.configuration_storage_controller import ConfigurationStorageController
-from src.controller.image_controller import ImageController
-from src.enum.configuration_enum import ConfigurationEnum
 
 
 def classification_processor_job():
