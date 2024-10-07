@@ -19,8 +19,6 @@ class MeatClassifierJob():
         meat_classifier_endpoint = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MODULE_ENDPOINT.name)
 
-        meat_classifier_interval_delay = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.MEAT_CLASSIFIER_MODULE_INTERVAL_DELAY.name)
 
         payload = {}
         headers = {}
@@ -28,6 +26,9 @@ class MeatClassifierJob():
         while True:
             meat_classifier_module_is_active = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.MEAT_CLASSIFIER_MODULE_IS_ACTIVE.name)
+
+            meat_classifier_interval_delay = ConfigurationStorageController.get_config_data_value(
+                ConfigurationEnum.MEAT_CLASSIFIER_MODULE_INTERVAL_DELAY.name)
 
             if meat_classifier_module_is_active:
                 MeatClassifierJob.logger.info('Requesting a new batch processing.')

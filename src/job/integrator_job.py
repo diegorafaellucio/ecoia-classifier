@@ -17,11 +17,6 @@ class IntegratorJob():
 
         time.sleep(jobs_wakeup_delay)
 
-        integrator_module_endpoint = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.INTEGRATOR_MODULE_ENDPOINT.name)
-
-        integrator_module_interval_delay = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.INTEGRATOR_MODULE_INTERVAL_DELAY.name)
 
         payload = {}
         headers = {}
@@ -29,6 +24,9 @@ class IntegratorJob():
         while True:
             integrator_module_is_active = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.INTEGRATOR_MODULE_IS_ACTIVE.name)
+
+            integrator_module_interval_delay = ConfigurationStorageController.get_config_data_value(
+                ConfigurationEnum.INTEGRATOR_MODULE_INTERVAL_DELAY.name)
 
             if integrator_module_is_active:
 
