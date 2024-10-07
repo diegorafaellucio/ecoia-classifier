@@ -61,14 +61,14 @@ class SkeletonSizeUtils:
 
 
     @staticmethod
-    def get_width(img, start_point, end_point):
+    def get_width(start_point, end_point):
         width = np.sqrt((end_point[0] - start_point[0]) ** 2 + (end_point[1] - start_point[1]) ** 2)
         return width
 
 
 
     @staticmethod
-    def get_height(extreme_top, extreme_bottom):
+    def get_height(top, bottom):
         height = np.sqrt((top[0] - bottom[0]) ** 2 + (top[1] - bottom[1]) ** 2)
         return height
 
@@ -104,7 +104,7 @@ class SkeletonSizeUtils:
 
         bottom, top = SkeletonSizeUtils.get_extremes_axes_y(binary_mask)
 
-        start_point, end_point = SkeletonSizeUtils.get_points(cuts_coord)
+        start_point, end_point = SkeletonSizeUtils.get_points(cuts_coords)
         roi_start_point, roi_end_point = SkeletonSizeUtils.get_roi(binary_mask, start_point, end_point)
 
         width = SkeletonSizeUtils.get_width(roi_start_point, roi_end_point)
