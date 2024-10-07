@@ -59,79 +59,56 @@ class SkeletonSizeUtils:
 
         return size_descriptor
 
-    @staticmethod
-    def get_boundaries(binary_mask):
-
-        contours = SkeletonSizeUtils.get_objects(binary_mask)
-
-        point_reference_min_width = [10000000, 10000000]
-        point_reference_max_width = [0, 0]
-        extreme_top = []
-        extreme_bottom = []
-
-        for cnt in contours:
-
-            for point in cnt:
-
-                if point[0][0] < point_reference_min_width[0]:
-                    point_reference_min_width[0] = point[0][0]
-                    # point_reference_min_width[1]=point[0][1]
-
-                if point[0][0] > point_reference_max_width[0]:
-                    point_reference_max_width[0] = point[0][0]
-                    # point_reference_max_width[1]=point[0][1]
-
-                if point[0][1] < point_reference_min_width[1]:
-                    point_reference_min_width[1] = point[0][1]
-                    extreme_bottom = point[0]
-                if point[0][1] > point_reference_max_width[1]:
-                    point_reference_max_width[1] = point[0][1]
-                    extreme_top = point[0]
-
-        return point_reference_min_width[0], point_reference_max_width[0], point_reference_min_width[1], \
-        point_reference_max_width[1], extreme_bottom, extreme_top
 
     @staticmethod
     def get_width(img, start_point, end_point):
-        start_point_measure = np.array([0, 0])
-        end_point_measure = np.array([0, 0])
-
-        flag = True
-        for axes_x in range(start_point[0], end_point[0] + 1):
-            if (not np.array_equal(img[start_point[1], axes_x], [0, 0, 0])) and (
-            not np.sum(img[start_point[1], axes_x]) <= 50):
-
-                if flag:
-                    start_point_measure = [axes_x, start_point[1]]
-                    flag = False
-                elif np.array_equal(img[start_point[1], axes_x + 1], [0, 0, 0]) and not flag:
-                    end_point_measure = [axes_x, end_point[1]]
-                    break
-                else:
-                    end_point_measure = [axes_x, end_point[1]]
-
-        # cv2.line(img,start_point_measure,end_point_measure,(0,255,0),5)
-
-        width = sqrt(
-            (end_point_measure[0] - start_point_measure[0]) ** 2 + (end_point_measure[1] - start_point_measure[1]) ** 2)
+        width = np.sqrt((end_point[0] - start_point[0]) ** 2 + (end_point[1] - start_point[1]) ** 2)
         return width
 
+
+
     @staticmethod
-    def get_height(img,extreme_top, extreme_bottom):
-        #cv2.line(img, extreme_top, extreme_bottom, (0,255,0),5)
-        return sqrt((extreme_top[0]-extreme_bottom[0])**2 + (extreme_top[1]-extreme_bottom[1])**2)
+    def get_height(extreme_top, extreme_bottom):
+        height = np.sqrt((top[0] - bottom[0]) ** 2 + (top[1] - bottom[1]) ** 2)
+        return height
+
+    @staticmethod
+    def get_extremes_axes_y(binary_mask_carcass):
+        contours, _ = cv2.findContours(binary_mask_carcass, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours = contours[0]
+        bottom = tuple(contours[contours[:, :, 1].argmin()][0])
+        top = tuple(contours[contours[:, :, 1].argmax()][0])
+
+        return bottom, top
+
+    @staticmethod
+    def get_roi(binary_mask_carcass, start_point, end_point):
+        mask = np.zeros(binary_mask_carcass.shape, np.uint8)
+        cv2.line(mask, start_point, end_point, color=255, thickness=2)
+        _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
+        result = np.logical_and(binary_mask_carcass, mask)
+        result = np.uint8(result)
+
+        contours, _ = cv2.findContours(result, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours = contours[0]
+
+        roi_start_point = tuple(contours[contours[:, :, 0].argmin()][0])
+        roi_end_point = tuple(contours[contours[:, :, 0].argmax()][0])
+
+        return roi_start_point, roi_end_point
 
     @staticmethod
     def get_size(binary_mask, cuts_coords):
 
         pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.PIXEL_CENTIMETER_RATIO.name)
 
-        left, right, bottom, top, extreme_top, extreme_bottom = SkeletonSizeUtils.get_boundaries(binary_mask)
+        bottom, top = SkeletonSizeUtils.get_extremes_axes_y(binary_mask)
 
-        start_point, end_point = SkeletonSizeUtils.get_points(cuts_coords)
+        start_point, end_point = SkeletonSizeUtils.get_points(cuts_coord)
+        roi_start_point, roi_end_point = SkeletonSizeUtils.get_roi(binary_mask, start_point, end_point)
 
-        width = SkeletonSizeUtils.get_width(binary_mask, start_point, end_point)
-        height = SkeletonSizeUtils.get_height(binary_mask, extreme_top, extreme_bottom)
+        width = SkeletonSizeUtils.get_width(roi_start_point, roi_end_point)
+        height = SkeletonSizeUtils.get_height(bottom, top)
 
         width = round(width * pixel_centimeter_ratio, 2)
         height = round(height * pixel_centimeter_ratio, 2)
