@@ -17,6 +17,10 @@ class IntegratorJob():
 
         time.sleep(jobs_wakeup_delay)
 
+        integrator_module_endpoint = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.INTEGRATOR_MODULE_ENDPOINT.name)
+
+
 
         payload = {}
         headers = {}
