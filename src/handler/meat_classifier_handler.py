@@ -30,20 +30,20 @@ class MeatClassifierHandler:
 
     @staticmethod
     def process_images(classifier_suite):
-
-        amount_of_images_in_processing_state = ImageController.get_amount_of_images_by_state(ImageStateEnum.PROCESSING.value)
-
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
-        available_workers = max_workers - amount_of_images_in_processing_state;
+        # amount_of_images_in_processing_state = ImageController.get_amount_of_images_by_state(ImageStateEnum.PROCESSING.value)
+        #
+        #
+        # available_workers = max_workers - amount_of_images_in_processing_state;
 
-        if available_workers > 0:
+        if max_workers > 0:
 
 
-            execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
+            # execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
 
-            data = ImageController.get_images_to_classify(available_workers)
+            data = ImageController.get_images_to_classify(max_workers)
 
             have_data_to_classify = FileUtils.have_files_to_process(data)
 
@@ -63,13 +63,17 @@ class MeatClassifierHandler:
                     state = item[9]
                     aux_grading_id = item[10]
 
-                    futures.append(
-                        execution_pool.submit(MeatClassifierHandler.process_image, image_id, image_path, sequence_number,
-                                              side_number, roulette_number, slaughter_date, created_at,
-                                              processing_timestamp, flag_img, state, aux_grading_id, classifier_suite))
+                    # futures.append(
+                    #     execution_pool.submit(MeatClassifierHandler.process_image, image_id, image_path, sequence_number,
+                    #                           side_number, roulette_number, slaughter_date, created_at,
+                    #                           processing_timestamp, flag_img, state, aux_grading_id, classifier_suite))
 
-                for x in concurrent.futures.as_completed(futures):
-                    image_id = x.result()
+                    MeatClassifierHandler.process_image(image_id, image_path, sequence_number,
+                    side_number, roulette_number, slaughter_date, created_at,
+                    processing_timestamp, flag_img, state, aux_grading_id, classifier_suite)
+
+                # for x in concurrent.futures.as_completed(futures):
+                #     image_id = x.result()
             else:
 
                 MeatClassifierHandler.logger.info('Was not data to process!')
