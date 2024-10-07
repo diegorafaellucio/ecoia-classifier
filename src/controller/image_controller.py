@@ -8,7 +8,7 @@ class ImageController:
     @staticmethod
     def get_images_to_classify(limit):
         with connection.cursor() as cursor:
-            sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {} FOR UPDATE;'.format(
+            sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {};'.format(
                 ImageStateEnum.WAITING_PROCESSING.value, limit)
             cursor.execute(sql)
             results = cursor.fetchall()
@@ -31,7 +31,7 @@ class ImageController:
     def get_images_to_integrate(limit):
         with transaction.atomic():
             with connection.cursor() as cursor:
-                sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {} FOR UPDATE; '.format(
+                sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {}; '.format(
                     ImageStateEnum.WAITING_INTEGRATION.value,
                     limit)
                 cursor.execute(sql)

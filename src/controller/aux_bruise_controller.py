@@ -13,7 +13,6 @@ class AuxBruiseController:
             results = cursor.fetchall()
             cursor.close()
             connection.close()
-
             name = results[0][0]
             return name
 
