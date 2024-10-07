@@ -63,21 +63,13 @@ class MeatClassifierHandler:
                     state = item[9]
                     aux_grading_id = item[10]
 
-                    # futures.append(
-                    #     execution_pool.submit(MeatClassifierHandler.process_image, image_id, image_path, sequence_number,
-                    #                           side_number, roulette_number, slaughter_date, created_at,
-                    #                           processing_timestamp, flag_img, state, aux_grading_id, classifier_suite))
-
                     MeatClassifierHandler.process_image(image_id, image_path, sequence_number,
                     side_number, roulette_number, slaughter_date, created_at,
                     processing_timestamp, flag_img, state, aux_grading_id, classifier_suite)
 
-                # for x in concurrent.futures.as_completed(futures):
-                #     image_id = x.result()
             else:
 
                 MeatClassifierHandler.logger.info('Was not data to process!')
-                # print('Was not images to process...')
 
     @staticmethod
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
@@ -86,9 +78,8 @@ class MeatClassifierHandler:
         try:
 
             MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
+
             classification_id = None
-            system_version = ConfigurationStorageController.get_config_data_value(
-                ConfigurationEnum.SYSTEM_VERSION.name)
 
             MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
             ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
@@ -100,15 +91,15 @@ class MeatClassifierHandler:
             image_absolute_path = images_main_path + image_path
             masked_image_absolute_path = image_absolute_path.replace('.', '-masked.')
 
-            # ImageHandler.logger.info(
-            #     'Checking if there are image to sequence: {} and side: {}'.format(sequence_number, side_number))
+            MeatClassifierHandler.logger.info(
+                'Checking if there are image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
             MeatClassifierHandler.logger.info('Checking if file exists. Image ID: {}'.format(image_id))
             has_image = FileUtils.has_file(image_absolute_path, flag_img, state)
 
             if has_image:
-                # ImageHandler.logger.info(
-                #     'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
+                MeatClassifierHandler.logger.info(
+                    'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
                 image = cv2.imread(image_absolute_path)
                 cut_lines_image = image.copy()
@@ -128,10 +119,6 @@ class MeatClassifierHandler:
                 if classification_id not in (
                         ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_95.value,
                         ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value):
-
-
-
-
 
                     MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
                     bruise_detection_results = bruise_detector.detect(image)
