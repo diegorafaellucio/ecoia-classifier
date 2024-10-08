@@ -32,7 +32,7 @@ class IntegratorJob():
             integrator_module_interval_delay = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.INTEGRATOR_MODULE_INTERVAL_DELAY.name)
 
-            time.sleep(integrator_module_interval_delay)
+            time.sleep(2)
 
             if integrator_module_is_active:
 
