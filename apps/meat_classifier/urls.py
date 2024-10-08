@@ -80,7 +80,7 @@ classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_dete
                     side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector]
 
 
-meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, name=JobNameEnum.CLASSIFIER.value)
+meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, args=(classifier_suite,), name=JobNameEnum.CLASSIFIER.value)
 meat_classifier_job_thread.start()
 
 urlpatterns = [
