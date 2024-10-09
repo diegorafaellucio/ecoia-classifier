@@ -1,6 +1,5 @@
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
-from src.handler.integrator_handler import IntegratorHandler
 import requests
 import time
 import logging
@@ -18,6 +17,13 @@ class IntegratorJob():
 
         time.sleep(jobs_wakeup_delay)
 
+        integrator_module_endpoint = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.INTEGRATOR_MODULE_ENDPOINT.name)
+
+
+
+        payload = {}
+        headers = {}
 
         while True:
             integrator_module_is_active = ConfigurationStorageController.get_config_data_value(
@@ -29,7 +35,9 @@ class IntegratorJob():
             time.sleep(integrator_module_interval_delay)
 
             if integrator_module_is_active:
-                # IntegratorJob.logger.info('Requesting a new batch processing.')
-                IntegratorHandler.process_images()
+
+                IntegratorJob.logger.info('Requesting a new batch processing.')
+                response = requests.request("POST", integrator_module_endpoint, headers=headers, data=payload)
+                IntegratorJob.logger.info(response)
 
 
