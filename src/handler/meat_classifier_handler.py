@@ -141,7 +141,7 @@ class MeatClassifierHandler:
                     CutsUtils.save_cuts_data(image_id, cuts_coords)
 
                     MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
-                    BruiseUtils.save_bruises_data(cuts_mask, side_detection_result, sanitized_bruises, image_id)
+                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)

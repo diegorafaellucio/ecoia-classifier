@@ -13,10 +13,12 @@ class BruiseController:
             return data
 
     @staticmethod
-    def insert_into_bruise(image_id, bruise_id, cut_id, bruise_coordinates):
+    def insert_into_bruise(image_id, bruise_id, cut_id, bruise_coordinates, width, height, diameter):
         with connection.cursor() as cursor:
-            sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at) values ({}, {}, {}, '{}', now(), now())".format(
-                    bruise_id, image_id, cut_id, bruise_coordinates)
+
+            sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at, height, width, diameter) values ({}, {}, {}, '{}', now(), now(), {}, {}, {})".format(
+                    bruise_id, image_id, cut_id, bruise_coordinates, height, width, diameter)
+
             cursor.execute(sql)
             cursor.close()
             connection.close()

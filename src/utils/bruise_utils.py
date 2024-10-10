@@ -1,5 +1,6 @@
 import cv2
 import logging
+import numpy as np
 from shapely import Polygon
 from src.utils.detector_utils import DetectorUtils
 from src.enum.bruises_enum import BruisesEnum
@@ -179,10 +180,13 @@ class BruiseUtils:
         return cut_lines_image
 
     @staticmethod
-    def save_bruises_data(cuts_mask, side_detection_result, bruises, image_id):
+    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CONFIDENCE_THRESHOLD.name)
+
+        pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.PIXEL_CENTIMETER_RATIO.name)
 
         if bruises is not None:
             for bruise in bruises:
@@ -204,6 +208,8 @@ class BruiseUtils:
                 midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
                                                                                             side_detection_result)
 
+                diameter_cm, width, height = BruiseUtils.calculate_extent_bruise(binary_mask, bruise, pixel_centimeter_ratio)
+
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
                 if cut_id != 0:
@@ -216,7 +222,7 @@ class BruiseUtils:
 
                             bruise_id = BruisesEnum[bruise_label].value
 
-                            BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord])
+                            BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
 
     @staticmethod
     def get_bruise_integration_data(image_id):
@@ -242,3 +248,95 @@ class BruiseUtils:
             output_data.append(bruise_data)
 
         return output_data
+
+    @staticmethod
+    def get_roi(binary_mask, bruise):
+
+        x_min = bruise['topleft']['x']
+        y_min = bruise['topleft']['y']
+        x_max = bruise['bottomright']['x']
+        y_max = bruise['bottomright']['y']
+
+
+        mask_bruise = BruiseUtils.get_bruise_mask([x_min, y_max], [x_max, y_min], binary_mask.shape)
+        percentage_intersection = BruiseUtils.get_percentage_instersection(binary_mask, mask_bruise)
+
+        roi = ([x_min, y_min], [x_max, y_max])
+
+        if percentage_intersection == 0:
+            roi = -1
+
+        elif percentage_intersection < 0.80:
+            mask_intersection = BruiseUtils.get_mask_intersection(binary_mask, mask_bruise)
+            roi = BruiseUtils.get_region_of_intersection(mask_intersection)
+
+        return roi
+
+    @staticmethod
+    def get_region_of_intersection(mask_intersection):
+
+        _, binary_intersection = cv2.threshold(mask_intersection, 127, 255, cv2.THRESH_BINARY)
+        contours_intersection, _ = cv2.findContours(mask_intersection, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        points = np.reshape(contours_intersection[0], (-1, 2))
+        min = np.min(points, axis=0)
+        max = np.max(points, axis=0)
+        return (min, max)
+
+    @staticmethod
+    def get_mask_intersection(mask_carcass, mask_bruise):
+        _, binary_mask_carcass = cv2.threshold(mask_carcass, 127, 255, cv2.THRESH_BINARY)
+        _, binary_mask_bruise = cv2.threshold(mask_bruise, 127, 255, cv2.THRESH_BINARY)
+
+        mask_intersection = np.logical_and(binary_mask_carcass, binary_mask_bruise)
+        # mask_intersection*=255
+        return np.uint8(mask_intersection)
+
+    @staticmethod
+    def get_percentage_instersection(mask_carcass, mask_bruise):
+
+        _, binary_mask_carcass = cv2.threshold(mask_carcass, 127, 255, cv2.THRESH_BINARY)
+        _, binary_mask_bruise = cv2.threshold(mask_bruise, 127, 255, cv2.THRESH_BINARY)
+        area_intersection = np.sum(np.logical_and(binary_mask_carcass, binary_mask_bruise))
+        area_bruise = np.sum(binary_mask_bruise / 255)
+
+        percentage_intersection = area_intersection / area_bruise
+
+        return percentage_intersection
+
+    @staticmethod
+    def get_bruise_mask(points_min, points_max, img_shape):
+        mask_bruise = np.zeros(img_shape, np.uint8)
+        mask_bruise = cv2.rectangle(mask_bruise, points_min, points_max, color=255, thickness=cv2.FILLED)
+
+        return mask_bruise
+
+    @staticmethod
+    def calculate_extent_bruise(binary_mask,bruise, pixel_centimeter_ratio):
+
+        width = 0
+        height = 0
+        diameter_cm = 0
+
+        roi = BruiseUtils.get_roi(binary_mask, bruise)
+        if roi == -1:
+            return width, height, diameter_cm
+
+        x_center = int((roi[0][0] + roi[1][0]) / 2)
+        y_center = int((roi[0][1] + roi[1][1]) / 2)
+
+        width = roi[1][0] - roi[0][0]
+        height = roi[1][1] - roi[0][1]
+
+        if width < 0:
+            width = -1 * width
+
+        if height < 0:
+            height = -1 * height
+
+        diameter = (width + height) / 2
+
+        width = round(width * pixel_centimeter_ratio, 2)
+        height = round(height * pixel_centimeter_ratio, 2)
+        diameter_cm = round(diameter*pixel_centimeter_ratio,2)
+
+        return diameter_cm, width, height
