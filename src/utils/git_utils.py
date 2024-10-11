@@ -44,9 +44,10 @@ class GitUtils:
             if branch.name != current_branch:
                 try:
                     project_repo.delete_head(branch, force=True)  # force=True se quiser forçar a remoção
-                    print(f"Deleted branch: {branch.name}")
+                    # print(f"Deleted branch: {branch.name}")
                 except git.exc.GitCommandError as e:
-                    print(f"Could not delete branch {branch.name}: {e}")
+                    pass
+                    # print(f"Could not delete branch {branch.name}: {e}")
 
 
     @staticmethod

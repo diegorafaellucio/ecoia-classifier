@@ -23,7 +23,8 @@ class ModelUtils:
         models_path =  os.path.join(base_path, ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODELS_PATH.name))
 
         models = os.listdir(models_path)
-        counter = 0
+
+        main_branch = 'main'
         for model in models:
             is_model_in_database = ModelController.is_model_in_database(model)
             
@@ -31,10 +32,15 @@ class ModelUtils:
             if not is_model_in_database:
 
                 model_path = os.path.join(models_path, model)
-                GitUtils.perform_checkout(model_path, 'main')
+
+                GitUtils.perform_checkout(model_path, main_branch)
+
+                GitUtils.remove_all_not_active_branchs(main_branch,model_path)
 
                 most_recent_branch = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path, plant_models_identifier)
                 GitUtils.perform_checkout(model_path, most_recent_branch)
+
+                GitUtils.remove_all_not_active_branchs(most_recent_branch, model_path)
 
                 model_weight_path = "data/models/{}/weight.pt".format(model)
                 model_approach = DetectionApproachEnum.ULTRALYTICS.value
@@ -62,6 +68,8 @@ class ModelUtils:
 
             model_current_version = GitUtils.get_current_version(model_path)
 
+            GitUtils.remove_all_not_active_branchs(model_current_version, model_path)
+
             model_id = ModelController.get_model_id(model)
 
 
@@ -70,6 +78,8 @@ class ModelUtils:
 
             if model_current_version != model_most_recent_version:
                 GitUtils.perform_checkout(model_path, model_most_recent_version)
+
+                GitUtils.remove_all_not_active_branchs(model_most_recent_version, model_path)
 
 
                 ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, model_most_recent_version)
