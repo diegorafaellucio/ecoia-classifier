@@ -13,16 +13,20 @@ class GitUtils:
 
         project_repo = Repo(project_path)
 
+        project_repo.git.fetch('--all')
+
         project_repo.remotes.origin.pull()
 
-        available_branches = project_repo.branches
+        available_branches = [branch.split("/")[-1] for branch in project_repo.git.branch('-r').splitlines()]
+
+        # available_branches = project_repo.branches
 
         selected_branches = []
 
         for available_branch in available_branches:
 
-            if plant_models_identifier in available_branch.name:
-                selected_branches.append(available_branch.name)
+            if plant_models_identifier in available_branch:
+                selected_branches.append(available_branch)
 
         if len(selected_branches) != 0:
             most_recent_branch_name = GitUtils.get_most_recent_branch(selected_branches)
