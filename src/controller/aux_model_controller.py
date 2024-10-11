@@ -3,7 +3,7 @@ from src.enum.image_state_enum import ImageStateEnum
 import re
 
 
-class AuxModelController:
+class ModelController:
 
     @staticmethod
     def get_models_without_curent_version():

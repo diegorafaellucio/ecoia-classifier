@@ -22,7 +22,7 @@ class WatermarkUtils:
         if watermark_path is None:
 
                 logo_path = ConfigurationStorageController.get_config_data_value(
-                    ConfigurationEnum.WATERMARK_LOGO_PATH.name)
+                    ConfigurationEnum.MODULE_GENERATE_WATERMARK_LOGO_PATH.name)
         else:
             logo_path = watermark_path
 

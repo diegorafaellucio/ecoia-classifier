@@ -16,7 +16,7 @@ def get_local_ip():
     except Exception as e:
         return f"Erro ao obter o IP: {e}"
 
-env_file = '../.env'
+env_file = '../../.env'
 
 if os.path.exists(env_file):
     load_dotenv(env_file)

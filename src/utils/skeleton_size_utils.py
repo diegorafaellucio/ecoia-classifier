@@ -100,7 +100,7 @@ class SkeletonSizeUtils:
     @staticmethod
     def get_size(binary_mask, cuts_coords):
 
-        pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.PIXEL_CENTIMETER_RATIO.name)
+        pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_SIZE_PREDICTION_PIXEL_CENTIMETER_RATIO.name)
 
         bottom, top = SkeletonSizeUtils.get_extremes_axes_y(binary_mask)
 

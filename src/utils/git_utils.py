@@ -1,4 +1,4 @@
-from src.controller.aux_model_controller import AuxModelController
+from src.controller.aux_model_controller import ModelController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
 from git import Repo

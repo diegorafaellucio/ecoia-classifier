@@ -2,7 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from src.enum.updatemodelsapireturnmessagesenum import UpdateModelsApiReturnMessagesEnum
-from src.handler.update_models_handler import UpdateModelsHandler
+from src.handler.model_updater_handler import ModelUpdaterHandler
 
 # Create your views here.
 class UpdateModelsView(GenericAPIView):
@@ -11,7 +11,7 @@ class UpdateModelsView(GenericAPIView):
     def post(self, request, *args, **kwargs):
 
 
-        UpdateModelsHandler.update()
+        ModelUpdaterHandler.update()
 
         try:
 

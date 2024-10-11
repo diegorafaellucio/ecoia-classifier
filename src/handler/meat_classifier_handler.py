@@ -207,10 +207,10 @@ class MeatClassifierHandler:
                             breed_id = BreedUtils.get_breed_id(breed_result)
                             CarcassInformationController.update_breed(image_id, breed_id)
 
-                generate_watermark = ConfigurationStorageController.get_config_data_value(
-                ConfigurationEnum.GENERATE_WATERMARK.name)
+                generate_watermark_isenabled = ConfigurationStorageController.get_config_data_value(
+                ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
 
-                if generate_watermark == 1:
+                if generate_watermark_isenabled:
 
                     cut_lines_image = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
                     image = WatermarkUtils.get_image_with_watermarker(image)

@@ -1,4 +1,4 @@
-from src.controller.aux_model_controller import AuxModelController
+from src.controller.aux_model_controller import ModelController
 from src.controller.model_update_history_controller import ModelUpdateHistoryController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
@@ -8,9 +8,7 @@ from git import Repo
 import os
 from pathlib import Path
 
-class AuxModelUtils:
-
-
+class ModelUtils:
 
     @staticmethod
     def initialize_models():
@@ -21,12 +19,11 @@ class AuxModelUtils:
 
         base_path = Path(__file__).resolve().parent.parent.parent
         models_path =  os.path.join(base_path, ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODELS_PATH.name))
-        # models_without_current_version = AuxModelController.get_models_without_curent_version()
 
         models = os.listdir(models_path)
         counter = 0
         for model in models:
-            is_model_in_database = AuxModelController.is_model_in_database(model)
+            is_model_in_database = ModelController.is_model_in_database(model)
             
 
             if not is_model_in_database:
@@ -42,7 +39,7 @@ class AuxModelUtils:
 
                 print(model,model_version)
 
-                AuxModelController.insert_into_aux_model(model, model_version, model_weight_path, model_approach)
+                ModelController.insert_into_aux_model(model, model_version, model_weight_path, model_approach)
 
     @staticmethod
     def update_models():
@@ -59,7 +56,7 @@ class AuxModelUtils:
 
         models = os.listdir(models_path)
         for model in models:
-            model_id, model_current_version = AuxModelController.get_model_id_and_current_version(model)
+            model_id, model_current_version = ModelController.get_model_id_and_current_version(model)
 
             model_path = os.path.join(models_path, model)
 

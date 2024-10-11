@@ -1,3 +1,3 @@
 .env
 __pycache__/
-/logs/main.log
+/data/logs/main.log

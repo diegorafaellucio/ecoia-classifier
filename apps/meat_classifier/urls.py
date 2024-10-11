@@ -10,12 +10,12 @@ from src.ml.shape_predictor.shape_predictor import ShapePredictor
 from src.job.meat_classifier_job import MeatClassifierJob
 import threading
 from src.utils.configuration_storage_utils import ConfigurationStorageUtils
-from src.utils.aux_model_utils import AuxModelUtils
+from src.utils.model_utils import ModelUtils
 
 logger = logging.getLogger(__name__)
 
 ConfigurationStorageUtils.initialize_configs()
-AuxModelUtils.initialize_models()
+ModelUtils.initialize_models()
 
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)

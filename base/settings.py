@@ -36,7 +36,7 @@ LOGGING = {
         },
         "file_handler": {
             "class": "logging.FileHandler",
-            "filename": str(BASE_DIR) + "/logs/main.log",
+            "filename": str(BASE_DIR) + "/data/logs/main.log",
             "mode": "a",
             "formatter": "full_formatter",
         },
@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.meat_classifier',
     'apps.integrator',
-    'apps.update_models',
+    'apps.model_updater',
     'django_crontab',
 ]
 

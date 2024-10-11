@@ -21,5 +21,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('classifier/', include('apps.meat_classifier.urls')),
     path('integrator/', include('apps.integrator.urls')),
-    path('model_updater', include('apps.update_models.urls'))
+    path('model_updater', include('apps.model_updater.urls'))
 ]

@@ -127,10 +127,10 @@ class BruiseUtils:
     def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.BRUISE_CONFIDENCE_THRESHOLD.name)
+            ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
 
         bruise_plot_radius = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.BRUISE_PLOT_RADIUS.name)
+            ConfigurationEnum.BRUISE_CLASSIFICATION_PLOT_RADIUS.name)
 
         if bruises is not None:
 
@@ -183,10 +183,10 @@ class BruiseUtils:
     def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.BRUISE_CONFIDENCE_THRESHOLD.name)
+            ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
 
         pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.PIXEL_CENTIMETER_RATIO.name)
+            ConfigurationEnum.MODULE_SIZE_PREDICTION_PIXEL_CENTIMETER_RATIO.name)
 
         if bruises is not None:
             for bruise in bruises:

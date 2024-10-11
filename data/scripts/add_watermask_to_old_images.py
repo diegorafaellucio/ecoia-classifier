@@ -57,7 +57,7 @@ def generate_image(image_path):
     image = cv2.imread(image_path)
 
     image_with_watermark = get_image_with_watermarker(image,
-                                                                     watermark_path='../data/images/watermark_logo.png')
+                                                      watermark_path='../images/watermark_logo.png')
 
     resized_image_with_watermark = imutils.resize(image_with_watermark, height=500)
 
