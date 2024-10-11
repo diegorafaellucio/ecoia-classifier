@@ -1,5 +1,6 @@
 import logging
 import concurrent.futures
+import traceback
 
 import imutils
 
@@ -240,6 +241,7 @@ class MeatClassifierHandler:
                 'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name, image_id))
             ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
         except Exception as ex:
+            traceback.print_exc()
             classification_id = ClassificationErrorEnum.ERRO_96.value
             MeatClassifierHandler.logger.info(
                 'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
