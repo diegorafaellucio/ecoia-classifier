@@ -40,7 +40,7 @@ class ModelUtils:
                 model_weight_path = "data/models/{}/weight.pt".format(model)
                 model_approach = DetectionApproachEnum.ULTRALYTICS.value
 
-                print(model,model_version)
+                # print(model,model_version)
 
                 ModelController.insert_into_aux_model(model, most_recent_branch, model_weight_path, model_approach)
 
@@ -72,17 +72,16 @@ class ModelUtils:
             most_recent_branch = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path,
                                                                                                  plant_models_identifier)
 
-            most_recent_branch_version = GitUtils.get_version_from_branch_name(most_recent_branch)
+            # most_recent_branch_version = GitUtils.get_version_from_branch_name(most_recent_branch)
 
-
-            if model_current_version != most_recent_branch_version:
+            if model_current_version != most_recent_branch:
                 GitUtils.perform_checkout(model_path, most_recent_branch)
 
 
-                ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, most_recent_branch_version)
+                ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, most_recent_branch)
                 ModelController.update_model_version(most_recent_branch, model)
 
-                ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, most_recent_branch_version))
+                ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, most_recent_branch))
             else:
                 ModelUtils.logger.info('{} model: No updates available!'.format(model))
 
