@@ -27,9 +27,9 @@ class ModelUtils:
             
 
             if not is_model_in_database:
-                GitUtils.perform_checkout(model_path, 'main')
 
                 model_path = os.path.join(models_path, model)
+                GitUtils.perform_checkout(model_path, 'main')
 
                 most_recent_branch = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path, plant_models_identifier)
                 GitUtils.perform_checkout(model_path, most_recent_branch)
