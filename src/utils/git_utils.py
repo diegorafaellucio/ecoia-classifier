@@ -61,3 +61,5 @@ class GitUtils:
     def perform_checkout(project_path, branch_name):
         project_repo = Repo(project_path)
         project_repo.git.checkout(branch_name)
+        project_repo.git.pull('origin', branch_name)
+
