@@ -42,8 +42,11 @@ class ModelUtils:
 
                 print(model,model_version)
 
-                ModelController.insert_into_aux_model(model, model_version, model_weight_path, model_approach)
+                ModelController.insert_into_aux_model(model, most_recent_branch, model_weight_path, model_approach)
 
+                ModelUtils.logger.info('{} model: initialized with branch {}'.format(model, most_recent_branch))
+            else:
+                ModelUtils.logger.info('{} model: was initialized befeore.'.format(model))
     @staticmethod
     def update_models():
         client_identifier = ConfigurationStorageController.get_config_data_value(
@@ -77,6 +80,7 @@ class ModelUtils:
 
 
                 ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, most_recent_branch_version)
+                ModelController.update_model_version(most_recent_branch, model)
 
                 ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, most_recent_branch_version))
             else:
