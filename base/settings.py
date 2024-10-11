@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.meat_classifier',
     'apps.integrator',
+    'apps.update_models',
     'django_crontab',
 ]
 

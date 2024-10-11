@@ -16,6 +16,7 @@ from src.utils.cuts_utils import CutsUtils
 from src.utils.watermark_utils import WatermarkUtils
 from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
+from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
 from src.enum.hump_enum import HumpEnum
 from src.utils.hump_utils import HumpUtils
@@ -30,6 +31,7 @@ class MeatClassifierHandler:
 
     @staticmethod
     def process_images(classifier_suite):
+
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
