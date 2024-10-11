@@ -1,4 +1,4 @@
-from src.controller.aux_model_controller import ModelController
+from src.controller.model_controller import ModelController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
 from git import Repo
@@ -34,21 +34,13 @@ class GitUtils:
         return most_recent_branch_name
 
 
-    @staticmethod
-    def get_project_current_version(project_path):
-        model_repo = Repo(project_path)
-        current_branch = model_repo.active_branch
-        branch_name = current_branch.name
-        project_version = GitUtils.get_version_from_branch_name(branch_name)
-
-        return project_version
-
-
 
     @staticmethod
-    def get_version_from_branch_name(branch_name):
-        branch_name_elements = branch_name.split('-')
-        project_version = branch_name_elements[-1]
+    def get_current_version(model_path):
+        project_repo = Repo(model_path)
+
+        project_version = project_repo.active_branch.name
+
         return project_version
 
     @staticmethod

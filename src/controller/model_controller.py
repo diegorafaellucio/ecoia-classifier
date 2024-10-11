@@ -41,15 +41,15 @@ class ModelController:
             connection.close()
 
     @classmethod
-    def get_model_id_and_current_version(cls, model):
+    def get_model_id(cls, model_name):
         with connection.cursor() as cursor:
-            sql = "select id, current_version from aux_model where name = '{}'".format(model)
+            sql = "select id, current_version from aux_model where name = '{}'".format(model_name)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
             connection.close()
 
-            return results[0][0], results[0][1]
+            return results[0][0]
 
     @classmethod
     def update_model_version(cls, new_version, model):
@@ -60,4 +60,4 @@ class ModelController:
             cursor.close()
             connection.close()
 
-            return results[0][0], results[0][1]
+            # return results[0][0], results[0][1]
