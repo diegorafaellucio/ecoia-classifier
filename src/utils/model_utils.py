@@ -7,8 +7,10 @@ from src.utils.git_utils import GitUtils
 from git import Repo
 import os
 from pathlib import Path
+import logging
 
 class ModelUtils:
+    logger = logging.getLogger(__name__)
 
     @staticmethod
     def initialize_models():
@@ -57,6 +59,9 @@ class ModelUtils:
 
         models = os.listdir(models_path)
         for model in models:
+
+
+
             model_id, model_current_version = ModelController.get_model_id_and_current_version(model)
 
             model_path = os.path.join(models_path, model)
@@ -72,4 +77,8 @@ class ModelUtils:
 
 
                 ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, most_recent_branch_version)
+
+                ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, most_recent_branch_version))
+            else:
+                ModelUtils.logger.info('{} model: No updates available!'.format(model))
 
