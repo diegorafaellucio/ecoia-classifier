@@ -2,6 +2,7 @@ from src.controller.model_controller import ModelController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
 from src.enum.configuration_enum import ConfigurationEnum
 from git import Repo
+import git
 import os
 from pathlib import Path
 
@@ -33,6 +34,19 @@ class GitUtils:
 
         return most_recent_branch_name
 
+    @staticmethod
+    def remove_all_not_active_branchs(current_branch, model_path):
+        project_repo = Repo(model_path)
+
+        local_branches = project_repo.branches
+
+        for branch in local_branches:
+            if branch.name != current_branch:
+                try:
+                    project_repo.delete_head(branch, force=True)  # force=True se quiser forçar a remoção
+                    print(f"Deleted branch: {branch.name}")
+                except git.exc.GitCommandError as e:
+                    print(f"Could not delete branch {branch.name}: {e}")
 
 
     @staticmethod
