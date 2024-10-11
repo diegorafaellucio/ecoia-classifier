@@ -27,6 +27,7 @@ class ModelUtils:
             
 
             if not is_model_in_database:
+                GitUtils.perform_checkout(model_path, 'main')
 
                 model_path = os.path.join(models_path, model)
 
