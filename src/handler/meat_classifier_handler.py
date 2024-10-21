@@ -36,21 +36,11 @@ class MeatClassifierHandler:
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
-        # amount_of_images_in_processing_state = ImageController.get_amount_of_images_by_state(ImageStateEnum.PROCESSING.value)
-        #
-        #
-        # available_workers = max_workers - amount_of_images_in_processing_state;
-
         if max_workers > 0:
-
-
-            # execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=max_workers)
 
             data = ImageController.get_images_to_classify(max_workers)
 
             have_data_to_classify = FileUtils.have_files_to_process(data)
-
-            futures = []
 
             if have_data_to_classify:
                 for item in data:
@@ -108,13 +98,13 @@ class MeatClassifierHandler:
                 cut_lines_image = image.copy()
 
                 MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
-                classification_id, filter_label, filter_confidence = ClassifierUtils.get_classification_id(image_id, image,
+                classification_id, filter_label, filter_confidence, side_detection_result = ClassifierUtils.get_classification_id(image_id, image,
                                                                             skeleton_detector, filter_detector,
-                                                                            meat_detector)
+                                                                            meat_detector, side_detector)
 
                 ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
-                side_detection_result = ClassifierUtils.classify(side_detector, image)
+
 
                 if side_detection_result is None:
                     classification_id = ClassificationErrorEnum.ERRO_96.value
@@ -231,8 +221,6 @@ class MeatClassifierHandler:
                 classification_id = ClassificationErrorEnum.ERRO_91.value
                 ImageController.update_filter_classification_data('NAO_CLASSIFICADO',
                                                                   0.0, image_id)
-
-
 
             MeatClassifierHandler.logger.info(
                 'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
