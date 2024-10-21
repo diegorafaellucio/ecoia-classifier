@@ -33,15 +33,10 @@ class ClassifierUtils:
 
         classification_id = None
 
-        # ClassifierHandler.logger.info(
-        #     f'Checking if a skeleton is present to sequence: {sequence_number} and side: {side_number}')
-
-
-
         skeleton_detection_result = ClassifierUtils.classify(skeleton_detector, image)
 
         if skeleton_detection_result is None:
-            classification_id = ClassificationErrorEnum.ERRO_92.value
+            classification_id = ClassificationErrorEnum.ERRO_93.value
             filter_label = 'NAO_CLASSIFICADO'
             filter_confidence = 0.0
 
@@ -52,14 +47,14 @@ class ClassifierUtils:
             filter_detection_result = ClassifierUtils.classify(filter_detector, image)
 
             if side_detection_result is None:
-                classification_id = ClassificationErrorEnum.ERRO_92.value
+                classification_id = ClassificationErrorEnum.ERRO_102.value
                 filter_label = 'NAO_CLASSIFICADO'
                 filter_confidence = 0.0
 
             else:
 
                 if filter_detection_result is None:
-                    classification_id = ClassificationErrorEnum.ERRO_95.value
+                    classification_id = ClassificationErrorEnum.ERRO_100.value
 
 
                     filter_label = 'NAO_CLASSIFICADO'
@@ -82,7 +77,7 @@ class ClassifierUtils:
                         meat_detection_result = ClassifierUtils.classify(meat_detector, image)
 
                         if meat_detection_result is None:
-                            classification_id = ClassificationErrorEnum.ERRO_96.value
+                            classification_id = ClassificationErrorEnum.ERRO_101.value
                         else:
                             meat_detection_label = meat_detection_result['label']
 

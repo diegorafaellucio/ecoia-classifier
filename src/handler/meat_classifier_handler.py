@@ -110,8 +110,8 @@ class MeatClassifierHandler:
                     classification_id = ClassificationErrorEnum.ERRO_96.value
 
                 if classification_id not in (
-                        ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_95.value,
-                        ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value):
+                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_100.value,
+                        ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value, ClassificationErrorEnum.ERRO_97.value):
 
                     MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
                     bruise_detection_results = bruise_detector.detect(image)
