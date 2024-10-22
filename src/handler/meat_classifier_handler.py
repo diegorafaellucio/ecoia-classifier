@@ -104,17 +104,13 @@ class MeatClassifierHandler:
 
                 ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
-
-
-                if side_detection_result is None:
-                    classification_id = ClassificationErrorEnum.ERRO_96.value
-
                 if classification_id not in (
-                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_100.value,
+                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
                         ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value, ClassificationErrorEnum.ERRO_97.value):
 
                     MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
                     bruise_detection_results = bruise_detector.detect(image)
+
                     MeatClassifierHandler.logger.info('Detecting stamps. Image ID: {}'.format(image_id))
                     stamp_detection_results = stamp_detector.detect(image)
 
@@ -154,9 +150,8 @@ class MeatClassifierHandler:
                     conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
 
-
                     if conformation_classification_is_enabled:
-                        conformation_result = ClassifierUtils.classify(conformation_detector, image)
+                        conformation_result, intersection_score = ClassifierUtils.classify(conformation_detector, image)
 
                         if conformation_result is not None:
                             conformation_id = ConformationEnum[conformation_result['label']].value
@@ -166,7 +161,6 @@ class MeatClassifierHandler:
 
                     size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
-
 
 
                     if size_prediction_is_enabled:
@@ -182,7 +176,7 @@ class MeatClassifierHandler:
                     if hump_classification_is_enabled:
                       if side_detection_result['label'] == 'LADO_B':
                         MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
-                        hump_result = ClassifierUtils.classify(hump_detector, image)
+                        hump_result, intersection_score = ClassifierUtils.classify(hump_detector, image)
                         hump_id = HumpUtils.get_hump_id(hump_result)
                       else:
                         hump_id = HumpEnum.AUSENTE.value
@@ -193,15 +187,15 @@ class MeatClassifierHandler:
                     breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_BREED_PREDICTION.name)
 
                     if breed_classification_is_enabled:
-                        breed_result = ClassifierUtils.classify(breed_detector, image)
+                        breed_result, intersection_score = ClassifierUtils.classify(breed_detector, image)
                         if breed_result:
                             breed_id = BreedUtils.get_breed_id(breed_result)
                             CarcassInformationController.update_breed(image_id, breed_id)
 
-                generate_watermark_isenabled = ConfigurationStorageController.get_config_data_value(
+                generate_watermark_is_enabled = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
 
-                if generate_watermark_isenabled:
+                if generate_watermark_is_enabled:
 
                     cut_lines_image = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
                     image = WatermarkUtils.get_image_with_watermarker(image)

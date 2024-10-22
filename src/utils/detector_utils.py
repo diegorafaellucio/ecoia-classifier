@@ -6,9 +6,10 @@ from src.enum.configuration_enum import ConfigurationEnum
 class DetectorUtils:
 
     @staticmethod
-    def get_best_detection(detections, height, width):
+    def get_best_detection(detections, height, width, get_intersection_score):
 
         best_detection = None
+        intersection_score = 0
         max_condidence_score = 0
         max_intersection_score = 0
 
@@ -41,7 +42,11 @@ class DetectorUtils:
                     best_detection = detection
                     max_intersection_score = intersection_score
 
-        return best_detection
+
+        if get_intersection_score:
+            return best_detection, intersection_score
+        else:
+            return best_detection
 
     @staticmethod
     def get_intersection_score(height, width, detection_coords):
