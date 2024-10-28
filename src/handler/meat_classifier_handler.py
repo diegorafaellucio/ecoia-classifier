@@ -70,158 +70,166 @@ class MeatClassifierHandler:
 
         try:
 
-            MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
+            if aux_grading_id is not None:
 
-            classification_id = None
+                MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
 
-            MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
-            ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
+                classification_id = None
 
-            skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector = classifier_suite
+                MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
+                ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-            images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
+                skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector = classifier_suite
 
-            image_absolute_path = images_main_path + image_path
-            masked_image_absolute_path = image_absolute_path.replace('.', '-masked.')
+                images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
-            MeatClassifierHandler.logger.info(
-                'Checking if there are image to sequence: {} and side: {}'.format(sequence_number, side_number))
+                image_absolute_path = images_main_path + image_path
+                masked_image_absolute_path = image_absolute_path.replace('.', '-masked.')
 
-            MeatClassifierHandler.logger.info('Checking if file exists. Image ID: {}'.format(image_id))
-            has_image = FileUtils.has_file(image_absolute_path, flag_img, state)
-
-            if has_image:
                 MeatClassifierHandler.logger.info(
-                    'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
+                    'Checking if there are image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
-                image = cv2.imread(image_absolute_path)
-                cut_lines_image = image.copy()
+                MeatClassifierHandler.logger.info('Checking if file exists. Image ID: {}'.format(image_id))
+                has_image = FileUtils.has_file(image_absolute_path, flag_img, state)
 
-                MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
-                classification_id, filter_label, filter_confidence, side_detection_result = ClassifierUtils.get_classification_id(image_id, image,
-                                                                            skeleton_detector, filter_detector,
-                                                                            meat_detector, side_detector)
+                if has_image:
+                    MeatClassifierHandler.logger.info(
+                        'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
-                ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
+                    image = cv2.imread(image_absolute_path)
+                    cut_lines_image = image.copy()
 
-                if classification_id not in (
-                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
-                        ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value, ClassificationErrorEnum.ERRO_97.value):
+                    MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
+                    classification_id, filter_label, filter_confidence, side_detection_result = ClassifierUtils.get_classification_id(image_id, image,
+                                                                                skeleton_detector, filter_detector,
+                                                                                meat_detector, side_detector)
 
-                    MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
-                    bruise_detection_results = bruise_detector.detect(image)
+                    ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
-                    MeatClassifierHandler.logger.info('Detecting stamps. Image ID: {}'.format(image_id))
-                    stamp_detection_results = stamp_detector.detect(image)
+                    if classification_id not in (
+                            ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
+                            ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value, ClassificationErrorEnum.ERRO_97.value):
 
-                    MeatClassifierHandler.logger.info('Sanitizing bruises. Image ID: {}'.format(image_id))
-                    sanitized_bruises = BruiseUtils.sanitize_bruises(bruise_detection_results, stamp_detection_results)
+                        MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
+                        bruise_detection_results = bruise_detector.detect(image)
 
-                    MeatClassifierHandler.logger.info('Obtaining cuts maps. Image ID: {}'.format(image_id))
-                    cuts_coords = CutsUtils.get_cuts(image, side_detection_result, side_a_shape_predictor,
-                                                     side_b_shape_predictor)
+                        MeatClassifierHandler.logger.info('Detecting stamps. Image ID: {}'.format(image_id))
+                        stamp_detection_results = stamp_detector.detect(image)
 
-                    MeatClassifierHandler.logger.info('Mapping bruises in cuts. Image ID: {}'.format(image_id))
-                    cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
+                        MeatClassifierHandler.logger.info('Sanitizing bruises. Image ID: {}'.format(image_id))
+                        sanitized_bruises = BruiseUtils.sanitize_bruises(bruise_detection_results, stamp_detection_results)
 
-                    cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
-                                                                                  sanitized_bruises, cuts_mask)
-                    MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
-                    CutsUtils.save_cuts_data(image_id, cuts_coords)
+                        MeatClassifierHandler.logger.info('Obtaining cuts maps. Image ID: {}'.format(image_id))
+                        cuts_coords = CutsUtils.get_cuts(image, side_detection_result, side_a_shape_predictor,
+                                                         side_b_shape_predictor)
 
-                    MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
-                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
+                        MeatClassifierHandler.logger.info('Mapping bruises in cuts. Image ID: {}'.format(image_id))
+                        cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
-                    carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
-                        image_id)
+                        cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
+                                                                                      sanitized_bruises, cuts_mask)
+                        MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
+                        CutsUtils.save_cuts_data(image_id, cuts_coords)
 
-                    if not carcass_information_already_exists:
-                        CarcassInformationController.initialize_carcass_information(image_id)
+                        MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
+                        BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
 
-                    grease_color_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
-                        ConfigurationEnum.MODULE_GREASE_PREDICTION.name)
+                        carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
+                            image_id)
 
-                    if grease_color_classification_is_enabled:
+                        if not carcass_information_already_exists:
+                            CarcassInformationController.initialize_carcass_information(image_id)
 
-                        grease_color_id = GreaseColorUtils.classify(grease_color_detector, image, binary_mask)
+                        grease_color_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                            ConfigurationEnum.MODULE_GREASE_PREDICTION.name)
 
-                        CarcassInformationController.update_grease_color(image_id, grease_color_id)
+                        if grease_color_classification_is_enabled:
 
-                    conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
-                        ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
+                            grease_color_id = GreaseColorUtils.classify(grease_color_detector, image, binary_mask)
 
-                    if conformation_classification_is_enabled:
-                        conformation_result, intersection_score = ClassifierUtils.classify(conformation_detector, image)
+                            CarcassInformationController.update_grease_color(image_id, grease_color_id)
 
-                        if conformation_result is not None:
-                            conformation_id = ConformationEnum[conformation_result['label']].value
-                            CarcassInformationController.update_conformation(image_id, conformation_id)
+                        conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                            ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
 
+                        if conformation_classification_is_enabled:
+                            conformation_result, intersection_score = ClassifierUtils.classify(conformation_detector, image)
 
-
-                    size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
-                        ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
-
-
-                    if size_prediction_is_enabled:
-                        width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
-
-                        CarcassInformationController.update_width(image_id, width)
-                        CarcassInformationController.update_height(image_id, height)
-                        CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
-
-                    hump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
-                        ConfigurationEnum.MODULE_HUMP_PREDICTION.name)
-
-                    if hump_classification_is_enabled:
-                      if side_detection_result['label'] == 'LADO_B':
-                        MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
-                        hump_result, intersection_score = ClassifierUtils.classify(hump_detector, image)
-                        hump_id = HumpUtils.get_hump_id(hump_result)
-                      else:
-                        hump_id = HumpEnum.AUSENTE.value
-
-                      CarcassInformationController.update_hump(image_id, hump_id)
+                            if conformation_result is not None:
+                                conformation_id = ConformationEnum[conformation_result['label']].value
+                                CarcassInformationController.update_conformation(image_id, conformation_id)
 
 
-                    breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_BREED_PREDICTION.name)
 
-                    if breed_classification_is_enabled:
-                        breed_result, intersection_score = ClassifierUtils.classify(breed_detector, image)
-                        if breed_result:
-                            breed_id = BreedUtils.get_breed_id(breed_result)
-                            CarcassInformationController.update_breed(image_id, breed_id)
+                        size_prediction_is_enabled = ConfigurationStorageController.get_config_data_value(
+                            ConfigurationEnum.MODULE_SIZE_PREDICTION.name)
 
-                generate_watermark_is_enabled = ConfigurationStorageController.get_config_data_value(
-                ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
 
-                if generate_watermark_is_enabled:
+                        if size_prediction_is_enabled:
+                            width, height, size_descriptor = SkeletonSizeUtils.get_size(binary_mask, cuts_coords)
 
-                    cut_lines_image = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
-                    image = WatermarkUtils.get_image_with_watermarker(image)
+                            CarcassInformationController.update_width(image_id, width)
+                            CarcassInformationController.update_height(image_id, height)
+                            CarcassInformationController.update_size_descriptor(image_id, size_descriptor)
 
-                    cut_lines_image = imutils.resize(cut_lines_image, height=1920)
-                    image = imutils.resize(image, height=1920)
+                        hump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                            ConfigurationEnum.MODULE_HUMP_PREDICTION.name)
 
-                    cv2.imwrite(masked_image_absolute_path, cut_lines_image)
-                    FileUtils.copy_file(image_absolute_path)
-                    cv2.imwrite(image_absolute_path, image)
+                        if hump_classification_is_enabled:
+                          if side_detection_result['label'] == 'LADO_B':
+                            MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
+                            hump_result, intersection_score = ClassifierUtils.classify(hump_detector, image)
+                            hump_id = HumpUtils.get_hump_id(hump_result)
+                          else:
+                            hump_id = HumpEnum.AUSENTE.value
+
+                          CarcassInformationController.update_hump(image_id, hump_id)
+
+
+                        breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_BREED_PREDICTION.name)
+
+                        if breed_classification_is_enabled:
+                            breed_result, intersection_score = ClassifierUtils.classify(breed_detector, image)
+                            if breed_result:
+                                breed_id = BreedUtils.get_breed_id(breed_result)
+                                CarcassInformationController.update_breed(image_id, breed_id)
+
+                    generate_watermark_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
+
+                    if generate_watermark_is_enabled:
+
+                        cut_lines_image = WatermarkUtils.get_image_with_watermarker(cut_lines_image)
+                        image = WatermarkUtils.get_image_with_watermarker(image)
+
+                        cut_lines_image = imutils.resize(cut_lines_image, height=1920)
+                        image = imutils.resize(image, height=1920)
+
+                        cv2.imwrite(masked_image_absolute_path, cut_lines_image)
+                        FileUtils.copy_file(image_absolute_path)
+                        cv2.imwrite(image_absolute_path, image)
+
+                    else:
+
+                        cv2.imwrite(masked_image_absolute_path, cut_lines_image)
 
                 else:
+                    classification_id = ClassificationErrorEnum.ERRO_91.value
+                    ImageController.update_filter_classification_data('NAO_CLASSIFICADO',
+                                                                      0.0, image_id)
 
-                    cv2.imwrite(masked_image_absolute_path, cut_lines_image)
-
+                MeatClassifierHandler.logger.info(
+                    'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
+                ImageController.update_image_classification(classification_id, image_id)
+                MeatClassifierHandler.logger.info(
+                    'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name, image_id))
+                ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
             else:
-                classification_id = ClassificationErrorEnum.ERRO_91.value
-                ImageController.update_filter_classification_data('NAO_CLASSIFICADO',
-                                                                  0.0, image_id)
+                MeatClassifierHandler.logger.info(
+                    'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name,
+                                                                           image_id))
+                ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
 
-            MeatClassifierHandler.logger.info(
-                'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
-            ImageController.update_image_classification(classification_id, image_id)
-            MeatClassifierHandler.logger.info(
-                'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name, image_id))
-            ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
         except Exception as ex:
             traceback.print_exc()
             classification_id = ClassificationErrorEnum.ERRO_96.value
@@ -233,4 +241,3 @@ class MeatClassifierHandler:
                                                                        image_id))
             ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
 
-        return image_id
