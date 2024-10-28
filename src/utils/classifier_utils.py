@@ -46,35 +46,15 @@ class ClassifierUtils:
 
         else:
 
-            filter_detection_result = ClassifierUtils.classify(filter_detector, image)
+            meat_detection_result = ClassifierUtils.classify(meat_detector, image)
 
-            if filter_detection_result is None:
-                classification_id = ClassificationErrorEnum.ERRO_100.value
-
+            if meat_detection_result is None:
+                classification_id = ClassificationErrorEnum.ERRO_101.value
             else:
+                meat_detection_label = meat_detection_result['label']
 
-                filter_label = filter_detection_result['label']
-                filter_confidence = filter_detection_result['confidence']
+                meat_detataset_id = MeatEnum[meat_detection_label].value['database_id']
 
-                filter_black_list = ConfigurationStorageController.get_config_data_value(
-                    ConfigurationEnum.FILTER_BLACK_LIST.name)
-
-                filter_in_black_List = ClassifierUtils.predicted_result_is_in_black_list(
-                    filter_detection_result, filter_black_list)
-
-                if filter_in_black_List:
-                    classification_id = ClassificationErrorEnum.ERRO_97.value
-                else:
-
-                    meat_detection_result = ClassifierUtils.classify(meat_detector, image)
-
-                    if meat_detection_result is None:
-                        classification_id = ClassificationErrorEnum.ERRO_101.value
-                    else:
-                        meat_detection_label = meat_detection_result['label']
-
-                        meat_detataset_id = MeatEnum[meat_detection_label].value['database_id']
-
-                        classification_id = meat_detataset_id
+                classification_id = meat_detataset_id
 
         return classification_id, filter_label, filter_confidence, side_detection_result
