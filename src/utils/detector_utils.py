@@ -90,4 +90,3 @@ class DetectorUtils:
             return True
         else:
             return False
-

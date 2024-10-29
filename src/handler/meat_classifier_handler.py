@@ -19,8 +19,11 @@ from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
 from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
+from src.enum.rump_error_enum import ClassificationErrorRumpEnum
+from src.enum.rump_enum import ClassificationRumpEnum
 from src.enum.hump_enum import HumpEnum
 from src.utils.hump_utils import HumpUtils
+from src.utils.rump_utils import RumpUtils
 from src.utils.breed_utils import BreedUtils
 import cv2
 
@@ -83,11 +86,15 @@ class MeatClassifierHandler:
             MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
 
             classification_id = None
+            cut_mask_rump = None
+            cut_rump_id = None
+            rump_id = None
+            rump_image = None
 
             MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
             ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
 
-            skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector = classifier_suite
+            skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, rump_detector = classifier_suite
 
             images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -138,8 +145,29 @@ class MeatClassifierHandler:
                     MeatClassifierHandler.logger.info('Mapping bruises in cuts. Image ID: {}'.format(image_id))
                     cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
-                    cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
-                                                                                  sanitized_bruises, cuts_mask)
+
+                    rump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_RUMP_CLASSIFICATION.name)
+
+                    if rump_classification_is_enabled:
+                        rump_image, cut_mask_rump, cut_rump_id = CutsUtils.get_cut_mask(cuts_coords, image)
+
+
+                    cut_lines_image, rump_is_bruised = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
+                                                                                  sanitized_bruises, cuts_mask, cut_mask_rump)
+
+                    if not rump_is_bruised:
+                        rump_result = ClassifierUtils.classify(rump_detector, rump_image, True)
+                        if rump_result:
+                            rump_id = RumpUtils.get_rump_id(rump_result)
+                    else:
+                        rump_id = RumpUtils.get_bruise_deviation(rump_is_bruised)
+
+                    bruise_deviation = RumpUtils.classify_meat_deviation(classification_id, rump_id)
+
+                    # CarcassInformationController.insert_rump(image_id, aux_grading_id, cut_id, type)
+                    CarcassInformationController.insert_rump(image_id, int(rump_id), cut_rump_id, bruise_deviation)
+
+
                     MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
                     CutsUtils.save_cuts_data(image_id, cuts_coords)
 
@@ -207,6 +235,11 @@ class MeatClassifierHandler:
                         if breed_result:
                             breed_id = BreedUtils.get_breed_id(breed_result)
                             CarcassInformationController.update_breed(image_id, breed_id)
+
+
+
+
+
 
                 generate_watermark_isenabled = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)

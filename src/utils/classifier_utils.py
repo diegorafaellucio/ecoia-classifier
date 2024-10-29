@@ -8,7 +8,18 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def classify(detector, image):
+    def classify(detector, image, image_classification = False):
+
+        image_height, image_width = image.shape[:2]
+        detection_results = detector.detect(image, image_classification)
+        if not image_classification:
+            best_result = DetectorUtils.get_best_detection(detection_results, image_height, image_width)
+            return best_result
+        else:
+            return detection_results
+
+    @staticmethod
+    def classify_cuts(detector, image):
 
         image_height, image_width = image.shape[:2]
         detection_results = detector.detect(image)

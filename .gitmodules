@@ -41,3 +41,6 @@
 	path = data/models/breed
 	url = git@ecoia-weights-breed:ecotracesolutions/ecoia-weights-breed
 	branch = main
+[submodule "data/models/rump"]
+	path = data/models/rump
+	url = git@ecoia-weights-rump:ecotracesolutions/ecoia-weights-rump.git

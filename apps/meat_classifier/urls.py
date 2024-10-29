@@ -79,8 +79,12 @@ breed_classification_weights_path = ConfigurationStorageController.get_config_da
 breed_classification_approach = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.BREED_CLASSIFICATION_APPROACH.name)
 breed_detector = DetectorLoader.load_detector(breed_classification_weights_path, breed_classification_approach)
 
+rump_classification_weights_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.RUMP_CLASSIFICATION_WEIGHTS_PATH.name)
+rump_classification_approach = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.RUMP_CLASSIFICATION_APPROACH.name)
+rump_detector = DetectorLoader.load_detector(rump_classification_weights_path, rump_classification_approach)
+
 classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
-                    side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector]
+                    side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, rump_detector]
 
 
 meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, name=JobNameEnum.CLASSIFIER.value)

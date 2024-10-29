@@ -124,7 +124,10 @@ class BruiseUtils:
         return bruise_detections
 
     @staticmethod
-    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask):
+    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask, cut_rump):
+
+        rump_with_bruise = []
+
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
@@ -155,6 +158,13 @@ class BruiseUtils:
 
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
+
+                # Check if rump cap has a bruise
+                cut_rump_id = cut_rump[mid_y_coord][mid_x_coord]
+                if cut_rump_id != 0:
+                    rump_with_bruise.append(BruisesEnum[bruise_label.upper()].value)
+
+
                 if cut_id != 0:
 
                     if midpoint_is_inside_detection:
@@ -177,7 +187,7 @@ class BruiseUtils:
 
                             cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
                                                          , bgr_bruise_color, 5)
-        return cut_lines_image
+        return cut_lines_image, rump_with_bruise
 
     @staticmethod
     def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
