@@ -104,7 +104,7 @@ class MeatClassifierHandler:
                                                                                 skeleton_detector, filter_detector,
                                                                                 meat_detector, side_detector)
 
-                    ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
+                    #ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
                     if classification_id not in (
                             ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
