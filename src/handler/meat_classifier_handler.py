@@ -70,7 +70,7 @@ class MeatClassifierHandler:
 
         try:
 
-            if aux_grading_id is not None:
+            if aux_grading_id is None:
 
                 MeatClassifierHandler.logger.info('Starting image processing. Image ID: {}.'.format(image_id))
 
@@ -104,7 +104,7 @@ class MeatClassifierHandler:
                                                                                 skeleton_detector, filter_detector,
                                                                                 meat_detector, side_detector)
 
-                    ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
+                    # ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
 
                     if classification_id not in (
                             ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
@@ -232,7 +232,7 @@ class MeatClassifierHandler:
 
         except Exception as ex:
             traceback.print_exc()
-            classification_id = ClassificationErrorEnum.ERRO_96.value
+            classification_id = ClassificationErrorEnum.ERRO_101.value
             MeatClassifierHandler.logger.info(
                 'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
             ImageController.update_image_classification(classification_id, image_id)
