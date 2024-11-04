@@ -10,13 +10,13 @@ import tqdm
 from ultralytics import YOLO
 
 
-class Detector():
+class Classifier():
 
     def __init__(self, weights_path):
         self.model = YOLO(weights_path)
 
 
-    def detect(self, image, image_classification=False):
+    def predict(self, image, image_classification=False):
 
         if not image_classification:
             # print('detectando lesoes na imagem', image.shape)
@@ -61,17 +61,28 @@ class Detector():
 
                 return results
         else:
-            result = {}
+            results = []
             pred = self.model.predict(image, verbose=False)
 
             class_names = pred[0].names
-            class_id = pred[0].probs.top1
-            confidence = pred[0].probs.top1conf.tolist()
+            probs = pred[0].probs.top5
+            confidences = pred[0].probs.top5conf.tolist()
 
-            result['confidence'] = confidence
-            result['label'] = class_names[class_id]
 
-            return result
+            if len(probs):
+                for i, boxe in enumerate(probs):
+                    result = {}
+
+                    class_id = int(probs[i])  # integer class
+                    confidence = confidences[i]  # integer class
+                    classification_label = class_names[class_id]
+
+                    result['confidence'] = confidence
+                    result['label'] = classification_label
+
+                    results.append(result)
+
+            return results
 
 
         

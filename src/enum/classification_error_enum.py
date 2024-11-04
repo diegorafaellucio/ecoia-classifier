@@ -9,4 +9,8 @@ class ClassificationErrorEnum(Enum):
     ERRO_95 = '15'
     ERRO_96 = '16'
     ERRO_97 = '17'
+    ERRO_200 = '200'
+    ERRO_201 = '201'
+    ERRO_202 = '202'
+    ERRO_203 = '203'
 

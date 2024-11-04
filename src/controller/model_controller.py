@@ -6,7 +6,7 @@ import re
 class ModelController:
 
     @staticmethod
-    def get_models_without_curent_version():
+    def get_models_without_current_version():
         with connection.cursor() as cursor:
             sql = 'select * from aux_model where current_version is null;'
 
@@ -32,7 +32,7 @@ class ModelController:
                 return False
 
     @staticmethod
-    def insert_into_aux_model(model_name, model_version, model_weight_path, model_approach):
+    def insert(model_name, model_version, model_weight_path, model_approach):
         with connection.cursor() as cursor:
             sql = "INSERT INTO aux_model (name, current_version, path, approach, created_at, updated_at) VALUES ('{}', '{}', '{}', '{}', DEFAULT, DEFAULT)".format(model_name, model_version, model_weight_path, model_approach)
 
@@ -41,7 +41,7 @@ class ModelController:
             connection.close()
 
     @classmethod
-    def get_model_id(cls, model_name):
+    def get_id(cls, model_name):
         with connection.cursor() as cursor:
             sql = "select id, current_version from aux_model where name = '{}'".format(model_name)
             cursor.execute(sql)
@@ -52,12 +52,10 @@ class ModelController:
             return results[0][0]
 
     @classmethod
-    def update_model_version(cls, new_version, model):
+    def update_version(cls, new_version, model):
         with connection.cursor() as cursor:
             sql = "update aux_model set current_version =  '{}' where name = '{}'".format(new_version, model)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
             connection.close()
-
-            # return results[0][0], results[0][1]

@@ -33,7 +33,7 @@ class IntegratorHandler:
 
         # execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
 
-        data = ImageController.get_images_to_integrate(max_workers)
+        data = ImageController.get_to_integrate(max_workers)
 
         have_data_to_integrate = FileUtils.have_files_to_process(data)
 
@@ -75,7 +75,7 @@ class IntegratorHandler:
 
 
         IntegratorHandler.logger.info('Starting to integrate data. Image ID: {}.'.format(image_id))
-        ImageController.update_image_status(ImageStateEnum.INTEGRATING.value, image_id)
+        ImageController.update_status(ImageStateEnum.INTEGRATING.value, image_id)
 
 
         slaughter_start_interval = DateUtils.get_start_interval_from_created_at()
@@ -130,11 +130,11 @@ class IntegratorHandler:
 
                 if slaughter_start_interval < created_at < slaughter_finish_interval:
                     return_code, elapsed_time  = IntegratorUtils.integrate_data(integration_endpoint, integration_string)
-                    IntegrationLogController.insert_into_integration_log(image_id, return_code, elapsed_time,
-                                                                         integration_string)
+                    IntegrationLogController.insert(image_id, return_code, elapsed_time,
+                                                    integration_string)
                 else:
-                    IntegrationLogController.insert_into_integration_log(image_id, 200, 1,
-                                                                         integration_string)
+                    IntegrationLogController.insert(image_id, 200, 1,
+                                                    integration_string)
 
 
 
@@ -142,7 +142,7 @@ class IntegratorHandler:
         IntegratorHandler.logger.info(
             'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSED.name,
                                                                    image_id))
-        ImageController.update_image_status(ImageStateEnum.PROCESSED.value, image_id)
+        ImageController.update_status(ImageStateEnum.PROCESSED.value, image_id)
 
         return image_id
 

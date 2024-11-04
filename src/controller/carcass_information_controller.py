@@ -100,16 +100,3 @@ class CarcassInformationController:
             connection.close()
             return results
         
-    @staticmethod
-    def insert_rump(image_id, aux_grading_id, cut_rump_id, type):
-
-        with connection.cursor() as cursor:
-            sql = "insert into cuts_grading (image_id, aux_grading_id, cut_id, type) values ({}, {}, {}, '{}')".format(
-                image_id, aux_grading_id, cut_rump_id, type)
-
-            cursor.execute(sql)
-            results = cursor.fetchall()
-            cursor.close()
-            connection.close()
-            return results
-

@@ -2,7 +2,7 @@ import cv2
 import logging
 import numpy as np
 from shapely import Polygon
-from src.utils.detector_utils import DetectorUtils
+from src.utils.object_detection_utils import ObjectDetectionUtils
 from src.enum.bruises_enum import BruisesEnum
 from PIL import ImageColor
 from src.controller.configuration_storage_controller import ConfigurationStorageController
@@ -10,6 +10,7 @@ from src.controller.bruise_controller import BruiseController
 from src.controller.aux_bruise_controller import AuxBruiseController
 from src.controller.aux_cut_controller import AuxCutController
 from src.enum.configuration_enum import ConfigurationEnum
+from src.enum.cuts_enum import CutsEnum
 
 
 class BruiseUtils:
@@ -153,8 +154,8 @@ class BruiseUtils:
                 mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
                 mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
 
-                midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
-                                                                                            side_detection_result)
+                midpoint_is_inside_detection = ObjectDetectionUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
+                                                                                                   side_detection_result)
 
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
@@ -190,13 +191,15 @@ class BruiseUtils:
         return cut_lines_image, rump_with_bruise
 
     @staticmethod
-    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
+    def save_bruises_data_and_get_all_affected_cuts(cuts_mask, binary_mask, side_detection_result, bruises, image_id):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
 
         pixel_centimeter_ratio = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MODULE_SIZE_PREDICTION_PIXEL_CENTIMETER_RATIO.name)
+
+        affeted_cuts = {}
 
         if bruises is not None:
             for bruise in bruises:
@@ -215,12 +218,20 @@ class BruiseUtils:
                 mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
                 mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
 
-                midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
-                                                                                            side_detection_result)
+                midpoint_is_inside_detection = ObjectDetectionUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
+                                                                                                   side_detection_result)
 
                 diameter_cm, width, height = BruiseUtils.calculate_extent_bruise(binary_mask, bruise, pixel_centimeter_ratio)
 
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
+
+                cut_name = CutsEnum.get_name_by_value(cut_id)
+
+                if cut_name not in affeted_cuts:
+                    affeted_cuts[cut_name] = set([bruise_label])
+                else:
+                    affeted_cuts[cut_name].add(bruise_label)
+
 
                 if cut_id != 0:
 
@@ -228,18 +239,17 @@ class BruiseUtils:
 
                         if bruise_confidence > bruise_confidence_threshold:
 
-
-
                             bruise_id = BruisesEnum[bruise_label].value
 
-                            BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
+                            BruiseController.insert(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
+                return affeted_cuts
 
     @staticmethod
     def get_bruise_integration_data(image_id):
 
         output_data = []
 
-        bruises_in_image = BruiseController.get_bruises_by_image_id(image_id)
+        bruises_in_image = BruiseController.get_by_image_id(image_id)
 
         for bruise_in_image in bruises_in_image:
             bruise_id = bruise_in_image[5]

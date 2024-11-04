@@ -7,6 +7,7 @@ import imutils
 from src.controller.image_controller import ImageController
 from src.controller.carcass_information_controller import CarcassInformationController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
+from src.controller.cuts_grading_controller import CutsGradingController
 from src.enum.conformation_enum import ConformationEnum
 from src.enum.configuration_enum import ConfigurationEnum
 from src.utils.file_utils import FileUtils
@@ -17,13 +18,10 @@ from src.utils.cuts_utils import CutsUtils
 from src.utils.watermark_utils import WatermarkUtils
 from src.utils.grease_color_utils import GreaseColorUtils
 from src.enum.image_state_enum import ImageStateEnum
-from src.enum.system_version_enum import SystemVersionEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
-from src.enum.rump_error_enum import ClassificationErrorRumpEnum
-from src.enum.rump_enum import ClassificationRumpEnum
 from src.enum.hump_enum import HumpEnum
+from src.enum.cuts_enum import CutsEnum
 from src.utils.hump_utils import HumpUtils
-from src.utils.rump_utils import RumpUtils
 from src.utils.breed_utils import BreedUtils
 import cv2
 
@@ -92,9 +90,9 @@ class MeatClassifierHandler:
             rump_image = None
 
             MeatClassifierHandler.logger.info('Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
-            ImageController.update_image_status(ImageStateEnum.PROCESSING.value, image_id)
+            ImageController.update_status(ImageStateEnum.PROCESSING.value, image_id)
 
-            skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, rump_detector = classifier_suite
+            skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, cuts_classification_models = classifier_suite
 
             images_main_path = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.IMAGES_MAIN_PATH.name)
 
@@ -115,13 +113,13 @@ class MeatClassifierHandler:
                 cut_lines_image = image.copy()
 
                 MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
-                classification_id, filter_label, filter_confidence = ClassifierUtils.get_classification_id(image_id, image,
+                classification_id, filter_label, filter_confidence = ClassifierUtils.get_classification_id(image,
                                                                             skeleton_detector, filter_detector,
                                                                             meat_detector)
 
-                ImageController.update_filter_classification_data(filter_label, filter_confidence, image_id)
+                ImageController.update_filter_information(filter_label, filter_confidence, image_id)
 
-                side_detection_result = ClassifierUtils.classify(side_detector, image)
+                side_detection_result = ClassifierUtils.predict(side_detector, image)
 
                 if side_detection_result is None:
                     classification_id = ClassificationErrorEnum.ERRO_96.value
@@ -131,9 +129,9 @@ class MeatClassifierHandler:
                         ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value):
 
                     MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
-                    bruise_detection_results = bruise_detector.detect(image)
+                    bruise_detection_results = bruise_detector.predict(image)
                     MeatClassifierHandler.logger.info('Detecting stamps. Image ID: {}'.format(image_id))
-                    stamp_detection_results = stamp_detector.detect(image)
+                    stamp_detection_results = stamp_detector.predict(image)
 
                     MeatClassifierHandler.logger.info('Sanitizing bruises. Image ID: {}'.format(image_id))
                     sanitized_bruises = BruiseUtils.sanitize_bruises(bruise_detection_results, stamp_detection_results)
@@ -146,33 +144,11 @@ class MeatClassifierHandler:
                     cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
 
-                    rump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_RUMP_CLASSIFICATION.name)
-
-                    if rump_classification_is_enabled:
-                        rump_image, cut_mask_rump, cut_rump_id = CutsUtils.get_cut_mask(cuts_coords, image)
-
-
-                    cut_lines_image, rump_is_bruised = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
-                                                                                  sanitized_bruises, cuts_mask, cut_mask_rump)
-
-                    if not rump_is_bruised:
-                        rump_result = ClassifierUtils.classify(rump_detector, rump_image, True)
-                        if rump_result:
-                            rump_id = RumpUtils.get_rump_id(rump_result)
-                    else:
-                        rump_id = RumpUtils.get_bruise_deviation(rump_is_bruised)
-
-                    bruise_deviation = RumpUtils.classify_meat_deviation(classification_id, rump_id)
-
-                    # CarcassInformationController.insert_rump(image_id, aux_grading_id, cut_id, type)
-                    CarcassInformationController.insert_rump(image_id, int(rump_id), cut_rump_id, bruise_deviation)
-
-
                     MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
                     CutsUtils.save_cuts_data(image_id, cuts_coords)
 
                     MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
-                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
+                    affected_cuts = BruiseUtils.save_bruises_data_and_get_all_affected_cuts(cuts_mask, binary_mask, side_detection_result, sanitized_bruises, image_id)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
@@ -194,7 +170,7 @@ class MeatClassifierHandler:
 
 
                     if conformation_classification_is_enabled:
-                        conformation_result = ClassifierUtils.classify(conformation_detector, image)
+                        conformation_result = ClassifierUtils.predict(conformation_detector, image)
 
                         if conformation_result is not None:
                             conformation_id = ConformationEnum[conformation_result['label']].value
@@ -220,7 +196,7 @@ class MeatClassifierHandler:
                     if hump_classification_is_enabled:
                       if side_detection_result['label'] == 'LADO_B':
                         MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
-                        hump_result = ClassifierUtils.classify(hump_detector, image)
+                        hump_result = ClassifierUtils.predict(hump_detector, image)
                         hump_id = HumpUtils.get_hump_id(hump_result)
                       else:
                         hump_id = HumpEnum.AUSENTE.value
@@ -231,18 +207,50 @@ class MeatClassifierHandler:
                     breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.MODULE_BREED_PREDICTION.name)
 
                     if breed_classification_is_enabled:
-                        breed_result = ClassifierUtils.classify(breed_detector, image)
+                        breed_result = ClassifierUtils.predict(breed_detector, image)
                         if breed_result:
                             breed_id = BreedUtils.get_breed_id(breed_result)
                             CarcassInformationController.update_breed(image_id, breed_id)
 
+                module_cut_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
+                    ConfigurationEnum.MODULE_CUT_CLASSIFICATION.name)
+
+                if module_cut_classification_is_enabled:
+
+                    for cut_name, cut_model in cuts_classification_models.items():
+
+                        if cut_name in affected_cuts:
+
+                            cut_image = CutsUtils.get_cut_image_without_background(cuts_coords, image, cut_name)
+
+                            cut_classification_id = ClassifierUtils.get_cut_classification_id(cut_model, cut_image, affected_cuts, cut_name)
+
+                            cut_and_meat_classification_correlation =  ClassifierUtils.get_cut_and_meat_classification_correlation(classification_id, cut_classification_id)
+
+                            CutsGradingController.insert(image_id, cut_classification_id, CutsEnum[cut_name].value, cut_and_meat_classification_correlation)
 
 
 
 
+
+                        # if CutsEnum.PICANHA.name in affected_cuts:
+                        #
+                        # if cut_classification_result:
+                        #     rump_id = RumpUtils.get_rump_id(rump_result)
+                        #
+                        # if not rump_is_bruised:
+                        #
+                        #
+                        # else:
+                        #     rump_id = RumpUtils.get_bruise_deviation(rump_is_bruised)
+                        #
+                        # bruise_deviation = RumpUtils.classify_meat_deviation(classification_id, rump_id)
+                        #
+                        # # CarcassInformationController.insert_rump(image_id, aux_grading_id, cut_id, type)
+                        # CarcassInformationController.insert_rump(image_id, int(rump_id), cut_rump_id, bruise_deviation)
 
                 generate_watermark_isenabled = ConfigurationStorageController.get_config_data_value(
-                ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
+                    ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
 
                 if generate_watermark_isenabled:
 
@@ -262,26 +270,26 @@ class MeatClassifierHandler:
 
             else:
                 classification_id = ClassificationErrorEnum.ERRO_91.value
-                ImageController.update_filter_classification_data('NAO_CLASSIFICADO',
-                                                                  0.0, image_id)
+                ImageController.update_filter_information('NAO_CLASSIFICADO',
+                                                          0.0, image_id)
 
 
 
             MeatClassifierHandler.logger.info(
                 'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
-            ImageController.update_image_classification(classification_id, image_id)
+            ImageController.update_classification(classification_id, image_id)
             MeatClassifierHandler.logger.info(
                 'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name, image_id))
-            ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
+            ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
         except Exception as ex:
             traceback.print_exc()
             classification_id = ClassificationErrorEnum.ERRO_96.value
             MeatClassifierHandler.logger.info(
                 'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
-            ImageController.update_image_classification(classification_id, image_id)
+            ImageController.update_classification(classification_id, image_id)
             MeatClassifierHandler.logger.info(
                 'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name,
                                                                        image_id))
-            ImageController.update_image_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
+            ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
 
         return image_id

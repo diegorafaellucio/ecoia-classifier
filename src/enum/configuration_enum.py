@@ -1,5 +1,5 @@
 from enum import Enum
-
+from src.utils.cuts_utils import CutsUtils
 
 from src.enum.detection_approach_enum import DetectionApproachEnum
 
@@ -90,7 +90,8 @@ class ConfigurationEnum(Enum):
 
     MODULE_BREED_PREDICTION = ('MODULE_BREED_PREDICTION', False)
 
-    MODULE_RUMP_CLASSIFICATION = ('MODULE_RUMP_CLASSIFICATION', False)
+    MODULE_CUT_CLASSIFICATION = ('MODULE_CUT_CLASSIFICATION', False)
+    MODULE_CUT_CLASSIFICATION_AVAILABLE_MODELS = ('MODULE_CUT_CLASSIFICATION_AVAILABLE_MODELS', CutsUtils.get_cuts_with_classification_enabled())
 
     SLAUGHTER_START_HOUR = ('SLAUGHTER_START_HOUR', 4)
 

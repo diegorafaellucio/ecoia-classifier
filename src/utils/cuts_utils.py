@@ -9,6 +9,20 @@ from src.controller.cut_controller import CutController
 class CutsUtils:
     logger = logging.getLogger(__name__)
 
+    @staticmethod
+    def get_cuts_with_classification_enabled():
+        cuts_with_classification_enabled = []
+
+        for item_key, item in CutsEnum.__members__.items():
+            key = item.key
+            model_name = item.model_name
+
+            if model_name != "":
+                cuts_with_classification_enabled.append(key)
+
+        return cuts_with_classification_enabled
+
+
 
     @staticmethod
     def get_cuts(image, side_detection_result, side_a_shape_predictor, side_b_shape_predictor):
@@ -52,43 +66,40 @@ class CutsUtils:
         return cut_lines_image, cuts_mask, binary_mask
 
     @staticmethod
-    def get_cut_mask(cut_coords, image):
-        # cut_lines_image = image.copy()
-        # cuts_mask = np.zeros(image.shape[:2], dtype=np.uint8)
-        cut_rump_cap = None
-        cut_id = None
+    def get_cut_image_without_background(cut_coords, image, cut_name):
         square_size = 512
 
-        for cut_coord_key, cut_coord_data in cut_coords.items():
-            if cut_coord_key.upper() == 'PICANHA':
-                cut_id = CutsEnum[cut_coord_key.upper()].value
+        cut_coord_data = cut_coords[cut_name]
 
-                p_min = np.min(cut_coord_data, axis=0)
-                p_max = np.max(cut_coord_data, axis=0)
+        p_min = np.min(cut_coord_data, axis=0)
+        p_max = np.max(cut_coord_data, axis=0)
 
-                p_min[p_min < 0] = 0
-                p_max[p_max < 0] = 0
+        p_min[p_min < 0] = 0
+        p_max[p_max < 0] = 0
 
-                points = np.reshape(cut_coord_data, (-1, 1, 2))
-                mask = np.zeros((image.shape[0], image.shape[1]))
-                mask = cv2.fillPoly(mask, [points], 255)
-                _, mask = cv2.threshold(mask, 10, 255, cv2.THRESH_BINARY)
+        points = np.reshape(cut_coord_data, (-1, 1, 2))
+        mask = np.zeros((image.shape[0], image.shape[1]))
+        mask = cv2.fillPoly(mask, [points], 255)
+        _, mask = cv2.threshold(mask, 10, 255, cv2.THRESH_BINARY)
 
-                mask_roi = mask[p_min[1]:p_max[1], p_min[0]:p_max[0]]
+        mask_roi = mask[p_min[1]:p_max[1], p_min[0]:p_max[0]]
 
-                mask_roi = cv2.resize(mask_roi, (square_size, square_size))
-                _, mask_roi = cv2.threshold(mask_roi, 10, 255, cv2.THRESH_BINARY)
-                mask_roi = np.uint8(mask_roi)
+        mask_roi = cv2.resize(mask_roi, (square_size, square_size))
+        _, mask_roi = cv2.threshold(mask_roi, 10, 255, cv2.THRESH_BINARY)
+        mask_roi = np.uint8(mask_roi)
 
-                source_roi = image[p_min[1]-1:p_max[1]+1, p_min[0]-1:p_max[0]+1]
-                source_roi = cv2.resize(source_roi,(square_size,square_size))
-                cut_rump_cap = cv2.bitwise_and(source_roi,source_roi, mask=mask_roi)
+        source_roi = image[p_min[1]-1:p_max[1]+1, p_min[0]-1:p_max[0]+1]
+        source_roi = cv2.resize(source_roi,(square_size,square_size))
+        cut_image = cv2.bitwise_and(source_roi,source_roi, mask=mask_roi)
 
-        return cut_rump_cap, mask, cut_id
+
+        return cut_image
 
     @staticmethod
     def save_cuts_data(image_id, cuts_coords):
         for cut_coord_key, cut_coord_data in cuts_coords.items():
-            CutController.insert_into_cut(CutsEnum[cut_coord_key.upper()].value, image_id, cut_coord_data)
+            CutController.insert(CutsEnum[cut_coord_key.upper()].value, image_id, cut_coord_data)
+
+
 
 
