@@ -10,6 +10,7 @@
     <mapping directory="$PROJECT_DIR$/data/models/grease" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/hump" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/meat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/models/rump" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/side" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/skeleton" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/stamp" vcs="Git" />

@@ -3,7 +3,7 @@ import re
 class CutController:
 
     @staticmethod
-    def insert_into_cut(cut_id, image_id, coordinates):
+    def insert(cut_id, image_id, coordinates):
         with connection.cursor() as cursor:
             sql = "insert into cut (cut_id, image_id, coordinates, created_at, updated_at) values ({}, {}, '{}', now(), now())".format(
                     cut_id, image_id, coordinates)

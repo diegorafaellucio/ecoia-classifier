@@ -1,13 +1,13 @@
 import pickle
 
-class Detector():
+class Classifier():
 
     def __init__(self, weights_path):
         with open(weights_path,'rb') as file:
             self.model = pickle.load(file)
 
 
-    def detect(self, image_features):
+    def predict(self, image_features):
 
         # print('detectando lesoes na imagem', image.shape)
 

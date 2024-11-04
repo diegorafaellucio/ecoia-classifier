@@ -45,7 +45,7 @@ class ModelUtils:
                 model_weight_path = "data/models/{}/weight.pt".format(model)
                 model_approach = DetectionApproachEnum.ULTRALYTICS.value
 
-                ModelController.insert_into_aux_model(model, most_recent_branch, model_weight_path, model_approach)
+                ModelController.insert(model, most_recent_branch, model_weight_path, model_approach)
 
                 ModelUtils.logger.info('{} model: initialized with branch {}'.format(model, most_recent_branch))
             else:
@@ -70,7 +70,7 @@ class ModelUtils:
 
             GitUtils.remove_all_not_active_branchs(model_current_version, model_path)
 
-            model_id = ModelController.get_model_id(model)
+            model_id = ModelController.get_id(model)
 
 
             model_most_recent_version = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path,
@@ -83,7 +83,7 @@ class ModelUtils:
 
 
                 ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, model_most_recent_version)
-                ModelController.update_model_version(model_most_recent_version, model)
+                ModelController.update_version(model_most_recent_version, model)
 
                 ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, model_most_recent_version))
             else:

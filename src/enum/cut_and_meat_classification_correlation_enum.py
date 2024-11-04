@@ -1,15 +1,11 @@
 from enum import Enum
 
 
-class BruisesEnum(Enum):
-    FALHA = ("FALHA", 1)
-    GRAVE = ("GRAVE", 2)
-    LEVE = ("LEVE", 3)
-    MODERADA = ("MODERADA", 4)
+class CutAndMeatClassificationCorrelationEnum(Enum):
+    POSITIVE = ("POSITIVE", "POSITIVE")
+    NEGATIVE = ("NEGATIVE", "POSITIVE")
+    IN_COMPLIANCE = ("IN_COMPLIANCE", "IN_COMPLIANCE")
 
-    def __init__(self, key, value):
-        self._key = key
-        self._value = value
     @property
     def key(self):
         return self._key

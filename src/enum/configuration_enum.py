@@ -1,5 +1,5 @@
 from enum import Enum
-
+from src.utils.cuts_utils import CutsUtils
 
 from src.enum.detection_approach_enum import DetectionApproachEnum
 
@@ -41,6 +41,9 @@ class ConfigurationEnum(Enum):
 
     BREED_CLASSIFICATION_WEIGHTS_PATH = ('BREED_CLASSIFICATION_WEIGHTS_PATH', 'data/models/breed/weight.pt')
     BREED_CLASSIFICATION_APPROACH = ('BREED_CLASSIFICATION_APPROACH', DetectionApproachEnum.ULTRALYTICS.value)
+
+    RUMP_CLASSIFICATION_WEIGHTS_PATH = ('RUMP_CLASSIFICATION_WEIGHTS_PATH', 'data/models/rump/weight.pt')
+    RUMP_CLASSIFICATION_APPROACH = ('RUMP_CLASSIFICATION_APPROACH', DetectionApproachEnum.ULTRALYTICS.value)
 
     MEAT_CLASSIFIER_MODULE_IS_ACTIVE = ('MEAT_CLASSIFIER_MODULE_IS_ACTIVE', False)
 
@@ -87,6 +90,9 @@ class ConfigurationEnum(Enum):
     MODULE_HUMP_PREDICTION = ('MODULE_HUMP_PREDICTION', False)
 
     MODULE_BREED_PREDICTION = ('MODULE_BREED_PREDICTION', False)
+
+    MODULE_CUT_CLASSIFICATION = ('MODULE_CUT_CLASSIFICATION', False)
+    MODULE_CUT_CLASSIFICATION_AVAILABLE_MODELS = ('MODULE_CUT_CLASSIFICATION_AVAILABLE_MODELS', CutsUtils.get_cuts_with_classification_enabled())
 
     SLAUGHTER_START_HOUR = ('SLAUGHTER_START_HOUR', 4)
 

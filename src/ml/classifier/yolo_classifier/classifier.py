@@ -21,7 +21,7 @@ from utils.torch_utils import select_device
 from utils.augmentations import letterbox
 
 
-class Detector():
+class Classifier():
 
     def __init__(self, weights_path, device='', dnn=False, image_size=[416, 416], augment=False, visualize=False,
                  conf_thres=0.005, iou_thres=0.15, max_det=50, classes=None, agnostic_nms=False,  half=False, bs=1):
@@ -54,7 +54,7 @@ class Detector():
         if self.pt and self.device.type != 'cpu':
             self.model(torch.zeros(1, 3, *image_size).to(self.device).type_as(next(self.model.model.parameters())))
 
-    def detect(self, image):
+    def predict(self, image):
 
         # print('detectando lesoes na imagem', image.shape)
 
