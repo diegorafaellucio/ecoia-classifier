@@ -226,11 +226,18 @@ class MeatClassifierHandler:
                                                                                               affected_cuts,
                                                                                               cut_name)
 
+
+
+                            CutsGradingController.insert(image_id, cut_classification_id, CutsEnum[cut_name].value)
+
                             cut_and_meat_classification_correlation = ClassifierUtils.get_cut_and_meat_classification_correlation(
                                 classification_id, cut_classification_id)
 
-                            CutsGradingController.insert(image_id, cut_classification_id, CutsEnum[cut_name].value,
-                                                         cut_and_meat_classification_correlation)
+                            if cut_and_meat_classification_correlation is not None:
+                                CutsGradingController.update_correlation_information(image_id, cut_and_meat_classification_correlation)
+
+
+
 
 
 

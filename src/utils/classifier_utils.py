@@ -91,14 +91,16 @@ class ClassifierUtils:
     @staticmethod
     def get_cut_and_meat_classification_correlation(meat_classification_id, cut_classification_id):
 
-        correlation = ""
+        correlation = None
 
-        if meat_classification_id == cut_classification_id:
-            correlation = CutAndMeatClassificationCorrelationEnum.IN_COMPLIANCE.value
-        elif cut_classification_id > meat_classification_id:
-            correlation = CutAndMeatClassificationCorrelationEnum.POSITIVE.value
-        elif cut_classification_id < meat_classification_id:
-            correlation = CutAndMeatClassificationCorrelationEnum.NEGATIVE.value
+        if cut_classification_id not in (ClassificationErrorEnum.ERRO_200.value, ClassificationErrorEnum.ERRO_201.value, ClassificationErrorEnum.ERRO_202.value, ClassificationErrorEnum.ERRO_203.value):
+
+            if meat_classification_id == cut_classification_id:
+                correlation = CutAndMeatClassificationCorrelationEnum.IN_COMPLIANCE.value
+            elif cut_classification_id < meat_classification_id:
+                correlation = CutAndMeatClassificationCorrelationEnum.POSITIVE.value
+            elif cut_classification_id > meat_classification_id:
+                correlation = CutAndMeatClassificationCorrelationEnum.NEGATIVE.value
 
         return correlation
 
