@@ -1,11 +1,10 @@
-from src.utils.detector_utils import DetectorUtils
-from src.controller.configuration_storage_controller import ConfigurationStorageController
-from src.enum.configuration_enum import ConfigurationEnum
 from src.enum.classification_error_enum import ClassificationErrorEnum
-from src.controller.image_controller import ImageController
 from src.enum.meat_enum import MeatEnum
 from src.enum.bruises_enum import BruisesEnum
 from src.enum.cut_and_meat_classification_correlation_enum import CutAndMeatClassificationCorrelationEnum
+from src.utils.object_detection_utils import ObjectDetectionUtils
+from src.utils.image_classification_utils import ImageClassificationUtils
+
 class ClassifierUtils:
 
 
@@ -63,58 +62,41 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def get_classification_id(image, skeleton_detector, filter_detector, meat_detector):
+    def get_classification_id(image, side_detector, meat_detector):
 
         classification_id = None
 
-        # ClassifierHandler.logger.info(
-        #     f'Checking if a skeleton is present to sequence: {sequence_number} and side: {side_number}')
-
-        skeleton_detection_result = ClassifierUtils.classify(skeleton_detector, image)
-
-        if skeleton_detection_result is None:
-            classification_id = ClassificationErrorEnum.ERRO_92.value
-            filter_label = 'NAO_CLASSIFICADO'
-            filter_confidence = 0.0
-
-        side_detection_result = ClassifierUtils.classify(side_detector, image)
+        side_detection_result = ClassifierUtils.predict(side_detector, image)
 
         if side_detection_result is None:
             classification_id = ClassificationErrorEnum.ERRO_102.value
 
         else:
-            filter_detection_result = ClassifierUtils.classify(filter_detector, image)
 
-            if filter_detection_result is None:
-                classification_id = ClassificationErrorEnum.ERRO_95.value
-
-
-                filter_label = 'NAO_CLASSIFICADO'
-                filter_confidence = 0.0
-            else:
-
-                filter_label = filter_detection_result['label']
-                filter_confidence = filter_detection_result['confidence']
-
-                filter_black_list = ConfigurationStorageController.get_config_data_value(
-                    ConfigurationEnum.FILTER_BLACK_LIST.name)
-
-                filter_in_black_List = ClassifierUtils.predicted_result_is_in_black_list(
-                    filter_detection_result, filter_black_list)
-
-                if filter_in_black_List:
-                    classification_id = ClassificationErrorEnum.ERRO_97.value
-                else:
-
-            meat_detection_result = ClassifierUtils.classify(meat_detector, image)
+            meat_detection_result = ClassifierUtils.predict(meat_detector, image)
 
             if meat_detection_result is None:
                 classification_id = ClassificationErrorEnum.ERRO_101.value
             else:
-                meat_detection_label = meat_detection_result['label']
+                meat_classification_label = meat_detection_result['label']
 
-                        meat_classification_id = MeatEnum[meat_classification_label].value['database_id']
+                meat_classification_id = MeatEnum[meat_classification_label].value['database_id']
 
-                        classification_id = meat_classification_id
+                classification_id = meat_classification_id
 
-        return classification_id, filter_label, filter_confidence, side_detection_result
+        return classification_id, side_detection_result
+
+    @staticmethod
+    def get_cut_and_meat_classification_correlation(meat_classification_id, cut_classification_id):
+
+        correlation = ""
+
+        if meat_classification_id == cut_classification_id:
+            correlation = CutAndMeatClassificationCorrelationEnum.IN_COMPLIANCE.value
+        elif cut_classification_id > meat_classification_id:
+            correlation = CutAndMeatClassificationCorrelationEnum.POSITIVE.value
+        elif cut_classification_id < meat_classification_id:
+            correlation = CutAndMeatClassificationCorrelationEnum.NEGATIVE.value
+
+        return correlation
+

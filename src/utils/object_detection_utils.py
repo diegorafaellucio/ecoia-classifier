@@ -3,7 +3,7 @@ from src.controller.configuration_storage_controller import ConfigurationStorage
 from src.enum.configuration_enum import ConfigurationEnum
 
 
-class DetectorUtils:
+class ObjectDetectionUtils:
 
     @staticmethod
     def get_best_result(results, height=0, width=0):

@@ -11,7 +11,7 @@ class GreaseColorUtils:
 
 
     @staticmethod
-    def classify(detector, image, binary_mask):
+    def predict(detector, image, binary_mask):
 
         image_without_background = GreaseColorUtils.remove_background(image, binary_mask)
 
