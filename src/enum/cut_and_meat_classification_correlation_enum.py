@@ -3,7 +3,7 @@ from enum import Enum
 
 class CutAndMeatClassificationCorrelationEnum(Enum):
     POSITIVE = ("POSITIVE", "POSITIVE")
-    NEGATIVE = ("NEGATIVE", "POSITIVE")
+    NEGATIVE = ("NEGATIVE", "NEGATIVE")
     IN_COMPLIANCE = ("IN_COMPLIANCE", "IN_COMPLIANCE")
 
     def __init__(self, key, value):
