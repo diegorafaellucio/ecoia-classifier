@@ -20,7 +20,7 @@ class CutsGradingController:
     def update_correlation_information(image_id, meat_and_cut_correlation):
         with connection.cursor() as cursor:
             sql = "update cuts_grading set carcacass_cut_classification_correlation = '{}'  where image_id =  {};".format(
-                image_id, meat_and_cut_correlation)
+                meat_and_cut_correlation, image_id)
 
             cursor.execute(sql)
             results = cursor.fetchall()
