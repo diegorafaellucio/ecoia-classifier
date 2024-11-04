@@ -219,22 +219,22 @@ class BruiseUtils:
 
                     cut_name = CutsEnum.get_name_by_value(cut_id)
 
+                    if cut_name != 0:
+                        if cut_name not in affeted_cuts:
+                            affeted_cuts[cut_name] = set([bruise_label])
+                        else:
+                            affeted_cuts[cut_name].add(bruise_label)
 
-                    if cut_name not in affeted_cuts:
-                        affeted_cuts[cut_name] = set([bruise_label])
-                    else:
-                        affeted_cuts[cut_name].add(bruise_label)
 
+                        if cut_id != 0:
 
-                    if cut_id != 0:
+                            if midpoint_is_inside_detection:
 
-                        if midpoint_is_inside_detection:
+                                if bruise_confidence > bruise_confidence_threshold:
 
-                            if bruise_confidence > bruise_confidence_threshold:
+                                    bruise_id = BruisesEnum[bruise_label].value
 
-                                bruise_id = BruisesEnum[bruise_label].value
-
-                                BruiseController.insert(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
+                                    BruiseController.insert(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
                 except:
                     pass
 

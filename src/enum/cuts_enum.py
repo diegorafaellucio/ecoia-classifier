@@ -55,4 +55,5 @@ class CutsEnum(Enum):
         for item in cls:
             if item.value == value:
                 return item.key
-        raise KeyError(f'vale {value} not found in CutsEnum.')
+
+        return 0
