@@ -219,18 +219,18 @@ class MeatClassifierHandler:
 
                         for cut_name, cut_model in cuts_classification_models.items():
 
-                            if cut_name in affected_cuts:
-                                cut_image = CutsUtils.get_cut_image_without_background(cuts_coords, image, cut_name)
 
-                                cut_classification_id = ClassifierUtils.get_cut_classification_id(cut_model, cut_image,
-                                                                                                  affected_cuts,
-                                                                                                  cut_name)
+                            cut_image = CutsUtils.get_cut_image_without_background(cuts_coords, image, cut_name)
 
-                                cut_and_meat_classification_correlation = ClassifierUtils.get_cut_and_meat_classification_correlation(
-                                    classification_id, cut_classification_id)
+                            cut_classification_id = ClassifierUtils.get_cut_classification_id(cut_model, cut_image,
+                                                                                              affected_cuts,
+                                                                                              cut_name)
 
-                                CutsGradingController.insert(image_id, cut_classification_id, CutsEnum[cut_name].value,
-                                                             cut_and_meat_classification_correlation)
+                            cut_and_meat_classification_correlation = ClassifierUtils.get_cut_and_meat_classification_correlation(
+                                classification_id, cut_classification_id)
+
+                            CutsGradingController.insert(image_id, cut_classification_id, CutsEnum[cut_name].value,
+                                                         cut_and_meat_classification_correlation)
 
 
 

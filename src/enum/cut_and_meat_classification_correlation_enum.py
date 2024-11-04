@@ -6,6 +6,9 @@ class CutAndMeatClassificationCorrelationEnum(Enum):
     NEGATIVE = ("NEGATIVE", "POSITIVE")
     IN_COMPLIANCE = ("IN_COMPLIANCE", "IN_COMPLIANCE")
 
+    def __init__(self, key, value):
+        self._key = key
+        self._value = value
     @property
     def key(self):
         return self._key
