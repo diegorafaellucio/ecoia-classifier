@@ -3,7 +3,7 @@ CREATE TABLE `cuts_grading` (
   `image_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `aux_grading_id` int NOT NULL,
   `cut_id` int NOT NULL,
-  `type` enum('POSITIVE','NEGATIVE','IN_COMPLIANCE') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `carcacass_cut_classification_correlation` enum('POSITIVE','NEGATIVE','IN_COMPLIANCE') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `created_at` datetime DEFAULT (now()),
   `updated_at` datetime DEFAULT (now()),
   PRIMARY KEY (`id`),
