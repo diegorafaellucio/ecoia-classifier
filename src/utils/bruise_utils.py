@@ -10,7 +10,7 @@ from src.controller.bruise_controller import BruiseController
 from src.controller.aux_bruise_controller import AuxBruiseController
 from src.controller.aux_cut_controller import AuxCutController
 from src.enum.configuration_enum import ConfigurationEnum
-
+from src.enum.level_extension_lesion_enum import LevelExtensionLesionEnum
 
 class BruiseUtils:
     logger = logging.getLogger(__name__)
@@ -124,7 +124,7 @@ class BruiseUtils:
         return bruise_detections
 
     @staticmethod
-    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask):
+    def draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result, bruises, cuts_mask, binary_mask):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
@@ -146,6 +146,15 @@ class BruiseUtils:
 
                 bruise_x_max = bruise['bottomright']['x']
                 bruise_y_max = bruise['bottomright']['y']
+
+
+                roi  = BruiseUtils.get_roi(binary_mask, bruise)
+
+                if roi !=-1:
+                    bruise_x_min = roi[0][0]
+                    bruise_y_min = roi[0][1]
+                    bruise_x_max = roi[1][0]
+                    bruise_y_max = roi[1][1]
 
                 mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
                 mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
@@ -175,12 +184,12 @@ class BruiseUtils:
                             rgb_bruise_color = ImageColor.getrgb(hex_bruise_color)
                             bgr_bruise_color = (rgb_bruise_color[2], rgb_bruise_color[1], rgb_bruise_color[0])
 
-                            cut_lines_image = cv2.circle(cut_lines_image, (mid_x_coord, mid_y_coord), bruise_radius
+                            cut_lines_image = cv2.rectangle(cut_lines_image, (bruise_x_min, bruise_y_min), (bruise_x_max, bruise_y_max)
                                                          , bgr_bruise_color, 5)
         return cut_lines_image
 
     @staticmethod
-    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
+    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id, extension_lesion_is_enable=False):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
@@ -207,8 +216,9 @@ class BruiseUtils:
 
                 midpoint_is_inside_detection = DetectorUtils.coord_is_inside_detection_area([mid_x_coord, mid_y_coord],
                                                                                             side_detection_result)
-
-                diameter_cm, width, height = BruiseUtils.calculate_extent_bruise(binary_mask, bruise, pixel_centimeter_ratio)
+                if extension_lesion_is_enable and data_lesion !='FALHA':
+                    diameter_cm, width, height = BruiseUtils.calculate_extent_bruise(binary_mask, bruise, pixel_centimeter_ratio)
+                    bruise_level_id = BruiseUtils.get_level_lesion_id(diameter_cm)
 
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
@@ -218,12 +228,12 @@ class BruiseUtils:
 
                         if bruise_confidence > bruise_confidence_threshold:
 
-
-
                             bruise_id = BruisesEnum[bruise_label].value
-
-                            BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm)
-
+                            if extension_lesion_is_enable and data_lesion != 'FALHA':
+                                BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm, bruise_level_id)
+                            else:
+                                BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,
+                                                                    [mid_x_coord, mid_y_coord])
     @staticmethod
     def get_bruise_integration_data(image_id):
 
@@ -339,4 +349,28 @@ class BruiseUtils:
         height = round(height * pixel_centimeter_ratio, 2)
         diameter_cm = round(diameter*pixel_centimeter_ratio,2)
 
+        diameter_cm = BruiseUtils.adjust_value_extension_lesion(diameter_cm)
+        height = BruiseUtils.adjust_value_extension_lesion(height)
+        width = BruiseUtils.adjust_value_extension_lesion(width)
+
+
         return diameter_cm, width, height
+
+    @staticmethod
+    def adjust_value_extension_lesion(value_extension_lesion):
+        decimal = value_extension_lesion - int(value_extension_lesion)
+        if decimal >= 0.5:
+            value_extension_lesion_adjusted = int(value_extension_lesion) + 1
+        else:
+            value_extension_lesion_adjusted  = int(value_extension_lesion)
+
+        return value_extension_lesion_adjusted
+
+    @staticmethod
+    def get_level_lesion_id(value_extension_lesion):
+        if value_extension_lesion <= 10:
+            return LevelExtensionLesionEnum.NIVEL_I.value
+        elif value_extension_lesion>=11 and value_extension_lesion <=20:
+            return LevelExtensionLesionEnum.NIVEL_II.value
+        else:
+            return LevelExtensionLesionEnum.NIVEL_III.value
