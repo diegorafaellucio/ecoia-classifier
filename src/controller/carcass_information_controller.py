@@ -99,4 +99,4 @@ class CarcassInformationController:
             cursor.close()
             connection.close()
             return results
-
+        

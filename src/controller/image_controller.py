@@ -28,7 +28,7 @@ class ImageController:
             return results[0]
 
     @staticmethod
-    def get_images_to_integrate(limit):
+    def get_to_integrate(limit):
         with transaction.atomic():
             with connection.cursor() as cursor:
                 sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {}; '.format(
@@ -41,7 +41,7 @@ class ImageController:
                 return results
 
     @staticmethod
-    def update_image_status(status, image_id):
+    def update_status(status, image_id):
         with connection.cursor() as cursor:
             query = "update image set state = '{}', processed_at = now()  where id = '{}'".format(status, image_id)
             cursor.execute(query)
@@ -49,7 +49,7 @@ class ImageController:
             connection.close()
 
     @staticmethod
-    def update_side_classification_data(classification, image_id):
+    def update_side_information(classification, image_id):
         with connection.cursor() as cursor:
             query = "update image set aux_side_id = '{}'  where id = '{}'".format(classification, image_id)
             cursor.execute(query)
@@ -57,7 +57,7 @@ class ImageController:
             connection.close()
 
     @staticmethod
-    def update_filter_classification_data(filter_label, filter_confidence, image_id):
+    def update_filter_information(filter_label, filter_confidence, image_id):
         with connection.cursor() as cursor:
             query = "update image set filter_label = '{}', filter_confidence = '{}', processed_at = now()  where id = '{}'".format(
                 filter_label, filter_confidence, image_id)
@@ -66,7 +66,7 @@ class ImageController:
             connection.close()
 
     @staticmethod
-    def update_image_classification(classification, image_id):
+    def update_classification(classification, image_id):
         with connection.cursor() as cursor:
             query = "update image set aux_grading_id = '{}'  where id = '{}'".format(classification, image_id)
             cursor.execute(query)

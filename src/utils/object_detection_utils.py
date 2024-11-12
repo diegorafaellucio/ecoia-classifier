@@ -3,21 +3,20 @@ from src.controller.configuration_storage_controller import ConfigurationStorage
 from src.enum.configuration_enum import ConfigurationEnum
 
 
-class DetectorUtils:
+class ObjectDetectionUtils:
 
     @staticmethod
-    def get_best_detection(detections, height, width, get_intersection_score):
+    def get_best_result(results, height=0, width=0):
 
         best_detection = None
-        intersection_score = 0
-        max_condidence_score = 0
+        max_confidence_score = 0
         max_intersection_score = 0
 
-        if detections is not None:
-            for detection in detections:
+        if results is not None:
+            for result in results:
 
-                bottom_right = detection['bottomright']
-                top_left = detection['topleft']
+                bottom_right = result['bottomright']
+                top_left = result['topleft']
 
                 x_min = top_left['x']
                 x_max = bottom_right['x']
@@ -25,9 +24,9 @@ class DetectorUtils:
                 y_min = top_left['y']
                 y_max = bottom_right['y']
 
-                confidence = detection['confidence']
+                confidence = result['confidence']
 
-                intersection_score = DetectorUtils.get_intersection_score(height, width, (x_min, y_min, x_max, y_max))
+                intersection_score = ObjectDetectionUtils.get_intersection_score(height, width, (x_min, y_min, x_max, y_max))
 
                 detection_width = x_max - x_min
                 detection_height = y_max - y_min
@@ -35,18 +34,13 @@ class DetectorUtils:
                 if not (detection_width > 0) or not (detection_height > 0):
                     pass
 
+                if intersection_score > max_intersection_score and confidence > max_confidence_score:
+                    max_confidence_score = confidence
 
-                if intersection_score > max_intersection_score and confidence > max_condidence_score:
-                    max_condidence_score = confidence
-
-                    best_detection = detection
+                    best_detection = result
                     max_intersection_score = intersection_score
 
-
-        if get_intersection_score:
-            return best_detection, intersection_score
-        else:
-            return best_detection
+        return best_detection
 
     @staticmethod
     def get_intersection_score(height, width, detection_coords):

@@ -3,6 +3,16 @@ import re
 class BruiseController:
 
     @staticmethod
+    def insert(image_id, bruise_id, cut_id, bruise_coordinates, width, height, diameter):
+        with connection.cursor() as cursor:
+            sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at, height, width, diameter) values ({}, {}, {}, '{}', now(), now(), {}, {}, {})".format(
+                bruise_id, image_id, cut_id, bruise_coordinates, height, width, diameter)
+
+            cursor.execute(sql)
+            cursor.close()
+            connection.close()
+
+    @staticmethod
     def get_color_by_bruise_id(bruise_id):
         with connection.cursor() as cursor:
             cursor.execute("select code from color where id = (select color_id from aux_bruise ab where ab.id = {})".format(bruise_id))
@@ -28,7 +38,8 @@ class BruiseController:
             connection.close()
 
     @staticmethod
-    def get_bruises_by_image_id(image_id):
+
+    def get_by_image_id(image_id):
         with connection.cursor() as cursor:
             sql = "select * from bruise where image_id =  '{}';".format(image_id)
             cursor.execute(sql)

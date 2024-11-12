@@ -11,13 +11,13 @@ class GreaseColorUtils:
 
 
     @staticmethod
-    def classify(detector, image, binary_mask):
+    def predict(detector, image, binary_mask):
 
         image_without_background = GreaseColorUtils.remove_background(image, binary_mask)
 
         image_features = GreaseColorUtils.get_histogram(image_without_background)
 
-        detection_results = detector.detect(image_features)
+        detection_results = detector.predict(image_features)
         grease_color_model_id = str(detection_results[0])
         grease_color_database_id = GreaseColorEnum.get_value(grease_color_model_id)
 

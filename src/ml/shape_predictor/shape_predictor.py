@@ -2,9 +2,9 @@
 
 import numpy as np
 import dlib
-from src.enum.cuts_coords_enum import CutsCoords
 from django.conf import settings
 import os
+from src.enum.cuts_enum import CutsEnum
 
 
 class ShapePredictor:
@@ -31,10 +31,10 @@ class ShapePredictor:
         # cv2.imshow('image', image)
         # cv2.waitKey(0)
         all_coords = {}
-
-        for cut_coords in CutsCoords:
-            cut_key = cut_coords.name
-            cut_points = cut_coords.value
+        for item_key, item in CutsEnum.__members__.items():
+            cut_key = item.name
+            cut_points = item.coords
+            temp = item.value
             coords = []
             for cut_point in cut_points:
                 coords.append(points[cut_point])
