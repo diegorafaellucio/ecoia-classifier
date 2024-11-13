@@ -128,16 +128,16 @@ class MeatClassifierHandler:
                     MeatClassifierHandler.logger.info('Mapping bruises in cuts. Image ID: {}'.format(image_id))
                     cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
-                        cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
+                    cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
                                                                                       sanitized_bruises, cuts_mask, binary_mask)
-                        MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
-                        CutsUtils.save_cuts_data(image_id, cuts_coords)
+                    MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
+                    CutsUtils.save_cuts_data(image_id, cuts_coords)
 
-                        MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
+                    MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
 
-                        extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
+                    extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.MODULE_EXTENSION_LESION.name)
-                        BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
+                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
@@ -149,10 +149,8 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_GREASE_PREDICTION.name)
 
                     if grease_color_classification_is_enabled:
-
                         grease_color_id = GreaseColorUtils.predict(grease_color_detector, image, binary_mask)
-
-                            CarcassInformationController.update_grease_color(image_id, grease_color_id)
+                        CarcassInformationController.update_grease_color(image_id, grease_color_id)
 
                     conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
@@ -180,24 +178,24 @@ class MeatClassifierHandler:
                     hump_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_HUMP_PREDICTION.name)
 
-                        if hump_classification_is_enabled:
-                          if side_detection_result['label'] == 'LADO_B':
+                    if hump_classification_is_enabled:
+                        if side_detection_result['label'] == 'LADO_B':
                             MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
                             hump_result = ClassifierUtils.classify(hump_detector, image)
                             hump_id = HumpUtils.get_hump_id(hump_result)
-                          else:
+                        else:
                             hump_id = HumpEnum.AUSENTE.value
 
-                          CarcassInformationController.update_hump(image_id, hump_id)
+                        CarcassInformationController.update_hump(image_id, hump_id)
 
                     breed_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_BREED_PREDICTION.name)
 
-                        if breed_classification_is_enabled:
-                            breed_result = ClassifierUtils.classify(breed_detector, image)
-                            if breed_result:
-                                breed_id = BreedUtils.get_breed_id(breed_result)
-                                CarcassInformationController.update_breed(image_id, breed_id)
+                    if breed_classification_is_enabled:
+                        breed_result = ClassifierUtils.classify(breed_detector, image)
+                        if breed_result:
+                            breed_id = BreedUtils.get_breed_id(breed_result)
+                            CarcassInformationController.update_breed(image_id, breed_id)
 
                     generate_watermark_is_enabled = ConfigurationStorageController.get_config_data_value(
                     ConfigurationEnum.MODULE_GENERATE_WATERMARK.name)
