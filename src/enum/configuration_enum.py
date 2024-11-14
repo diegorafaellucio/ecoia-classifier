@@ -1,5 +1,5 @@
 from enum import Enum
-
+from src.utils.cuts_utils import CutsUtils
 
 from src.enum.detection_approach_enum import DetectionApproachEnum
 

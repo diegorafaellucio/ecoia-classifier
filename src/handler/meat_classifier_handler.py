@@ -138,6 +138,7 @@ class MeatClassifierHandler:
                     extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.MODULE_EXTENSION_LESION.name)
                     BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
+                    affected_cuts= BruiseUtils.get_cuts_affeted_by_bruises(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
@@ -181,7 +182,7 @@ class MeatClassifierHandler:
                     if hump_classification_is_enabled:
                         if side_detection_result['label'] == 'LADO_B':
                             MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
-                            hump_result = ClassifierUtils.classify(hump_detector, image)
+                            hump_result = ClassifierUtils.predict(hump_detector, image)
                             hump_id = HumpUtils.get_hump_id(hump_result)
                         else:
                             hump_id = HumpEnum.AUSENTE.value
@@ -192,7 +193,7 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_BREED_PREDICTION.name)
 
                     if breed_classification_is_enabled:
-                        breed_result = ClassifierUtils.classify(breed_detector, image)
+                        breed_result = ClassifierUtils.predict(breed_detector, image)
                         if breed_result:
                             breed_id = BreedUtils.get_breed_id(breed_result)
                             CarcassInformationController.update_breed(image_id, breed_id)
