@@ -157,7 +157,7 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
 
                     if conformation_classification_is_enabled:
-                        conformation_result, intersection_score = ClassifierUtils.predict(conformation_detector, image)
+                        conformation_result = ClassifierUtils.predict(conformation_detector, image)
 
                         if conformation_result is not None:
                             conformation_id = ConformationEnum[conformation_result['label']].value
