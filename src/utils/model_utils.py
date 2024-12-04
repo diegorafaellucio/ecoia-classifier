@@ -66,12 +66,13 @@ class ModelUtils:
         for model in models:
             model_path = os.path.join(models_path, model)
 
-            model_current_version = 'main'#GitUtils.get_current_version(model_path)
+            model_current_version = 'main'
+
+            GitUtils.perform_checkout(model_path, model_current_version)#GitUtils.get_current_version(model_path)
 
             GitUtils.remove_all_not_active_branchs(model_current_version, model_path)
 
             model_id = ModelController.get_id(model)
-
 
             model_most_recent_version = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path,
                                                                                                  plant_models_identifier)
