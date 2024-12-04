@@ -56,6 +56,7 @@ class MeatClassifierHandler:
                     state = item[9]
                     aux_grading_id = item[10]
 
+
                     MeatClassifierHandler.process_image(image_id, image_path, sequence_number,
                                                         side_number, roulette_number, slaughter_date, created_at,
                                                         processing_timestamp, flag_img, state, aux_grading_id,

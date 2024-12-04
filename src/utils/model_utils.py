@@ -66,7 +66,7 @@ class ModelUtils:
         for model in models:
             model_path = os.path.join(models_path, model)
 
-            model_current_version = GitUtils.get_current_version(model_path)
+            model_current_version = 'main'#GitUtils.get_current_version(model_path)
 
             GitUtils.remove_all_not_active_branchs(model_current_version, model_path)
 
