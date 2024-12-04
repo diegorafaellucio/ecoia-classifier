@@ -22,9 +22,23 @@ class BruiseController:
             connection.close()
             return data
 
+    @staticmethod
+    def insert_into_bruise(image_id, bruise_id, cut_id, bruise_coordinates, width=None, height=None, diameter=None, bruise_level_id=None):
+        with connection.cursor() as cursor:
 
+            if width == None and height == None and diameter == None and bruise_level_id == None:
+                sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at) values ({}, {}, {}, '{}', now(), now())".format(
+                     bruise_id, image_id, cut_id, bruise_coordinates)
+            else:
+                sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at, height, width, diameter, bruise_level_id) values ({}, {}, {}, '{}', now(), now(), {}, {}, {}, {})".format(
+                    bruise_id, image_id, cut_id, bruise_coordinates, height, width, diameter, bruise_level_id)
+
+            cursor.execute(sql)
+            cursor.close()
+            connection.close()
 
     @staticmethod
+
     def get_by_image_id(image_id):
         with connection.cursor() as cursor:
             sql = "select * from bruise where image_id =  '{}';".format(image_id)

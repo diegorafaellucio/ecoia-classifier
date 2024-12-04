@@ -27,8 +27,10 @@ from src.utils.breed_utils import BreedUtils
 import cv2
 
 
+
 class MeatClassifierHandler:
     logger = logging.getLogger(__name__)
+
 
     @staticmethod
     def process_images(classifier_suite):
@@ -128,12 +130,16 @@ class MeatClassifierHandler:
                     cut_lines_image, cuts_mask,binary_mask = CutsUtils.get_cuts_mask_and_cut_lines_image(cuts_coords, image)
 
                     cut_lines_image = BruiseUtils.draw_bruises_on_cut_lines_image(cut_lines_image, side_detection_result,
-                                                                                  sanitized_bruises, cuts_mask)
+                                                                                      sanitized_bruises, cuts_mask, binary_mask)
                     MeatClassifierHandler.logger.info('Saving cuts. Image ID: {}'.format(image_id))
                     CutsUtils.save_cuts_data(image_id, cuts_coords)
 
                     MeatClassifierHandler.logger.info('Saving bruises. Image ID: {}'.format(image_id))
-                    affected_cuts = BruiseUtils.save_bruises_data_and_get_all_affected_cuts(cuts_mask, binary_mask, side_detection_result, sanitized_bruises, image_id)
+
+                    extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
+                            ConfigurationEnum.MODULE_EXTENSION_LESION.name)
+                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
+                    affected_cuts= BruiseUtils.get_cuts_affeted_by_bruises(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
@@ -145,16 +151,14 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_GREASE_PREDICTION.name)
 
                     if grease_color_classification_is_enabled:
-
                         grease_color_id = GreaseColorUtils.predict(grease_color_detector, image, binary_mask)
-
                         CarcassInformationController.update_grease_color(image_id, grease_color_id)
 
                     conformation_classification_is_enabled = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.MODULE_CONFORMATION_PREDICTION.name)
 
                     if conformation_classification_is_enabled:
-                        conformation_result, intersection_score = ClassifierUtils.predict(conformation_detector, image)
+                        conformation_result = ClassifierUtils.predict(conformation_detector, image)
 
                         if conformation_result is not None:
                             conformation_id = ConformationEnum[conformation_result['label']].value
@@ -177,12 +181,12 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_HUMP_PREDICTION.name)
 
                     if hump_classification_is_enabled:
-                      if side_detection_result['label'] == 'LADO_B':
-                        MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
-                        hump_result, intersection_score = ClassifierUtils.predict(hump_detector, image)
-                        hump_id = HumpUtils.get_hump_id(hump_result)
-                      else:
-                        hump_id = HumpEnum.AUSENTE.value
+                        if side_detection_result['label'] == 'LADO_B':
+                            MeatClassifierHandler.logger.info('Classifying. Image ID: {}'.format(image_id))
+                            hump_result = ClassifierUtils.predict(hump_detector, image)
+                            hump_id = HumpUtils.get_hump_id(hump_result)
+                        else:
+                            hump_id = HumpEnum.AUSENTE.value
 
                         CarcassInformationController.update_hump(image_id, hump_id)
 
@@ -209,6 +213,7 @@ class MeatClassifierHandler:
                         cv2.imwrite(masked_image_absolute_path, cut_lines_image)
                         FileUtils.copy_file(image_absolute_path)
                         cv2.imwrite(image_absolute_path, image)
+
                     else:
 
                         cv2.imwrite(masked_image_absolute_path, cut_lines_image)
