@@ -1,3 +1,11 @@
+[submodule "data/models/skeleton"]
+	path = data/models/skeleton
+	url = git@ecoia-weights-skeleton:ecotracesolutions/ecoia-weights-skeleton.git
+	branch = main
+[submodule "data/models/filter"]
+	path = data/models/filter
+	url = git@ecoia-weights-filter:ecotracesolutions/ecoia-weights-filter.git
+	branch = main
 [submodule "data/models/meat"]
 	path = data/models/meat
 	url = git@ecoia-weights-meat:ecotracesolutions/ecoia-weights-meat.git
