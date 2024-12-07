@@ -17,8 +17,8 @@ class ModelController:
             return results
 
 
-    @classmethod
-    def is_model_in_database(cls, model):
+    @staticmethod
+    def is_model_in_database(model):
         with connection.cursor() as cursor:
             sql = "select * from aux_model where name = '{}' and current_version is not null;".format(model)
             cursor.execute(sql)
@@ -40,8 +40,8 @@ class ModelController:
             cursor.close()
             connection.close()
 
-    @classmethod
-    def get_id(cls, model_name):
+    @staticmethod
+    def get_id(model_name):
         with connection.cursor() as cursor:
             sql = "select id, current_version from aux_model where name = '{}'".format(model_name)
             cursor.execute(sql)
@@ -51,11 +51,23 @@ class ModelController:
 
             return results[0][0]
 
-    @classmethod
-    def update_version(cls, new_version, model):
+    @staticmethod
+    def update_version( new_version, model):
         with connection.cursor() as cursor:
-            sql = "update aux_model set current_version =  '{}' where name = '{}'".format(new_version, model)
+            sql = "update aux_model set current_version =  '{}', updated_at =  now() where name = '{}'".format(new_version, model)
             cursor.execute(sql)
             results = cursor.fetchall()
             cursor.close()
             connection.close()
+
+    @staticmethod
+    def get_current_version(model):
+        with connection.cursor() as cursor:
+            sql = "select current_version from aux_model where name = '{}'".format(model)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+
+            return results[0][0]
+

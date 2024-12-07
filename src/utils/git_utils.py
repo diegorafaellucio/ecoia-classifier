@@ -1,10 +1,5 @@
-from src.controller.model_controller import ModelController
-from src.controller.configuration_storage_controller import ConfigurationStorageController
-from src.enum.configuration_enum import ConfigurationEnum
 from git import Repo
 import git
-import os
-from pathlib import Path
 
 class GitUtils:
 
@@ -14,13 +9,13 @@ class GitUtils:
 
         project_repo = Repo(project_path)
 
+        project_repo.git.reset('--hard')
+
         project_repo.git.fetch('--all')
 
         project_repo.remotes.origin.pull()
 
         available_branches = [branch.split("/")[-1] for branch in project_repo.git.branch('-r').splitlines()]
-
-        # available_branches = project_repo.branches
 
         selected_branches = []
 

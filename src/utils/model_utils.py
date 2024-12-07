@@ -52,6 +52,9 @@ class ModelUtils:
                 ModelUtils.logger.info('{} model: was initialized befeore.'.format(model))
     @staticmethod
     def update_models():
+
+        reset_branch = 'main'
+
         client_identifier = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.CLIENT_IDENTIFIER.name)
         plant_identifier = ConfigurationStorageController.get_config_data_value(ConfigurationEnum.PLANT_IDENTIFIER.name)
@@ -66,11 +69,11 @@ class ModelUtils:
         for model in models:
             model_path = os.path.join(models_path, model)
 
-            model_current_version = 'main'
+            model_current_version = ModelController.get_current_version(model)
 
-            GitUtils.perform_checkout(model_path, model_current_version)#GitUtils.get_current_version(model_path)
+            GitUtils.perform_checkout(model_path, reset_branch)
 
-            GitUtils.remove_all_not_active_branchs(model_current_version, model_path)
+            GitUtils.remove_all_not_active_branchs(reset_branch, model_path)
 
             model_id = ModelController.get_id(model)
 
