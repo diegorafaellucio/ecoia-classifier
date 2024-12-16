@@ -1,5 +1,6 @@
 import logging
 import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 import traceback
 
 import imutils
@@ -38,11 +39,17 @@ class MeatClassifierHandler:
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.MEAT_CLASSIFIER_MAX_WORKERS.name)
 
+        futures = []
+
+        executor = ThreadPoolExecutor(max_workers=max_workers)
+
         if max_workers > 0:
 
             data = ImageController.get_images_to_classify(max_workers)
 
             have_data_to_classify = FileUtils.have_files_to_process(data)
+
+
 
             if have_data_to_classify:
                 for item in data:
@@ -59,10 +66,20 @@ class MeatClassifierHandler:
                     aux_grading_id = item[10]
 
 
-                    MeatClassifierHandler.process_image(image_id, image_path, sequence_number,
+                    # MeatClassifierHandler.process_image(image_id, image_path, sequence_number,
+                    #                                     side_number, roulette_number, slaughter_date, created_at,
+                    #                                     processing_timestamp, flag_img, state, aux_grading_id,
+                    #                                     classifier_suite)
+
+                    futures.append(
+                        executor.submit(MeatClassifierHandler.process_image, image_id, image_path, sequence_number,
                                                         side_number, roulette_number, slaughter_date, created_at,
                                                         processing_timestamp, flag_img, state, aux_grading_id,
-                                                        classifier_suite)
+                                                        classifier_suite))
+
+                for _ in concurrent.futures.as_completed(futures):
+                    MeatClassifierHandler.logger.info('Register Processed successfully!')
+
 
             else:
 

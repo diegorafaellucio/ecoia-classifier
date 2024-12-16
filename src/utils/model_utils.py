@@ -82,16 +82,16 @@ class ModelUtils:
             model_most_recent_version = GitUtils.get_most_recent_branch_based_into_model_identifier(model_path,
                                                                                                  plant_models_identifier)
 
-            if model_current_version != model_most_recent_version:
-                GitUtils.perform_checkout(model_path, model_most_recent_version)
+            # if model_current_version != model_most_recent_version:
+            GitUtils.perform_checkout(model_path, model_most_recent_version)
 
-                GitUtils.remove_all_not_active_branchs(model_most_recent_version, model_path)
+            GitUtils.remove_all_not_active_branchs(model_most_recent_version, model_path)
 
 
-                ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, model_most_recent_version)
-                ModelController.update_version(model_most_recent_version, model)
+            ModelUpdateHistoryController.insert_into_model_update_history(model_id, model_current_version, model_most_recent_version)
+            ModelController.update_version(model_most_recent_version, model)
 
-                ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, model_most_recent_version))
-            else:
-                ModelUtils.logger.info('{} model: No updates available!'.format(model))
+            ModelUtils.logger.info('{} model: updating from {} to {}.'.format(model, model_current_version, model_most_recent_version))
+            # else:
+            #     ModelUtils.logger.info('{} model: No updates available!'.format(model))
 
