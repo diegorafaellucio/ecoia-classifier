@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+import cv2
 import numpy as np
 import dlib
 from django.conf import settings
@@ -17,9 +17,13 @@ class ShapePredictor:
 
     def get_polygons(self, image, rect, padding_left=0, padding_top=0):
 
+
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+
         points = []
 
-        landmarks = self.model_predictor(image, rect)
+        landmarks = self.model_predictor(image_rgb, rect)
 
         for counter, part in enumerate(landmarks.parts()):
             # cv2.putText(image, '{}'.format(counter), (padding_left + part.x, padding_top + part.y),

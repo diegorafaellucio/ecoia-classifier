@@ -67,6 +67,8 @@ class ModelUtils:
 
         models = os.listdir(models_path)
         for model in models:
+
+            ModelUtils.logger.info('Updating model: {}!'.format(model))
             model_path = os.path.join(models_path, model)
 
             model_current_version = ModelController.get_current_version(model)

@@ -72,6 +72,13 @@ class MeatClassifierHandler:
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
                       processing_timestamp, flag_img, state, aux_grading_id, classifier_suite):
 
+        reprocess_retroactive_days = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.REPROCESS_RETROACTIVE_DAYS.name)
+
+        filter_label = 'NAO_CLASSIFICADO'
+        filter_confidence = 0.0
+        classification_id = None
+
         try:
 
             if aux_grading_id is None:
@@ -98,20 +105,20 @@ class MeatClassifierHandler:
                 MeatClassifierHandler.logger.info(
                     'Localized image to sequence: {} and side: {}'.format(sequence_number, side_number))
 
-                image = cv2.imread(image_absolute_path)
+                # image = cv2.imread(image_absolute_path)
 
                 MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
 
-                classification_id, side_detection_result = ClassifierUtils.get_classification_id(
-                    image,
+                image, classification_id, filter_label, filter_confidence, side_detection_result = ClassifierUtils.get_classification_id(
+                    image_absolute_path,
                     side_detector,
-                    meat_detector
+                    meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days
                     )
 
 
-                if classification_id not in (
-                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_100.value,
-                        ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value, ClassificationErrorEnum.ERRO_97.value):
+                if classification_id not in (ClassificationErrorEnum.ERRO_91.value, ClassificationErrorEnum.ERRO_92.value,
+                        ClassificationErrorEnum.ERRO_93.value, ClassificationErrorEnum.ERRO_94.value, ClassificationErrorEnum.ERRO_95.value, ClassificationErrorEnum.ERRO_96.value, ClassificationErrorEnum.ERRO_97.value, ClassificationErrorEnum.ERRO_100.value,
+                        ClassificationErrorEnum.ERRO_101.value, ClassificationErrorEnum.ERRO_102.value)  and image is not None:
 
                     MeatClassifierHandler.logger.info('Detecting bruises. Image ID: {}'.format(image_id))
                     bruise_detection_results = bruise_detector.predict(image)
@@ -252,14 +259,16 @@ class MeatClassifierHandler:
                 MeatClassifierHandler.logger.info(
                     'Updating the image classification to: {}. Image ID: {}'.format(classification_id, image_id))
                 ImageController.update_classification(classification_id, image_id)
-                MeatClassifierHandler.logger.info(
-                    'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name, image_id))
-                ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
-            else:
-                MeatClassifierHandler.logger.info(
-                    'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name,
-                                                                           image_id))
-                ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
+
+
+
+            MeatClassifierHandler.logger.info(
+                'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name,
+                                                                       image_id))
+            ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
+
+            if reprocess_retroactive_days:
+                ImageController.update_filter_data(filter_label, filter_confidence, image_id)
 
 
         except:
@@ -272,4 +281,7 @@ class MeatClassifierHandler:
                 'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.WAITING_INTEGRATION.name,
                                                                        image_id))
             ImageController.update_status(ImageStateEnum.WAITING_INTEGRATION.value, image_id)
+
+            if reprocess_retroactive_days:
+                ImageController.update_filter_data(filter_label, filter_confidence, image_id)
 

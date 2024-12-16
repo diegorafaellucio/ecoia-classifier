@@ -57,7 +57,7 @@ class ImageController:
             connection.close()
 
     @staticmethod
-    def update_filter_information(filter_label, filter_confidence, image_id):
+    def update_filter_data(filter_label, filter_confidence, image_id):
         with connection.cursor() as cursor:
             query = "update image set filter_label = '{}', filter_confidence = '{}', processed_at = now()  where id = '{}'".format(
                 filter_label, filter_confidence, image_id)
