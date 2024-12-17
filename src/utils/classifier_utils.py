@@ -88,6 +88,7 @@ class ClassifierUtils:
 
         try:
             image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+            original_image = image.copy()
 
             adjust_image_color_reprocess_retroactive = ConfigurationStorageController.get_config_data_value(
                 ConfigurationEnum.ADJUST_IMAGE_COLOR_REPROCESS_RETROACTIVE.name)
@@ -95,6 +96,8 @@ class ClassifierUtils:
             if adjust_image_color_reprocess_retroactive:
                 image = cv2.addWeighted(image, 1.2, image, 0, 0)
                 image = ImageUtils.adjust_color(image)
+
+            # cv2.imwrite(image_path, image)
         except:
             classification_id = ClassificationErrorEnum.ERRO_92.value
 
@@ -109,7 +112,7 @@ class ClassifierUtils:
 
             if classification_id not in (ClassificationErrorEnum.ERRO_92.value, ClassificationErrorEnum.ERRO_96.value):
 
-                amount_of_zeros = ImageUtils.get_amount_of_zeros_in_image(image)
+                amount_of_zeros = ImageUtils.get_amount_of_zeros_in_image(original_image)
 
                 if amount_of_zeros > 0.80 :
                     classification_id = ClassificationErrorEnum.ERRO_91.value

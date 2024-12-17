@@ -54,7 +54,7 @@ class Classifier():
         if self.pt and self.device.type != 'cpu':
             self.model(torch.zeros(1, 3, *image_size).to(self.device).type_as(next(self.model.model.parameters())))
 
-    def predict(self, image, image_classification):
+    def predict(self, image, image_classification=False):
 
         # print('detectando lesoes na imagem', image.shape)
 
