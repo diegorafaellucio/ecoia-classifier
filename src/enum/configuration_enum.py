@@ -104,6 +104,8 @@ class ConfigurationEnum(Enum):
 
     PLANT_IDENTIFIER = ('PLANT_IDENTIFIER', 'default')
 
+    APPLICATION_NAME = ('APPLICATION_NAME', 'ecoia-classifier')
+
     def __init__(self, key, value):
         self._key = key
         self._value = value

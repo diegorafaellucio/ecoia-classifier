@@ -12,6 +12,7 @@ from src.job.meat_classifier_job import MeatClassifierJob
 import threading
 from src.utils.configuration_storage_utils import ConfigurationStorageUtils
 from src.utils.model_utils import ModelUtils
+from src.controller.monitor_system_controller import MonitorSystem
 import os
 from pathlib import Path
 
@@ -108,6 +109,8 @@ classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_dete
 
 meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, name=JobNameEnum.CLASSIFIER.value)
 meat_classifier_job_thread.start()
+
+MonitorSystem.insert_data_restart_system(ConfigurationStorageController.get_config_data_value(ConfigurationEnum.APPLICATION_NAME.name))
 
 urlpatterns = [
     path("classify", ClassifyView.as_view(), {'classifier_suite': classifier_suite}),
