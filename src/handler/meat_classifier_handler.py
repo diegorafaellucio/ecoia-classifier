@@ -127,6 +127,7 @@ class MeatClassifierHandler:
                 MeatClassifierHandler.logger.info('Classifying carcass. Image ID: {}'.format(image_id))
 
                 image, classification_id, filter_label, filter_confidence, side_detection_result = ClassifierUtils.get_classification_id(
+                    image_id,
                     image_absolute_path,
                     side_detector,
                     meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days
