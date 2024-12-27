@@ -25,6 +25,9 @@ class IntegratorHandler:
         max_workers = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.INTEGRATOR_MAX_WORKERS.name)
 
+        send_93_error_information = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.SEND_93_ERROR_INFORMATION.name)
+
         # amount_of_images_in_integrating_state = ImageController.get_amount_of_images_by_state(
         #     ImageStateEnum.INTEGRATING.value)
         #
@@ -33,7 +36,8 @@ class IntegratorHandler:
 
         # execution_pool = concurrent.futures.ThreadPoolExecutor(max_workers=available_workers)
 
-        data = ImageController.get_to_integrate(max_workers)
+
+        data = ImageController.get_to_integrate(max_workers, send_93_error_information=send_93_error_information)
 
         have_data_to_integrate = FileUtils.have_files_to_process(data)
 

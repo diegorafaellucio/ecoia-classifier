@@ -28,12 +28,21 @@ class ImageController:
             return results[0]
 
     @staticmethod
-    def get_to_integrate(limit):
+    def get_to_integrate(limit, send_93_error_information=False):
         with transaction.atomic():
             with connection.cursor() as cursor:
-                sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {}; '.format(
+
+                if send_93_error_information:
+                    sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 order by id asc limit {}; '.format(
                     ImageStateEnum.WAITING_INTEGRATION.value,
                     limit)
+
+                else:
+
+                    sql = 'select id, path, sequence_nr, side_nr, roulette_id, slaughter_dt, created_at , processed_at, flag_img, state, aux_grading_id from image where state in  ({}) and flag_img = 1 and aux_grading_id != 13 order by id asc limit {}; '.format(
+                        ImageStateEnum.WAITING_INTEGRATION.value,
+                        limit)
+
                 cursor.execute(sql)
                 results = cursor.fetchall()
                 cursor.close()
@@ -76,7 +85,8 @@ class ImageController:
     @staticmethod
     def update_carcass_detection_confidence(carcass_detection_confidence, image_id):
         with connection.cursor() as cursor:
-            query = "update image set update_carcass_detection_confidence = '{}'  where id = '{}'".format(carcass_detection_confidence, image_id)
+            query = "update image set update_carcass_detection_confidence = '{}'  where id = '{}'".format(
+                carcass_detection_confidence, image_id)
             cursor.execute(query)
             cursor.close()
             connection.close()
@@ -89,5 +99,3 @@ class ImageController:
             cursor.execute(query)
             cursor.close()
             connection.close()
-
-

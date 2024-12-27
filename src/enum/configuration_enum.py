@@ -109,6 +109,8 @@ class ConfigurationEnum(Enum):
 
     ADJUST_IMAGE_COLOR_REPROCESS_RETROACTIVE = ('ADJUST_IMAGE_COLOR_REPROCESS_RETROACTIVE', False)
 
+    SEND_93_ERROR_INFORMATION = ('SEND_93_ERROR_INFORMATION', True)
+
 
     def __init__(self, key, value):
         self._key = key
