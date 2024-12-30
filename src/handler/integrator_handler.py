@@ -102,6 +102,7 @@ class IntegratorHandler:
 
                 IntegratorHandler.logger.info('Collecting bruise and cuts data to integrate. Image ID: {}.'.format(image_id))
                 bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
+                grease_color  =
 
                 integration_dict = \
                     [{
@@ -115,6 +116,7 @@ class IntegratorHandler:
                         "data_hora_registro": str(created_at),
                         "dados": {
                             "id_classificacao": classification_score,
+                            "cor_de_gordura": "BRANCO",
                             "label_classificacao": classification_name,
                             "lesoes": bruise_data
                         }

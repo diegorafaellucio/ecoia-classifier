@@ -35,6 +35,17 @@ class CarcassInformationController:
             return results
 
     @staticmethod
+    def get_grease_color(image_id):
+        with connection.cursor() as cursor:
+            sql = "select (select name from aux_fat_color  where id= ci.aux_fat_color_id ) from carcass_information ci where image_id '{}'".format(
+                image_id)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            cursor.close()
+            connection.close()
+            return results[0][0]
+
+    @staticmethod
     def update_conformation(image_id, conformation_id):
         with connection.cursor() as cursor:
             sql = "UPDATE carcass_information t SET t.aux_conformation_id = '{}' WHERE t.image_id = '{}'".format(
