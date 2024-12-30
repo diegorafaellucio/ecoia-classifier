@@ -7,6 +7,7 @@ import imutils
 from src.controller.image_controller import ImageController
 from src.controller.integration_log_controller import IntegrationLogController
 from src.controller.configuration_storage_controller import ConfigurationStorageController
+from src.controller.carcass_information_controller import CarcassInformationController
 from src.enum.configuration_enum import ConfigurationEnum
 from src.enum.image_state_enum import ImageStateEnum
 from src.utils.file_utils import FileUtils
@@ -102,7 +103,7 @@ class IntegratorHandler:
 
                 IntegratorHandler.logger.info('Collecting bruise and cuts data to integrate. Image ID: {}.'.format(image_id))
                 bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
-                grease_color  =
+                grease_color  = CarcassInformationController.get_grease_color(image_id)
 
                 integration_dict = \
                     [{
@@ -116,7 +117,7 @@ class IntegratorHandler:
                         "data_hora_registro": str(created_at),
                         "dados": {
                             "id_classificacao": classification_score,
-                            "cor_de_gordura": "BRANCO",
+                            "cor_de_gordura": grease_color,
                             "label_classificacao": classification_name,
                             "lesoes": bruise_data
                         }
