@@ -74,17 +74,26 @@ class ImageController:
             connection.close()
 
     @staticmethod
-    def update_carcass_detection_confidence(carcass_detection_confidence, image_id):
+    def update_carcass_detection_confidence_score(carcass_detection_confidence, image_id):
         with connection.cursor() as cursor:
-            query = "update image set update_carcass_detection_confidence = '{}'  where id = '{}'".format(carcass_detection_confidence, image_id)
+            query = "update image set carcass_detection_confidence_score = '{}'  where id = '{}'".format(carcass_detection_confidence, image_id)
             cursor.execute(query)
             cursor.close()
             connection.close()
 
     @staticmethod
-    def upadte_carcass_intersection(intersection_score, image_id):
+    def update_carcass_intersection_score(intersection_score, image_id):
         with connection.cursor() as cursor:
-            query = "update image set carcass_intersection = '{}'  where id = '{}'".format(
+            query = "update image set carcass_intersection_score = '{}'  where id = '{}'".format(
+                intersection_score, image_id)
+            cursor.execute(query)
+            cursor.close()
+            connection.close()
+
+    @staticmethod
+    def update_carcass_classification_score(intersection_score, image_id):
+        with connection.cursor() as cursor:
+            query = "update image set carcass_classification_score = '{}'  where id = '{}'".format(
                 intersection_score, image_id)
             cursor.execute(query)
             cursor.close()
