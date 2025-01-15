@@ -48,9 +48,10 @@ class FileUtils:
     def read_model_info(model_weight_path):
 
         base_dir = settings.BASE_DIR
-        model_weight_path_elements = model_weight_path.split('/')
-        model_path = model_weight_path_elements[:-1]
-        model_info_path = os.path.join(base_dir, model_path, 'model_info.json')
+        model_path = os.path.dirname(model_weight_path)
+        model_path_relative = model_path.lstrip('/')
+        model_info_path = os.path.join(base_dir, model_path_relative, 'model_info.json')
+
 
         try:
             with open(model_info_path, "r") as json_file:
