@@ -1,7 +1,9 @@
 import json
-
+import os
 from django.db import connection
 from src.enum.configuration_enum import ConfigurationEnum
+
+
 class ConfigurationStorageController:
 
 
@@ -37,6 +39,3 @@ class ConfigurationStorageController:
             data = results[0][0]
             cursor.close()
             return data
-
-
-

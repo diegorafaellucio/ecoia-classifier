@@ -1,8 +1,11 @@
 import os
+import json
 import logging
 import shutil
-
+from pathlib import Path
 from src.enum.image_state_enum import ImageStateEnum
+from django.conf import settings
+
 
 class FileUtils:
     logger = logging.getLogger(__name__)
@@ -41,3 +44,21 @@ class FileUtils:
         shutil.copy(file_absolute_path, sync_file_absolute_path)
 
 
+    @staticmethod
+    def read_model_info(model_weight_path):
+
+        base_dir = settings.BASE_DIR
+        model_weight_path_elements = model_weight_path.split('/')
+        model_path = model_weight_path_elements[:-1]
+        model_info_path = os.path.join(base_dir, model_path, 'model_info.json')
+
+        try:
+            with open(model_info_path, "r") as json_file:
+                data = json.load(json_file)
+
+            return data["model_train_approach"]
+
+        except FileNotFoundError:
+            raise FileNotFoundError(f"O arquivo model_info não foi encontrado na pasta '{model_info_path}'.")
+        except json.JSONDecodeError:
+            raise ValueError(f"O arquivo '{model_info_path}' não contém um JSON válido.")
