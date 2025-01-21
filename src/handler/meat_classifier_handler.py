@@ -108,7 +108,7 @@ class MeatClassifierHandler:
                     'Updating the image state to: {}. Image ID: {}'.format(ImageStateEnum.PROCESSING.name, image_id))
                 ImageController.update_status(ImageStateEnum.PROCESSING.value, image_id)
 
-                skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, cuts_classification_models = classifier_suite
+                carcass_classification_classifier, skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector, side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, cuts_classification_models = classifier_suite
 
                 images_main_path = ConfigurationStorageController.get_config_data_value(
                     ConfigurationEnum.IMAGES_MAIN_PATH.name)
@@ -130,7 +130,7 @@ class MeatClassifierHandler:
                     image_id,
                     image_absolute_path,
                     side_detector,
-                    meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days
+                    meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days, carcass_classification_classifier
                     )
 
 
