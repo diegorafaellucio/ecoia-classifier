@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/breed" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/bruise" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/data/models/carcass-classification" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/conformation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/cuts" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/data/models/filter" vcs="Git" />

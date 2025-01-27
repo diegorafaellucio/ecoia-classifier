@@ -4,7 +4,7 @@ from src.utils.cuts_utils import CutsUtils
 from src.enum.detection_approach_enum import DetectionApproachEnum
 
 class ConfigurationEnum(Enum):
-
+    CARCASS_CLASSIFICATION_WEIGHTS_PATH = ('CARCASS_CLASSIFICATION_WEIGHTS_PATH', 'data/models/carcass-classification/weight.pt')
 
     SKELETON_CLASSIFICATION_WEIGHTS_PATH = ('SKELETON_CLASSIFICATION_WEIGHTS_PATH','data/models/skeleton/weight.pt')
     SKELETON_CLASSIFICATION_INTERSECTION_THRESHOLD = ('SKELETON_CLASSIFICATION_INTERSECTION_THRESHOLD', 0.80)

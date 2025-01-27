@@ -1,11 +1,11 @@
 from src.enum.classification_error_enum import ClassificationErrorEnum
 from src.enum.meat_enum import MeatEnum
 from src.enum.bruises_enum import BruisesEnum
+from src.enum.carcass_classification_enum import CarcassClassificationEnum
 from src.enum.configuration_enum import ConfigurationEnum
 from src.enum.cut_and_meat_classification_correlation_enum import CutAndMeatClassificationCorrelationEnum
 from src.utils.image_classification_utils import ImageClassificationUtils
 from src.controller.configuration_storage_controller import ConfigurationStorageController
-from src.controller.image_controller import ImageController
 from src.utils.image_utils import ImageUtils
 from src.utils.detector_utils import DetectorUtils
 import cv2
@@ -80,7 +80,7 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def get_classification_id(image_id, image_path, side_detector, meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days):
+    def get_classification_id(image_id, image_path, side_detector, meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days, carcass_classification_classifier):
 
         classification_id = None
         filter_label = 'NAO_CLASSIFICADO'
@@ -99,11 +99,13 @@ class ClassifierUtils:
                 image = cv2.addWeighted(image, 1.2, image, 0, 0)
                 image = ImageUtils.adjust_color(image)
 
-                cv2.imwrite(image_path, image)
+                # cv2.imwrite(image_path, image)
         except:
             classification_id = ClassificationErrorEnum.ERRO_92.value
 
         if reprocess_retroactive_days:
+
+
 
 
             if image is None:
@@ -121,6 +123,14 @@ class ClassifierUtils:
 
                 else:
 
+                    carcass_classification_result = ClassifierUtils.predict(carcass_classification_classifier, image, image_classification=True)
+                    carcass_classification_id = carcass_classification_result['label']
+
+                    carcass_classification_label = CarcassClassificationEnum.get_value(carcass_classification_id)
+                    carcass_classification_score = CarcassClassificationEnum.get_value(carcass_classification_id)
+
+
+
                     skeleton_detection_confidence_threshold = ConfigurationStorageController.get_config_data_value(
                         ConfigurationEnum.SKELETON_DETECTION_CONFIDENCE_THRESHOLD.name)
 
@@ -128,21 +138,16 @@ class ClassifierUtils:
 
 
 
-                    if skeleton_detection_result is None:
+                    if carcass_classification_result is None:
                         classification_id = ClassificationErrorEnum.ERRO_93.value
 
-                    elif skeleton_detection_result['label'] == ClassificationSkeletonEnum.NOSKELETON.value:
+                    elif carcass_classification_label == CarcassClassificationEnum.WITHOUT_CARCASS.value:
                         classification_id = ClassificationErrorEnum.ERRO_93.value
 
                     else:
 
                         intersection_threshold =ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.SKELETON_CLASSIFICATION_INTERSECTION_THRESHOLD.name)
-
-                        ImageController.update_carcass_intersection_score(round(intersection_score, 2), image_id)
-
-                        ImageController.update_carcass_detection_confidence_score(round(skeleton_detection_result['confidence'], 2), image_id)
-
 
 
                         if intersection_score < intersection_threshold:
@@ -189,10 +194,6 @@ class ClassifierUtils:
                     meat_classification_id = MeatEnum[meat_classification_label].value['database_id']
 
                     classification_id = meat_classification_id
-
-                    ImageController.update_carcass_classification_score(
-                        round(meat_detection_result['confidence'], 2),
-                        image_id)
 
         return image, classification_id, filter_label, filter_confidence, side_detection_result
 

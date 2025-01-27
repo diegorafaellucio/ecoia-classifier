@@ -21,6 +21,11 @@ logger = logging.getLogger(__name__)
 ConfigurationStorageUtils.initialize_configs()
 ModelUtils.initialize_models()
 
+carcass_classification_weights_path = ConfigurationStorageController.get_config_data_value(
+    ConfigurationEnum.CARCASS_CLASSIFICATION_WEIGHTS_PATH.name)
+carcass_classification_approach = FileUtils.read_model_info(carcass_classification_weights_path)
+carcass_classification_classifier = ClassifierLoader.load(carcass_classification_weights_path, carcass_classification_approach)
+
 skeleton_classification_weights_path = ConfigurationStorageController.get_config_data_value(
     ConfigurationEnum.SKELETON_CLASSIFICATION_WEIGHTS_PATH.name)
 skeleton_classification_approach = FileUtils.read_model_info(skeleton_classification_weights_path)
@@ -96,7 +101,7 @@ for module_cut_classification_available_model in module_cut_classification_avail
     cuts_classification_models[module_cut_classification_available_model]  = cut_classification_model
 
 
-classifier_suite = [skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
+classifier_suite = [carcass_classification_classifier, skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
                     side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, cuts_classification_models]
 
 

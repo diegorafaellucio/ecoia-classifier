@@ -44,3 +44,6 @@
 [submodule "data/models/rump"]
 	path = data/models/rump
 	url = git@ecoia-weights-rump:ecotracesolutions/ecoia-weights-rump.git
+[submodule "data/models/carcass-classification"]
+	path = data/models/carcass-classification
+	url = git@ecoia-weights-carcass-classification:ecotracesolutions/ecoia-weights-carcass-classification.git
