@@ -139,9 +139,11 @@ class ClassifierUtils:
                         intersection_threshold =ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.SKELETON_CLASSIFICATION_INTERSECTION_THRESHOLD.name)
 
-                        # ImageController.upadte_carcass_intersection(round(intersection_score, 2), image_id)
-                        #
-                        # ImageController.upadte_carcass_intersection(round(skeleton_detection_result['confidence'], 2), image_id)
+                        ImageController.update_carcass_intersection_score(round(intersection_score, 2), image_id)
+
+                        ImageController.update_carcass_detection_confidence_score(round(skeleton_detection_result['confidence'], 2), image_id)
+
+
 
                         if intersection_score < intersection_threshold:
                             classification_id = ClassificationErrorEnum.ERRO_94.value
@@ -187,6 +189,10 @@ class ClassifierUtils:
                     meat_classification_id = MeatEnum[meat_classification_label].value['database_id']
 
                     classification_id = meat_classification_id
+
+                    ImageController.update_carcass_classification_score(
+                        round(meat_detection_result['confidence'], 2),
+                        image_id)
 
         return image, classification_id, filter_label, filter_confidence, side_detection_result
 
