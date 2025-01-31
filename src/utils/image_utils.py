@@ -9,7 +9,7 @@ from wand.image import Image
 
 import os
 import re
-from pypylon import pylon
+
 from src.controller.image_controller import ImageController
 from src.enum.image_name_generate_approach_enum import ImageNameGenerateApproachEnum
 from src.enum.configuration_enum import ConfigurationEnum

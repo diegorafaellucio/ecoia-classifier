@@ -123,7 +123,9 @@ class ClassifierUtils:
 
                 else:
 
+
                     carcass_classification_result = ClassifierUtils.predict(carcass_classification_classifier, image, image_classification=True)
+
                     carcass_classification_id = carcass_classification_result['label']
 
                     carcass_classification_label = CarcassClassificationEnum.get_value(carcass_classification_id)
@@ -177,6 +179,8 @@ class ClassifierUtils:
 
 
         if image is not None and classification_id is None:
+            
+
             side_detection_result = ClassifierUtils.predict(side_detector, image)
 
             if side_detection_result is None:
