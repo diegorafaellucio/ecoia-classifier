@@ -61,11 +61,11 @@ class ClassifierUtils:
         if cut_name in affected_cuts:
             bruises = affected_cuts[cut_name]
 
-            if BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises:
+            if (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises) and not BruisesEnum.FALHA.key in bruises:
                 classification_id = ClassificationErrorEnum.ERRO_201.value
-            elif BruisesEnum.FALHA.key in bruises:
+            elif BruisesEnum.FALHA.key in bruises and not (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises):
                 classification_id = ClassificationErrorEnum.ERRO_202.value
-            elif BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises or BruisesEnum.FALHA.key in bruises:
+            elif BruisesEnum.FALHA.key in bruises and (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises):
                 classification_id = ClassificationErrorEnum.ERRO_203.value
         else:
 
