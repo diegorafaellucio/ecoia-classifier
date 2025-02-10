@@ -191,9 +191,7 @@ class BruiseUtils:
         return cut_lines_image
 
     @staticmethod
-    def get_cuts_affeted_by_bruises(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
-        bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
+    def get_cuts_affeted_by_bruises(cuts_mask, bruises):
 
         affeted_cuts = {}
 
@@ -212,19 +210,21 @@ class BruiseUtils:
                 bruise_x_max = bruise['bottomright']['x']
                 bruise_y_max = bruise['bottomright']['y']
 
-                mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
-                mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
 
+                roi = cuts_mask[bruise_y_min:bruise_y_max + 1, bruise_x_min:bruise_x_max + 1]
 
-                cut_id = cuts_mask[mid_y_coord][mid_x_coord]
+                ids_in_cut_mask = np.unique(roi)
 
-                cut_name = CutsEnum.get_name_by_value(cut_id)
+                for cut_id in ids_in_cut_mask:
+                    # cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
-                if cut_name != 0:
-                    if cut_name not in affeted_cuts:
-                        affeted_cuts[cut_name] = set([bruise_label])
-                    else:
-                        affeted_cuts[cut_name].add(bruise_label)
+                    cut_name = CutsEnum.get_name_by_value(cut_id)
+
+                    if cut_name != 0:
+                        if cut_name not in affeted_cuts:
+                            affeted_cuts[cut_name] = set([bruise_label])
+                        else:
+                            affeted_cuts[cut_name].add(bruise_label)
         return affeted_cuts
 
     @staticmethod

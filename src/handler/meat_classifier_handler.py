@@ -164,7 +164,7 @@ class MeatClassifierHandler:
                     extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.MODULE_EXTENSION_LESION.name)
                     BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
-                    affected_cuts= BruiseUtils.get_cuts_affeted_by_bruises(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id)
+                    affected_cuts= BruiseUtils.get_cuts_affeted_by_bruises(cuts_mask, sanitized_bruises)
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
