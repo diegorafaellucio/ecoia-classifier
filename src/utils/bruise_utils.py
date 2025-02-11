@@ -211,20 +211,28 @@ class BruiseUtils:
                 bruise_y_max = bruise['bottomright']['y']
 
 
-                roi = cuts_mask[bruise_y_min:bruise_y_max + 1, bruise_x_min:bruise_x_max + 1]
+                bounding_box_region = cuts_mask[bruise_y_min:bruise_y_max, bruise_x_min:bruise_x_max]
+                unique_bb, counts_bb = np.unique(bounding_box_region, return_counts=True)
+                bbox_area_per_class = dict(zip(unique_bb, counts_bb))
 
-                ids_in_cut_mask = np.unique(roi)
+                unique_mask, counts_mask = np.unique(cuts_mask, return_counts=True)
+                area_total_per_class = dict(zip(unique_mask, counts_mask))
 
-                for cut_id in ids_in_cut_mask:
+                bbox_coverage_per_class = {
+                    class_id: (bbox_area_per_class[class_id] / area_total_per_class[class_id])
+                    for class_id in bbox_area_per_class
+                }
+
+                for cut_id, cut_percent in bbox_coverage_per_class.items():
                     # cut_id = cuts_mask[mid_y_coord][mid_x_coord]
+                    if cut_percent >= 0.10:
+                        cut_name = CutsEnum.get_name_by_value(cut_id)
 
-                    cut_name = CutsEnum.get_name_by_value(cut_id)
-
-                    if cut_name != 0:
-                        if cut_name not in affeted_cuts:
-                            affeted_cuts[cut_name] = set([bruise_label])
-                        else:
-                            affeted_cuts[cut_name].add(bruise_label)
+                        if cut_name != 0:
+                            if cut_name not in affeted_cuts:
+                                affeted_cuts[cut_name] = set([bruise_label])
+                            else:
+                                affeted_cuts[cut_name].add(bruise_label)
         return affeted_cuts
 
     @staticmethod
