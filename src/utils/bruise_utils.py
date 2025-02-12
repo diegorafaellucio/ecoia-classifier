@@ -225,7 +225,7 @@ class BruiseUtils:
 
                 for cut_id, cut_percent in bbox_coverage_per_class.items():
                     # cut_id = cuts_mask[mid_y_coord][mid_x_coord]
-                    if cut_percent >= 0.10:
+                    if cut_percent >= 0.03:
                         cut_name = CutsEnum.get_name_by_value(cut_id)
 
                         if cut_name != 0:
