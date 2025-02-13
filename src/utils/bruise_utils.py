@@ -191,9 +191,7 @@ class BruiseUtils:
         return cut_lines_image
 
     @staticmethod
-    def get_cuts_affeted_by_bruises(cuts_mask, binary_mask,side_detection_result, bruises, image_id):
-        bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
-            ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
+    def get_cuts_affeted_by_bruises(cuts_mask, bruises):
 
         affeted_cuts = {}
 
@@ -212,19 +210,29 @@ class BruiseUtils:
                 bruise_x_max = bruise['bottomright']['x']
                 bruise_y_max = bruise['bottomright']['y']
 
-                mid_x_coord = int(bruise_x_min + ((bruise_x_max - bruise_x_min) / 2))
-                mid_y_coord = int(bruise_y_min + ((bruise_y_max - bruise_y_min) / 2))
 
+                bounding_box_region = cuts_mask[bruise_y_min:bruise_y_max, bruise_x_min:bruise_x_max]
+                unique_bb, counts_bb = np.unique(bounding_box_region, return_counts=True)
+                bbox_area_per_class = dict(zip(unique_bb, counts_bb))
 
-                cut_id = cuts_mask[mid_y_coord][mid_x_coord]
+                unique_mask, counts_mask = np.unique(cuts_mask, return_counts=True)
+                area_total_per_class = dict(zip(unique_mask, counts_mask))
 
-                cut_name = CutsEnum.get_name_by_value(cut_id)
+                bbox_coverage_per_class = {
+                    class_id: (bbox_area_per_class[class_id] / area_total_per_class[class_id])
+                    for class_id in bbox_area_per_class
+                }
 
-                if cut_name != 0:
-                    if cut_name not in affeted_cuts:
-                        affeted_cuts[cut_name] = set([bruise_label])
-                    else:
-                        affeted_cuts[cut_name].add(bruise_label)
+                for cut_id, cut_percent in bbox_coverage_per_class.items():
+                    # cut_id = cuts_mask[mid_y_coord][mid_x_coord]
+                    if cut_percent >= 0.03 and cut_id != 0:
+                        cut_name = CutsEnum.get_name_by_value(cut_id)
+
+                        if cut_name != 0:
+                            if cut_name not in affeted_cuts:
+                                affeted_cuts[cut_name] = set([bruise_label])
+                            else:
+                                affeted_cuts[cut_name].add(bruise_label)
         return affeted_cuts
 
     @staticmethod
