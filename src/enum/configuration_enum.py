@@ -100,6 +100,7 @@ class ConfigurationEnum(Enum):
 
     SEND_93_ERROR_INFORMATION = ('SEND_93_ERROR_INFORMATION', True)
 
+    MODULE_CONSIDER_CUT_AFFETED_BY_BRUISE = ('MODULE_CONSIDER_CUT_AFFETED_BY_BRUISE', 0.10)
 
     def __init__(self, key, value):
         self._key = key

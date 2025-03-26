@@ -163,8 +163,8 @@ class MeatClassifierHandler:
 
                     extension_lesion_is_enable = ConfigurationStorageController.get_config_data_value(
                             ConfigurationEnum.MODULE_EXTENSION_LESION.name)
-                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, extension_lesion_is_enable)
-                    affected_cuts= BruiseUtils.get_cuts_affeted_by_bruises(cuts_mask, sanitized_bruises)
+                    BruiseUtils.save_bruises_data(cuts_mask, binary_mask,side_detection_result, sanitized_bruises, image_id, cuts_coords,extension_lesion_is_enable)
+
 
                     carcass_information_already_exists = CarcassInformationController.carcass_information_already_exists(
                         image_id)
@@ -247,15 +247,13 @@ class MeatClassifierHandler:
                         ConfigurationEnum.MODULE_CUT_CLASSIFICATION.name)
 
                     if module_cut_classification_is_enabled:
-
+                        affected_cuts = BruiseUtils.get_bruises_in_cuts(image_id)
                         for cut_name, cut_model in cuts_classification_models.items():
 
 
                             cut_image = CutsUtils.get_cut_image_without_background(cuts_coords, image, cut_name)
 
-                            cut_classification_id = ClassifierUtils.get_cut_classification_id(cut_model, cut_image,
-                                                                                              affected_cuts,
-                                                                                              cut_name)
+                            cut_classification_id = ClassifierUtils.get_cut_classification_id(cut_model, cut_image,cut_name, affected_cuts)
 
 
 

@@ -1,7 +1,11 @@
+from itertools import count
+
 import cv2
 import logging
 import numpy as np
 from shapely import Polygon
+from sympy.physics.units import percent
+
 from src.utils.object_detection_utils import ObjectDetectionUtils
 from src.enum.bruises_enum import BruisesEnum
 from PIL import ImageColor
@@ -12,7 +16,7 @@ from src.controller.aux_cut_controller import AuxCutController
 from src.enum.configuration_enum import ConfigurationEnum
 from src.enum.level_extension_lesion_enum import LevelExtensionLesionEnum
 from src.enum.cuts_enum import CutsEnum
-
+from src.utils.cuts_utils import CutsUtils
 
 class BruiseUtils:
     logger = logging.getLogger(__name__)
@@ -191,52 +195,51 @@ class BruiseUtils:
         return cut_lines_image
 
     @staticmethod
-    def get_cuts_affeted_by_bruises(cuts_mask, bruises):
+    def get_id_cuts_affeted_by_bruises(cuts_coords, bruise, image_shape):
 
-        affeted_cuts = {}
+        id_cuts_affeted_by_bruise = []
+        threshold_consider_cut_affeted_by_bruise= ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.MODULE_CONSIDER_CUT_AFFETED_BY_BRUISE.name)
 
-        if bruises is not None:
-            for bruise in bruises:
+        if bruise is not None:
 
-                data_lesion = bruise['label']
-                data_lesion_items = data_lesion.split('-')
+            x_min = bruise['topleft']['x']
+            y_min = bruise['topleft']['y']
 
-                bruise_label = data_lesion_items[-1]
+            x_max = bruise['bottomright']['x']
+            y_max = bruise['bottomright']['y']
 
-                bruise_confidence = bruise['confidence']
-                bruise_x_min = bruise['topleft']['x']
-                bruise_y_min = bruise['topleft']['y']
+            mask_bruise = BruiseUtils.get_bruise_mask([x_min, y_max], [x_max, y_min], image_shape)
+            for cut_coord_key, cut_coord_data in cuts_coords.items():
+                cut_mask = CutsUtils.get_cut_mask(image_shape,cut_coord_data)
+                percent_intersection_cut_bruise = BruiseUtils.get_percentage_instersection(cut_mask, mask_bruise)
+                if percent_intersection_cut_bruise >=  threshold_consider_cut_affeted_by_bruise:
+                    id_cuts_affeted_by_bruise.append(CutsEnum[cut_coord_key.upper()].value)
+        return id_cuts_affeted_by_bruise
 
-                bruise_x_max = bruise['bottomright']['x']
-                bruise_y_max = bruise['bottomright']['y']
-
-
-                bounding_box_region = cuts_mask[bruise_y_min:bruise_y_max, bruise_x_min:bruise_x_max]
-                unique_bb, counts_bb = np.unique(bounding_box_region, return_counts=True)
-                bbox_area_per_class = dict(zip(unique_bb, counts_bb))
-
-                unique_mask, counts_mask = np.unique(cuts_mask, return_counts=True)
-                area_total_per_class = dict(zip(unique_mask, counts_mask))
-
-                bbox_coverage_per_class = {
-                    class_id: (bbox_area_per_class[class_id] / area_total_per_class[class_id])
-                    for class_id in bbox_area_per_class
-                }
-
-                for cut_id, cut_percent in bbox_coverage_per_class.items():
-                    # cut_id = cuts_mask[mid_y_coord][mid_x_coord]
-                    if cut_percent >= 0.03 and cut_id != 0:
-                        cut_name = CutsEnum.get_name_by_value(cut_id)
-
-                        if cut_name != 0:
-                            if cut_name not in affeted_cuts:
-                                affeted_cuts[cut_name] = set([bruise_label])
-                            else:
-                                affeted_cuts[cut_name].add(bruise_label)
-        return affeted_cuts
 
     @staticmethod
-    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id, extension_lesion_is_enable=False):
+    def get_position(bruise_height, reference_height):
+        if bruise_height <= reference_height:
+            return 'T'
+        else:
+            return 'D'
+
+    @staticmethod
+    def get_region_code_bruise(bruise, reference_height, count_rear_affeted, count_front_affeted):
+        center_height = int((bruise['bottomright']['y'] + bruise['topleft']['y'])/2)
+        code_region = BruiseUtils.get_position(center_height,reference_height)
+
+        if code_region == 'T':
+            count_rear_affeted+=1
+            code_region_bruise = code_region+str(count_rear_affeted)
+        else:
+            count_front_affeted+=1
+            code_region_bruise = code_region + str(count_front_affeted)
+
+        return code_region_bruise, count_front_affeted, count_rear_affeted
+    @staticmethod
+    def save_bruises_data(cuts_mask, binary_mask,side_detection_result, bruises, image_id, cuts_coords, extension_lesion_is_enable=False):
 
         bruise_confidence_threshold = ConfigurationStorageController.get_config_data_value(
             ConfigurationEnum.BRUISE_CLASSIFICATION_CONFIDENCE_THRESHOLD.name)
@@ -245,8 +248,12 @@ class BruiseUtils:
             ConfigurationEnum.MODULE_SIZE_PREDICTION_PIXEL_CENTIMETER_RATIO.name)
 
 
+        reference_height = int(binary_mask.shape[1]/2)
 
         if bruises is not None:
+            count_rear_affeted = 0
+            count_front_affeted = 0
+
             for bruise in bruises:
 
                 data_lesion = bruise['label']
@@ -272,17 +279,20 @@ class BruiseUtils:
 
                 cut_id = cuts_mask[mid_y_coord][mid_x_coord]
 
+                id_cuts_affeted_by_bruise = BruiseUtils.get_id_cuts_affeted_by_bruises(cuts_coords, bruise, binary_mask.shape)
 
+                region_code_bruise, count_front_affeted, count_rear_affeted = BruiseUtils.get_region_code_bruise(bruise,reference_height, count_rear_affeted, count_front_affeted)
 
-                if cut_id != 0:
-                    if midpoint_is_inside_detection:
-                        if bruise_confidence > bruise_confidence_threshold:
-                            bruise_id = BruisesEnum[bruise_label].value
-                            if extension_lesion_is_enable and data_lesion != 'FALHA':
-                                BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], width, height, diameter_cm, bruise_level_id)
-                            else:
-                                BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,
-                                                                    [mid_x_coord, mid_y_coord])
+                for cut_id in id_cuts_affeted_by_bruise:
+                    if cut_id != 0:
+                        if midpoint_is_inside_detection:
+                            if bruise_confidence > bruise_confidence_threshold:
+                                bruise_id = BruisesEnum[bruise_label].value
+                                if extension_lesion_is_enable and data_lesion != 'FALHA':
+                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], region_code_bruise,width, height, diameter_cm, bruise_level_id)
+                                else:
+                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,
+                                                                        [mid_x_coord, mid_y_coord], region_code_bruise)
 
 
     @staticmethod
@@ -291,22 +301,36 @@ class BruiseUtils:
         output_data = []
 
         bruises_in_image = BruiseController.get_by_image_id(image_id)
+        blacklist = []
+
+
 
         for bruise_in_image in bruises_in_image:
             bruise_id = bruise_in_image[5]
-            region_id = bruise_in_image[1]
+
+            region_bruise_code = bruise_in_image[-1]
+
+
+            if region_bruise_code in blacklist:
+                continue
+
+            blacklist.append(region_bruise_code)
+            region_name,region_id = BruiseUtils.get_region_affected(image_id, region_bruise_code)
+
 
             bruise_name = AuxBruiseController.get_name_by_id(bruise_id)
-            region_name = AuxCutController.get_name_by_id(region_id)
+            #region_name = AuxCutController.get_name_by_id(region_id)
 
             bruise_data = {
                 "id_lesao": bruise_id,
                 "id_regiao": region_id,
                 "label_lesao": bruise_name.upper(),
-                "label_regiao": region_name.upper()
+                "label_regiao": region_name
             }
 
+
             output_data.append(bruise_data)
+
 
         return output_data
 
@@ -425,3 +449,31 @@ class BruiseUtils:
             return LevelExtensionLesionEnum.NIVEL_II.value
         else:
             return LevelExtensionLesionEnum.NIVEL_III.value
+
+    @staticmethod
+    def get_bruises_in_cuts(image_id):
+        bruise_in_cuts = {}
+        bruises_in_image = BruiseController.get_by_image_id(image_id)
+
+        for bruise_in_image in bruises_in_image:
+            bruise_id = bruise_in_image[5]
+            region_id = bruise_in_image[1]
+            region_name = AuxCutController.get_name_by_id(region_id)
+
+            bruise_in_cuts[region_name.upper()] = bruise_in_cuts.setdefault(region_name.upper(),[]) + [bruise_id]
+
+        return bruise_in_cuts
+
+    @staticmethod
+    def get_region_affected(image_id, region_bruise_code):
+        region_affected_by_name = []
+        region_affected_by_id = []
+        bruises_in_image = BruiseController.get_cuts_affectd_by_image_id_and_region_code(image_id, region_bruise_code)
+
+        for bruise_in_image in bruises_in_image:
+            region_id = bruise_in_image[1]
+            region_name = AuxCutController.get_name_by_id(region_id)
+            region_affected_by_name.append(region_name.upper())
+            region_affected_by_id.append(region_id)
+
+        return region_affected_by_name, region_affected_by_id
