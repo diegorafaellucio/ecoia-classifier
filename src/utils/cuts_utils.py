@@ -100,6 +100,11 @@ class CutsUtils:
         for cut_coord_key, cut_coord_data in cuts_coords.items():
             CutController.insert(CutsEnum[cut_coord_key.upper()].value, image_id, cut_coord_data)
 
+    @staticmethod
+    def get_cut_mask(image_shape, cut_coord_data):
+        cuts_mask = np.zeros(image_shape,np.uint8)
+        coords_polygon = cut_coord_data.reshape((-1, 1, 2))
+        cv2.fillPoly(cuts_mask, pts=[coords_polygon], color=(255, 255, 255))
+        _, binary_mask = cv2.threshold(cuts_mask, 0, 255, cv2.THRESH_BINARY)
 
-
-
+        return binary_mask

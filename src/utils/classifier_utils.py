@@ -50,22 +50,21 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def get_cut_classification_id(classifer, cut_image, affected_cuts, cut_name):
+    def get_cut_classification_id(classifer, cut_image, cut_name, affected_cuts):
 
 
         cut_classification_result = ClassifierUtils.predict(classifer, cut_image, image_classification=True)
 
         classification_id = ClassificationErrorEnum.ERRO_200.value
 
-
-        if cut_name in affected_cuts:
+        if cut_name in affected_cuts.keys():
             bruises = affected_cuts[cut_name]
 
-            if (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises) and not BruisesEnum.FALHA.key in bruises:
+            if (BruisesEnum.LEVE.value in bruises or BruisesEnum.MODERADA.value in bruises or BruisesEnum.GRAVE.value in bruises) and not BruisesEnum.FALHA.value in bruises:
                 classification_id = ClassificationErrorEnum.ERRO_201.value
-            elif BruisesEnum.FALHA.key in bruises and not (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises):
+            elif BruisesEnum.FALHA.value in bruises and not (BruisesEnum.LEVE.value in bruises or BruisesEnum.MODERADA.value in bruises or BruisesEnum.GRAVE.value in bruises):
                 classification_id = ClassificationErrorEnum.ERRO_202.value
-            elif BruisesEnum.FALHA.key in bruises and (BruisesEnum.LEVE.key in bruises or BruisesEnum.MODERADA.key in bruises or BruisesEnum.GRAVE.key in bruises):
+            elif BruisesEnum.FALHA.value in bruises and (BruisesEnum.LEVE.value in bruises or BruisesEnum.MODERADA.value in bruises or BruisesEnum.GRAVE.value in bruises):
                 classification_id = ClassificationErrorEnum.ERRO_203.value
         else:
 
