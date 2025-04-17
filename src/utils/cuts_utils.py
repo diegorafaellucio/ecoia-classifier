@@ -66,7 +66,7 @@ class CutsUtils:
         return cut_lines_image, cuts_mask, binary_mask
 
     @staticmethod
-    def get_cut_image_without_background(cut_coords, image, cut_name):
+    def get_cut_image_without_background( cut_coords, image, cut_name):
         square_size = 512
 
         cut_coord_data = cut_coords[cut_name]

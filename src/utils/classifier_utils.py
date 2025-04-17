@@ -9,7 +9,6 @@ from src.controller.configuration_storage_controller import ConfigurationStorage
 from src.utils.image_utils import ImageUtils
 from src.utils.detector_utils import DetectorUtils
 import cv2
-from src.enum.skeleton_enum import ClassificationSkeletonEnum
 
 class ClassifierUtils:
 
