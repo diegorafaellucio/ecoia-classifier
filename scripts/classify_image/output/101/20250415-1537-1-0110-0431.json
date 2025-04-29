@@ -1,1 +1,0 @@
-{"classification_id": "101", "classification_name": null, "classification_confidence": 0.0, "filter_label": "BANDA_A_NORMAL", "filter_confidence": 0.9706488847732544, "side_detection_result": {"label": "LADO_A", "confidence": 0.9626467823982239, "topleft": {"x": 455, "y": 5}, "bottomright": {"x": 1168, "y": 2434}}}

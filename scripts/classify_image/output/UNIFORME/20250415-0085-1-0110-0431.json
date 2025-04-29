@@ -1,1 +1,0 @@
-{"classification_id": "8", "classification_name": "UNIFORME", "classification_confidence": 0.9538125991821289, "filter_label": "BANDA_A_NORMAL", "filter_confidence": 0.9701113104820251, "side_detection_result": {"label": "LADO_A", "confidence": 0.9550328850746155, "topleft": {"x": 479, "y": 0}, "bottomright": {"x": 1200, "y": 2450}}}
