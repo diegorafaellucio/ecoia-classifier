@@ -6,7 +6,9 @@ from src.enum.configuration_enum import ConfigurationEnum
 from src.enum.job_name_enum import JobNameEnum
 from src.enum.cuts_enum import CutsEnum
 from apps.meat_classifier.views.classify_view import ClassifyView
+from apps.meat_classifier.views.evaluate_model_view import EvaluateModelView
 from apps.meat_classifier.views.job_status_view import JobStatusView
+from apps.meat_classifier.views.classify_image_view import ClassifyImageView
 from src.ml.shape_predictor.shape_predictor import ShapePredictor
 from src.job.meat_classifier_job import MeatClassifierJob
 import threading
@@ -104,11 +106,29 @@ for module_cut_classification_available_model in module_cut_classification_avail
 classifier_suite = [carcass_classification_classifier, skeleton_detector, filter_detector, side_detector, meat_detector, bruise_detector, stamp_detector,
                     side_a_shape_predictor, side_b_shape_predictor, grease_color_detector, conformation_detector, hump_detector, breed_detector, cuts_classification_models]
 
+classifier_suite_dict = {
+    'carcass': carcass_classification_classifier,
+    'skeleton': skeleton_detector,
+    'filter': filter_detector,
+    'side': side_detector,
+    'meat': meat_detector,
+    'bruise': bruise_detector,
+    'stamp': stamp_detector,
+    'side_a_shape_predictor': side_a_shape_predictor,
+    'side_b_shape_predictor': side_b_shape_predictor,
+    'grease_color': grease_color_detector,
+    'conformation': conformation_detector,
+    'hump': hump_detector,
+    'breed': breed_detector,
+    'cuts': cuts_classification_models
+}
 
 meat_classifier_job_thread = threading.Thread(target=MeatClassifierJob.do, name=JobNameEnum.CLASSIFIER.value)
 meat_classifier_job_thread.start()
 
 urlpatterns = [
     path("classify", ClassifyView.as_view(), {'classifier_suite': classifier_suite}),
+    path("evaluate_model", EvaluateModelView.as_view(), {'classifier_suite': classifier_suite_dict}),
+    path("classify_image", ClassifyImageView.as_view(), {'classifier_suite': classifier_suite_dict}),
     path("job_status", JobStatusView.as_view(), {'meat_classifier_job_thread': meat_classifier_job_thread}),
 ]

@@ -78,10 +78,11 @@ class ClassifierUtils:
 
 
     @staticmethod
-    def get_classification_id(image_id, image_path, side_detector, meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days, carcass_classification_classifier):
+    def get_classification_id(image_path, side_detector, meat_detector, skeleton_detector, filter_detector, reprocess_retroactive_days, carcass_classification_classifier):
 
         classification_id = None
         filter_label = 'NAO_CLASSIFICADO'
+        classification_confidence = 0.0
         filter_confidence = 0.0
         side_detection_result = None
         image = None
@@ -193,11 +194,13 @@ class ClassifierUtils:
                 else:
                     meat_classification_label = meat_detection_result['label']
 
+                    classification_confidence = meat_detection_result['confidence']
+
                     meat_classification_id = MeatEnum[meat_classification_label].value['database_id']
 
                     classification_id = meat_classification_id
 
-        return image, classification_id, filter_label, filter_confidence, side_detection_result
+        return image, classification_id, classification_confidence, filter_label, filter_confidence, side_detection_result
 
     @staticmethod
     def get_cut_and_meat_classification_correlation(meat_classification_id, cut_classification_id):
