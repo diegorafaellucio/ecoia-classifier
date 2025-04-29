@@ -1,0 +1,1 @@
+{"classification_id": "3", "classification_name": "ESCASSA", "classification_confidence": 0.6358281970024109, "filter_label": "BANDA_A_NORMAL", "filter_confidence": 0.9687697291374207, "side_detection_result": {"label": "LADO_A", "confidence": 0.9611791968345642, "topleft": {"x": 431, "y": 0}, "bottomright": {"x": 1120, "y": 2284}}}

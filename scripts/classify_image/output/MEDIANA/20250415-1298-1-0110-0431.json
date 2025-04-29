@@ -1,0 +1,1 @@
+{"classification_id": "6", "classification_name": "MEDIANA", "classification_confidence": 0.9278733730316162, "filter_label": "BANDA_A_NORMAL", "filter_confidence": 0.975227415561676, "side_detection_result": {"label": "LADO_A", "confidence": 0.9659141302108765, "topleft": {"x": 462, "y": 0}, "bottomright": {"x": 1220, "y": 2380}}}

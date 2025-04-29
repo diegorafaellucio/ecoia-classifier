@@ -1,0 +1,1 @@
+{"classification_id": "1", "classification_name": "AUSENTE", "classification_confidence": 0.9369499087333679, "filter_label": "BANDA_A_NORMAL", "filter_confidence": 0.9707710146903992, "side_detection_result": {"label": "LADO_A", "confidence": 0.9550678133964539, "topleft": {"x": 495, "y": 0}, "bottomright": {"x": 1315, "y": 2481}}}

@@ -1,0 +1,1 @@
+{"classification_id": "9", "classification_name": "EXCESSIVA", "classification_confidence": 0.5628170967102051, "filter_label": "BANDA_B_NORMAL", "filter_confidence": 0.9677590727806091, "side_detection_result": {"label": "LADO_B", "confidence": 0.9513476490974426, "topleft": {"x": 297, "y": 0}, "bottomright": {"x": 1130, "y": 2359}}}
