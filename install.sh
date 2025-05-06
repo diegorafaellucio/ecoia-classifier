@@ -26,10 +26,4 @@ pip3.11 install -r requeriments_base.txt --break-system-packages --no-cache-dir
 pip3.11 install -r requeriments_torch.txt --break-system-packages --no-cache-dir
 pip3.11 install -r requeriments_ultralytics.txt --break-system-packages --no-cache-dir
 
-# Install Python requirements (collector)
-pip3.11 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu --break-system-packages --user
-pip3.11 install -r requeriments.txt --break-system-packages
 
-
-# Collector-specific pip installs
-pip3.11 install pypylon boto3 --break-system-packages
