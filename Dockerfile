@@ -12,10 +12,10 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Copy installation files
-COPY data/install/get-pip.py /app/
-COPY data/install/requeriments_base.txt /app/
-COPY data/install/requeriments_torch.txt /app/
-COPY data/install/requeriments_ultralytics.txt /app/
+COPY get-pip.py /app/
+COPY requeriments_base.txt /app/
+COPY requeriments_torch.txt /app/
+COPY requeriments_ultralytics.txt /app/
 
 # Install system dependencies
 RUN apt-get update && apt-get upgrade -y && \
