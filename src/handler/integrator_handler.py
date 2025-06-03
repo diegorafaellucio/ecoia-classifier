@@ -109,7 +109,13 @@ class IntegratorHandler:
                 classification_score = AuxGradingController.get_score_by_id(aux_grading_id)
 
                 IntegratorHandler.logger.info('Collecting bruise and cuts data to integrate. Image ID: {}.'.format(image_id))
-                bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
+
+                if client_identifier.upper() == 'minerva'.upper():
+                    bruise_data = BruiseUtils.get_bruise_integration_data_minerva(image_id)
+                else:
+                    bruise_data = BruiseUtils.get_bruise_integration_data(image_id)
+
+
                 grease_color  = CarcassInformationController.get_grease_color(image_id)
 
                 integration_dict = \

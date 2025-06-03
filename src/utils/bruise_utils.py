@@ -296,7 +296,31 @@ class BruiseUtils:
                                     BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,intersection_score,
                                                                         [mid_x_coord, mid_y_coord], region_code_bruise)
 
+    @staticmethod
+    def get_bruise_integration_data_minerva(image_id):
 
+        output_data = []
+
+        bruises_in_image = BruiseController.get_only_greatest_intersection_bruises_by_image_id(image_id)
+
+        for bruise_in_image in bruises_in_image:
+            bruise_id = bruise_in_image[5]
+            region_id = bruise_in_image[1]
+
+            bruise_name = AuxBruiseController.get_name_by_id(bruise_id)
+            region_name = AuxCutController.get_name_by_id(region_id)
+
+            bruise_data = {
+                "id_lesao": bruise_id,
+                "id_regiao": region_id,
+                "label_lesao": bruise_name.upper(),
+                "label_regiao": region_name.upper()
+            }
+
+            output_data.append(bruise_data)
+
+
+        return output_data
     @staticmethod
     def get_bruise_integration_data(image_id):
 
@@ -310,7 +334,7 @@ class BruiseUtils:
         for bruise_in_image in bruises_in_image:
             bruise_id = bruise_in_image[5]
 
-            region_bruise_code = bruise_in_image[-1]
+            region_bruise_code = bruise_in_image[-2]
 
 
             if region_bruise_code in blacklist:

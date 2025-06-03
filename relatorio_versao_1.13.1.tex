@@ -1,0 +1,135 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazilian]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\title{Relatório de Atualização: ECOIA Classifier\\Versão 1.13.1}
+\author{Equipe de Desenvolvimento}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+Este documento apresenta as alterações realizadas entre a versão 1.13.0 e a nova versão 1.13.1 do sistema ECOIA Classifier. O relatório detalha as modificações no código, novas funcionalidades, correções de bugs e melhorias de desempenho implementadas nesta atualização.
+
+\section{Resumo das Alterações}
+
+A versão 1.13.1 do ECOIA Classifier inclui as seguintes alterações principais:
+
+\begin{itemize}
+    \item Adição de um novo campo \texttt{cut\_intersection\_score} na tabela \texttt{bruise}
+    \item Atualização da estrutura de arquivos do projeto
+    \item Reorganização dos scripts de instalação e requisitos
+    \item Melhorias no sistema de detecção de hematomas e sua relação com cortes
+    \item Atualização de dependências para compatibilidade com Python 3.11
+\end{itemize}
+
+\section{Alterações no Banco de Dados}
+
+Foi adicionado um novo campo na tabela \texttt{bruise}:
+
+\begin{lstlisting}[language=SQL]
+ALTER TABLE bruise
+    ADD cut_intersection_score DECIMAL(10, 2) NULL;
+\end{lstlisting}
+
+Este campo armazena a pontuação de interseção entre o hematoma e o corte, permitindo uma análise mais precisa da relação entre hematomas e cortes específicos.
+
+\section{Modificações no Código}
+
+\subsection{Controlador de Hematomas}
+
+O arquivo \texttt{src/controller/bruise\_controller.py} foi modificado para incluir o novo campo \texttt{cut\_intersection\_score} nos métodos de inserção de dados de hematomas:
+
+\begin{lstlisting}[language=Python]
+@staticmethod
+def insert_into_bruise(image_id, bruise_id, cut_id, cut_intersection_score, bruise_coordinates, region_code_bruise, width=None, height=None, diameter=None, bruise_level_id=None):
+    # Implementação atualizada para incluir o novo campo cut_intersection_score
+\end{lstlisting}
+
+\subsection{Utilitários de Hematomas}
+
+O arquivo \texttt{src/utils/bruise\_utils.py} foi significativamente modificado:
+
+\begin{itemize}
+    \item O método \texttt{get\_id\_cuts\_affeted\_by\_bruises} foi renomeado para \texttt{get\_id\_intersection\_scores\_and\_cuts\_affected\_by\_bruises}
+    \item O método agora retorna não apenas os IDs dos cortes afetados, mas também as pontuações de interseção
+    \item A lógica de processamento foi atualizada para passar essas pontuações para o controlador de hematomas
+\end{itemize}
+
+\subsection{Handler do Integrador}
+
+No arquivo \texttt{src/handler/integrator\_handler.py}, foi adicionada a recuperação do identificador do cliente a partir das configurações do sistema:
+
+\begin{lstlisting}[language=Python]
+client_identifier = ConfigurationStorageController.get_config_data_value(
+    ConfigurationEnum.CLIENT_IDENTIFIER.name)
+\end{lstlisting}
+
+\section{Reorganização de Arquivos}
+
+\subsection{Arquivos de Requisitos}
+
+Os arquivos de requisitos foram reorganizados:
+
+\begin{itemize}
+    \item Os arquivos \texttt{data/install/requeriments\_base.txt} e \texttt{data/install/requeriments\_ultralytics.txt} foram movidos para o diretório raiz
+    \item O arquivo \texttt{data/install/requeriments\_torch.txt} foi atualizado e movido para o diretório raiz
+    \item As dependências foram atualizadas para compatibilidade com Python 3.11
+\end{itemize}
+
+\subsection{Scripts de Instalação}
+
+O script de instalação \texttt{data/install/install.sh} foi substituído por um novo script \texttt{install.sh} no diretório raiz, com melhorias e atualizações para facilitar a configuração do ambiente.
+
+\section{Arquivos Removidos}
+
+Alguns arquivos foram removidos do projeto:
+
+\begin{itemize}
+    \item \texttt{data/scripts/add\_ip\_machine\_to\_env.py}
+    \item \texttt{data/scripts/add\_watermask\_to\_old\_images.py}
+    \item \texttt{test\_img.py}
+\end{itemize}
+
+\section{Conclusão}
+
+A versão 1.13.1 do ECOIA Classifier traz melhorias significativas no sistema de detecção e análise de hematomas, especialmente na quantificação da relação entre hematomas e cortes específicos. A adição do campo \texttt{cut\_intersection\_score} permite uma análise mais precisa e detalhada, o que pode levar a insights mais valiosos sobre a qualidade da carne.
+
+Além disso, a reorganização dos arquivos de requisitos e scripts de instalação simplifica o processo de configuração do ambiente.
+
+Estas melhorias contribuem para um sistema mais robusto, preciso e fácil de usar, alinhado com os objetivos de qualidade e eficiência do ECOIA Classifier.
+
+\end{document}

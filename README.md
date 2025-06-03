@@ -15,6 +15,7 @@
 - [Dependencies](#dependencies)
 - [Configuration](#configuration)
 - [Development Best Practices](#development-best-practices)
+- [Release Notes](#release-notes)
 - [License](#license)
 - [Contributors](#contributors)
 
@@ -210,6 +211,32 @@ Example response:
 ### YOLO Dependencies
 - ultralytics 8.1.23
 
+## Release Notes
+
+### Version 1.13.1 (2025-06-03)
+
+#### Principais Alterações
+- **Adição de novo campo**: Implementado o campo `cut_intersection_score` na tabela `bruise` para quantificar a relação entre hematomas e cortes específicos
+- **Melhorias na detecção de hematomas**: Aprimoramento na identificação e classificação de hematomas e sua relação com cortes
+- **Atualização de dependências**: Compatibilidade com Python 3.11
+- **Reorganização de arquivos**: Estrutura de arquivos do projeto otimizada
+- **Reorganização de scripts**: Scripts de instalação e requisitos reorganizados para facilitar a configuração do ambiente
+
+#### Modificações Técnicas
+- Renomeação do método `get_id_cuts_affeted_by_bruises` para `get_id_intersection_scores_and_cuts_affected_by_bruises` com funcionalidade expandida
+- Atualização do controlador de hematomas para incluir o novo campo `cut_intersection_score`
+- Adição de recuperação do identificador do cliente no handler do integrador
+- Migração SQL para adição do novo campo na tabela `bruise`
+
+#### Arquivos Removidos
+- `data/scripts/add_ip_machine_to_env.py`
+- `data/scripts/add_watermask_to_old_images.py`
+- `test_img.py`
+
+#### Arquivos Reorganizados
+- Arquivos de requisitos movidos para o diretório raiz
+- Script de instalação atualizado e movido para o diretório raiz
+
 ## Configuration
 
 The system is highly configurable with various modules that can be enabled or disabled through the configuration system. Configuration is stored in the database and can be accessed through the `ConfigurationStorageController`.
@@ -259,4 +286,6 @@ To maintain code quality and ensure a smooth development process, we follow thes
 3. **Monitoring**: Implement monitoring to track system health and performance.
 4. **Logging**: Use comprehensive logging to track system behavior and troubleshoot issues.
 
+## License
 
+## Contributors
