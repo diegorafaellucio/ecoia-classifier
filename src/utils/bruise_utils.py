@@ -195,7 +195,7 @@ class BruiseUtils:
         return cut_lines_image
 
     @staticmethod
-    def get_id_cuts_affeted_by_bruises(cuts_coords, bruise, image_shape):
+    def get_id_intersection_scores_and_cuts_affected_by_bruises(cuts_coords, bruise, image_shape):
 
         id_cuts_affeted_by_bruise = []
         threshold_consider_cut_affeted_by_bruise= ConfigurationStorageController.get_config_data_value(
@@ -214,7 +214,7 @@ class BruiseUtils:
                 cut_mask = CutsUtils.get_cut_mask(image_shape,cut_coord_data)
                 percent_intersection_cut_bruise = BruiseUtils.get_percentage_instersection(cut_mask, mask_bruise)
                 if percent_intersection_cut_bruise >=  threshold_consider_cut_affeted_by_bruise:
-                    id_cuts_affeted_by_bruise.append(CutsEnum[cut_coord_key.upper()].value)
+                    id_cuts_affeted_by_bruise.append([CutsEnum[cut_coord_key.upper()].value, percent_intersection_cut_bruise])
         return id_cuts_affeted_by_bruise
 
 
@@ -277,21 +277,23 @@ class BruiseUtils:
                     diameter_cm, width, height = BruiseUtils.calculate_extent_bruise(binary_mask, bruise, pixel_centimeter_ratio)
                     bruise_level_id = BruiseUtils.get_level_lesion_id(diameter_cm)
 
-                cut_id = cuts_mask[mid_y_coord][mid_x_coord]
-
-                id_cuts_affeted_by_bruise = BruiseUtils.get_id_cuts_affeted_by_bruises(cuts_coords, bruise, binary_mask.shape)
+                intersection_scores_and_cuts_affected_by_bruises = BruiseUtils.get_id_intersection_scores_and_cuts_affected_by_bruises(cuts_coords, bruise, binary_mask.shape)
 
                 region_code_bruise, count_front_affeted, count_rear_affeted = BruiseUtils.get_region_code_bruise(bruise,reference_height, count_rear_affeted, count_front_affeted)
 
-                for cut_id in id_cuts_affeted_by_bruise:
+                for intersection_scores_and_cuts_affected_by_bruise in intersection_scores_and_cuts_affected_by_bruises:
+
+                    cut_id = intersection_scores_and_cuts_affected_by_bruise[0]
+                    intersection_score = intersection_scores_and_cuts_affected_by_bruise[1]
+
                     if cut_id != 0:
                         if midpoint_is_inside_detection:
                             if bruise_confidence > bruise_confidence_threshold:
                                 bruise_id = BruisesEnum[bruise_label].value
                                 if extension_lesion_is_enable and data_lesion != 'FALHA':
-                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id, [mid_x_coord, mid_y_coord], region_code_bruise,width, height, diameter_cm, bruise_level_id)
+                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,intersection_score, [mid_x_coord, mid_y_coord], region_code_bruise,width, height, diameter_cm, bruise_level_id)
                                 else:
-                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,
+                                    BruiseController.insert_into_bruise(image_id, bruise_id, cut_id,intersection_score,
                                                                         [mid_x_coord, mid_y_coord], region_code_bruise)
 
 

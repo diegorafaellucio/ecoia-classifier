@@ -77,6 +77,9 @@ class IntegratorHandler:
     def process_image(image_id, image_path, sequence_number, side_number, roulette_number, slaughter_date, created_at,
                       processed_at, flag_img, state, aux_grading_id):
 
+        client_identifier = ConfigurationStorageController.get_config_data_value(
+            ConfigurationEnum.CLIENT_IDENTIFIER.name)
+
 
 
         IntegratorHandler.logger.info('Starting to integrate data. Image ID: {}.'.format(image_id))

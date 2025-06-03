@@ -23,16 +23,18 @@ class BruiseController:
             return data
 
     @staticmethod
-    def insert_into_bruise(image_id, bruise_id, cut_id, bruise_coordinates, region_code_bruise,width=None, height=None, diameter=None, bruise_level_id=None):
+    def insert_into_bruise(image_id, bruise_id, cut_id, cut_intersection_score,bruise_coordinates, region_code_bruise,width=None, height=None, diameter=None, bruise_level_id=None):
         with connection.cursor() as cursor:
 
             if width == None and height == None and diameter == None and bruise_level_id == None:
-                sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at, region_bruise_code) values ({}, {}, {}, '{}', now(), now(),'{}')".format(
-                     bruise_id, image_id, cut_id, bruise_coordinates,region_code_bruise)
+                sql = "insert into bruise (bruise_id, image_id, cut_id, cut_intersection_score, bruise_coordinates, created_at, updated_at, region_bruise_code) values ({}, {}, {}, '{}', '{}', now(), now(),'{}')".format(
+                     bruise_id, image_id, cut_id, cut_intersection_score, bruise_coordinates,region_code_bruise)
             else:
-                sql = "insert into bruise (bruise_id, image_id, cut_id, bruise_coordinates, created_at, updated_at, height, width, diameter, bruise_level_id, region_bruise_code) values ({}, {}, {}, '{}', now(), now(), {}, {}, {}, {},'{}')".format(
-                    bruise_id, image_id, cut_id, bruise_coordinates, height, width, diameter, bruise_level_id, region_code_bruise)
+                sql = "insert into bruise (bruise_id, image_id, cut_id, cut_intersection_score, bruise_coordinates, created_at, updated_at, height, width, diameter, bruise_level_id, region_bruise_code) values ({}, {}, {},'{}', '{}', now(), now(), {}, {}, {}, {},'{}')".format(
+                    bruise_id, image_id, cut_id, cut_intersection_score, bruise_coordinates, height, width, diameter, bruise_level_id, region_code_bruise)
 
+
+            print(sql)
             cursor.execute(sql)
             cursor.close()
             connection.close()
