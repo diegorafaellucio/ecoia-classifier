@@ -39,7 +39,6 @@ class BruiseController:
                     bruise_id, image_id, cut_id, cut_intersection_score, bruise_coordinates, height, width, diameter,
                     bruise_level_id, region_code_bruise)
 
-            print(sql)
             cursor.execute(sql)
             cursor.close()
             connection.close()
