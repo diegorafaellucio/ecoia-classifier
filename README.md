@@ -255,6 +255,26 @@ To maintain code quality and ensure a smooth development process, we follow thes
 3. **Caching**: Use caching strategies to reduce redundant computations.
 4. **Asynchronous Processing**: Use asynchronous processing for long-running tasks.
 
+## Release Notes
+
+### Version 1.14.0 (June 10, 2025)
+
+#### New Features
+- Added API endpoint to use models directly with uploaded images
+  - New endpoint: `/classifier/use-model/` accepts image uploads via form data
+  - Supports specifying which model to use via the `model_name` parameter
+  - Returns prediction results in a standardized JSON format
+
+#### Improvements
+- Enhanced model prediction handling to support different model types
+- Added special handling for classifier models with the `image_classification` parameter
+
+#### Technical Details
+- Implemented in `UseModelView` and `UseModelHandler` classes
+- Supports all models available in the classifier suite
+- Handles nested models (e.g., cuts_classification_models.CUT_TYPE)
+- Includes proper error handling and temporary file cleanup
+
 ## Deployment
 
 ### Production Deployment with PM2
