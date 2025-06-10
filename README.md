@@ -18,6 +18,7 @@
 - [Release Notes](#release-notes)
 - [License](#license)
 - [Contributors](#contributors)
+- [Deployment](#deployment)
 
 ## Overview
 ECOIA Classifier is a Django-based application for automated meat classification using computer vision and machine learning. The system analyzes images of meat carcasses to detect and classify various attributes such as cuts, bruises, grease color, conformation, size, hump, and breed.
@@ -211,32 +212,6 @@ Example response:
 ### YOLO Dependencies
 - ultralytics 8.1.23
 
-## Release Notes
-
-### Version 1.13.1 (2025-06-03)
-
-#### Principais Alterações
-- **Adição de novo campo**: Implementado o campo `cut_intersection_score` na tabela `bruise` para quantificar a relação entre hematomas e cortes específicos
-- **Melhorias na detecção de hematomas**: Aprimoramento na identificação e classificação de hematomas e sua relação com cortes
-- **Atualização de dependências**: Compatibilidade com Python 3.11
-- **Reorganização de arquivos**: Estrutura de arquivos do projeto otimizada
-- **Reorganização de scripts**: Scripts de instalação e requisitos reorganizados para facilitar a configuração do ambiente
-
-#### Modificações Técnicas
-- Renomeação do método `get_id_cuts_affeted_by_bruises` para `get_id_intersection_scores_and_cuts_affected_by_bruises` com funcionalidade expandida
-- Atualização do controlador de hematomas para incluir o novo campo `cut_intersection_score`
-- Adição de recuperação do identificador do cliente no handler do integrador
-- Migração SQL para adição do novo campo na tabela `bruise`
-
-#### Arquivos Removidos
-- `data/scripts/add_ip_machine_to_env.py`
-- `data/scripts/add_watermask_to_old_images.py`
-- `test_img.py`
-
-#### Arquivos Reorganizados
-- Arquivos de requisitos movidos para o diretório raiz
-- Script de instalação atualizado e movido para o diretório raiz
-
 ## Configuration
 
 The system is highly configurable with various modules that can be enabled or disabled through the configuration system. Configuration is stored in the database and can be accessed through the `ConfigurationStorageController`.
@@ -280,12 +255,54 @@ To maintain code quality and ensure a smooth development process, we follow thes
 3. **Caching**: Use caching strategies to reduce redundant computations.
 4. **Asynchronous Processing**: Use asynchronous processing for long-running tasks.
 
-### Deployment
-1. **Continuous Integration**: Automatically build and test code changes.
-2. **Continuous Deployment**: Automate deployment processes.
-3. **Monitoring**: Implement monitoring to track system health and performance.
-4. **Logging**: Use comprehensive logging to track system behavior and troubleshoot issues.
+## Deployment
 
-## License
+### Production Deployment with PM2
 
-## Contributors
+For production environments, we use PM2 to manage the Django application process. The `deploy.sh` script automates this process.
+
+#### deploy.sh
+
+This script handles:
+
+- Deploying specific tagged versions of the application (optional)
+- Installing all requirements using pip3.11
+- Managing PM2 processes (stopping existing instances and starting new ones)
+- Configuring the application to run on the specified port
+
+To deploy the application:
+
+```bash
+# Deploy the current branch
+chmod +x deploy.sh
+./deploy.sh
+
+# Deploy a specific tagged version
+./deploy.sh v1.0.0
+```
+
+### Deployment Configuration
+
+The deploy.sh script uses the following configuration:
+
+- **Python Version**: Python 3.11
+- **Application Name**: ecoia-classifier
+- **Default Port**: 8000
+- **Host**: 0.0.0.0 (accessible from any IP)
+
+### Monitoring the Deployed Application
+
+After deployment, you can monitor and manage the application using PM2 commands:
+
+```bash
+# Check application status
+pm2 status
+
+# View application logs
+pm2 logs ecoia-classifier
+
+# Restart the application
+pm2 restart ecoia-classifier
+
+# Stop the application
+pm2 stop ecoia-classifier
