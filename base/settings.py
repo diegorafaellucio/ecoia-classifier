@@ -44,14 +44,15 @@ LOGGING = {
     "formatters": {
         "default_formatter": {
             "format": "%(asctime)s-%(levelname)s %(name)s: %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S"
+            "datefmt": "%Y-%m-%d %H:%M:%S,%f"
         },
         "full_formatter": {
             "format": "%(asctime)s Log Type: %(levelname)s  File: %(filename)s  Function:%(funcName)s \n Message:%(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S"
+            "datefmt": "%Y-%m-%d %H:%M:%S,%f"
         },
     },
 }
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
